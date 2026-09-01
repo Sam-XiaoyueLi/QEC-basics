@@ -1,16 +1,9 @@
 # Current State
 
-## Learning progress
+**Completed:** Arthur Pesah overview, an introductory Stim parity-measurement notebook, and the classical 3-bit repetition code (`02_classical_3bit_repetition_code.ipynb`).
 
-**Completed:** 
+**Current task:** stabilizers and syndromes — `03_stabilizers_and_syndromes.ipynb` connects the classical parity checks ($b_0 \oplus b_1$, $b_1 \oplus b_2$) to the quantum stabilizers $Z_0Z_1$, $Z_1Z_2$ on the 3-qubit repetition code, reproducing notebook 02's syndrome table via Pauli matrices and a Stim ancilla circuit; complete its TODO exercises and closed-notebook checklist.
 
-- Notebook 01: Stim basics — measurements, ancilla-based parity checks, and a first syndrome.
-- Notebook 02: classical 3-bit repetition code — encoding, code distance, syndrome tables, majority-vote decoding, the limits of a 2-bit code, and learner-completed exercises.
+**Next:** explicit syndrome-extraction circuits using ancilla qubits.
 
-**Current task:** create Notebook 03, **Stabilizers and Syndromes**. It should translate the two classical parity checks into the stabilizers \(Z_0Z_1\) and \(Z_1Z_2\), explain the \(+1/-1\) eigenvalue convention and its `0/1` syndrome-bit representation, and show how single \(X\) errors produce distinct syndromes.
-
-**Next:** build explicit ancilla-based syndrome-extraction circuits.
-
-## Maintenance note
-
-The repository is being prepared as a public tutorial. Preserve completed learner exercises and notes in existing notebooks. See [PROJECT_BRIEF.md](PROJECT_BRIEF.md) and [CLAUDE.md](../CLAUDE.md) before creating or revising material.
+See [PROJECT_BRIEF.md](PROJECT_BRIEF.md) for the full learning sequence this fits into.
