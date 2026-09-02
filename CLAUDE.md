@@ -2,8 +2,9 @@
 
 Persistent instructions for working in this repository. See also:
 
-- [README.md](README.md) — the public entry point and learning path
+- [README.md](README.md) — the public entry point and canonical learning roadmap
 - [docs/PROJECT_BRIEF.md](docs/PROJECT_BRIEF.md) — purpose, audience, and instructional design
+- [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) — internal mirror of the README roadmap
 - [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md) — what is complete and what comes next
 
 ## What this is
@@ -56,5 +57,15 @@ When creating or revising material:
 ## Boundaries
 
 - Do not edit unrelated files outside the current task.
-- Do not commit, push, install global tools, or change Git settings unless explicitly asked.
+- Do not install global tools or change Git settings unless explicitly asked.
 - After making edits, run targeted verification and report exactly what changed.
+
+## Git workflow
+
+- For every task that changes repository files: verify the changes first, then commit and push the task-scoped changes automatically.
+- Before editing, run `git status` and `git pull --ff-only`.
+- Stage only files changed for the current task; preserve unrelated user changes.
+- Use a concise, descriptive commit message.
+- Push normally with `git push`; never force-push.
+- If verification, commit, pull, or push fails, stop and report the exact blocker. Do not use destructive Git commands or work around a rejected push.
+- If a task makes no file changes, do not create an empty commit.

@@ -40,22 +40,39 @@ Open the notebooks in numerical order and select the project's `.venv` Python in
 
 Your own notes and completed exercises are learning records. Keep them when updating the repository.
 
-## Learning path
+## Learning roadmap
 
-| Notebook | Topic | What you will gain |
-|---|---|---|
-| 01 | Stim basics: measurement, parity, and a first syndrome | A concrete picture of parity measurement with an ancilla |
-| 02 | Classical 3-bit repetition code | Redundancy, code distance, syndromes, detection, and correction |
-| 03 | Stabilizers and syndromes | The quantum meaning of the classical parity checks |
-| 04 | Syndrome-extraction circuits | How ancillas measure stabilizers without reading the logical state |
-| 05 | Noisy decoding | How physical noise becomes logical failure |
-| 06+ | Surface code with Stim, Loom, and Quantinuum Guppy | Applying the ideas to a practical QEC code |
+This is the canonical, corrected roadmap for the repository. It restructures the path around classical coding theory (linear codes, the Hamming code, and the CSS/stabilizer trilogy) before ancilla circuits and noisy decoding.
+
+**Learning routine, for every step below:** read the stated source (if any) → complete its consolidation notebook → complete the end-of-notebook exercises → proceed to the next reading.
+
+1. `01` — Stim basics
+2. `02` — Classical 3-bit repetition code
+3. `03` — Stabilizers and syndromes
+4. `04` — Classical linear codes and the [7,4,3] Hamming code
+   - Read first: Arthur Pesah, *Classical Error Correction*.
+5. `05` — Stabilizer Trilogy I: codes and CSS construction
+   - Read first: Arthur Pesah, *Stabilizer Trilogy I*.
+6. `06` — Stabilizer Trilogy II: logical operators and code distance
+   - Read first: Arthur Pesah, *Stabilizer Trilogy II*.
+7. `07` — Stabilizer Trilogy III: quantum parity-check matrices and decoding
+   - Read first: Arthur Pesah, *Stabilizer Trilogy III*.
+8. `08` — Ancilla syndrome-extraction circuits
+9. `09` — Noisy repetition-code decoder
+10. `10` — Surface code, then Loom
 
 The next notebook assumes only the concepts made explicit in the preceding notebook. If a concept is unfamiliar, return to the earlier notebook rather than skipping ahead.
+
+### Current learner status
+
+- Completed: notebooks 01–03.
+- Already read: Arthur Pesah, *Stabilizer Trilogy I*.
+- Current next task: Notebook 04.
 
 ## Repository guide
 
 - [Project brief](docs/PROJECT_BRIEF.md): scope, audience, and authoring approach.
+- [Learning path](docs/LEARNING_PATH.md): internal mirror of the roadmap above.
 - [Current state](docs/CURRENT_STATE.md): current point in the learning path.
 - [Contributing guide for Claude](CLAUDE.md): durable instructions for creating or revising learning material.
 
