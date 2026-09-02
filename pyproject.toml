@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "el-loom>=0.4.0",
+    "guppylang>=0.21.16",
     "matplotlib>=3.11.1",
+    "pymatching>=2.4.0",
     "stim>=1.16.0",
 ]
 

@@ -46,13 +46,17 @@ When creating or revising material:
 
 - Keep notebooks self-contained, concise, and executable top-to-bottom. Do not rely on hidden state or out-of-order execution.
 - Give every new notebook a descriptive title, audience/prerequisite note where useful, learning objectives, expected outputs, and a short “how to use this notebook” note.
+- Use descriptive notebook titles that name the actual content (e.g. “Shor Code, CSS Codes, and the Steane Code”); never a vague series label such as “Stabilizer Trilogy I.”
+- Every notebook begins with `## Read before you begin`, containing direct and specific reading links, exact section names from that reading, and the concrete concepts to extract from each.
+- Each notebook must directly consolidate the stated reading through derivations, experiments, code, or simulation — not merely restate it.
 - Explain concepts before code. Use Markdown cells to define new ideas and interpret results.
 - Include small prediction questions before revealing results, and clearly marked TODO exercises for the learner.
+- Every notebook ends with `## Exercises`.
 - Keep instructional cells separate from learner-owned answer areas.
 - Verify affected notebooks by executing them top-to-bottom before reporting completion.
-- Do not create a separate “Answers,” “Your Answers,” “Questions,” reflection, or response section in notebooks.
+- Never create a separate “Answers,” “Your Answers,” “Solutions,” “Questions,” reflection, or response section in notebooks.
 - Place prediction questions and TODO exercises inline, immediately beside the concept or code they concern.
-- Do not create blank answer cells or prescribe where the reader must write responses; the reader chooses where, or whether, to record their own answers.
+- Never add blank answer cells or prescribe where the reader must write responses; the reader decides whether and where to record their own answers.
 
 ## Boundaries
 

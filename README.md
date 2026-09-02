@@ -2,7 +2,7 @@
 
 A beginner-friendly, hands-on introduction to quantum error correction (QEC).
 
-This repository is a guided learning path for readers who are comfortable with basic Python but are new to quantum error correction. It starts with familiar classical error correction, then builds toward stabilizers, syndrome-extraction circuits, noisy decoding, and the surface code.
+This repository is a guided, reading-led learning path for readers who are comfortable with basic Python but are new to quantum error correction. It starts with classical error correction, builds through the stabilizer formalism and the CSS/Steane code, and continues to noisy decoding, the surface code, and hardware-aware QEC with real tooling (Stim, Loom, and Quantinuum Guppy).
 
 You do not need to know how this repository was created to use it. Start here, follow the notebooks in order, and treat the prediction questions and exercises as part of the lesson.
 
@@ -42,32 +42,33 @@ Your own notes and completed exercises are learning records. Keep them when upda
 
 ## Learning roadmap
 
-This is the canonical, corrected roadmap for the repository. It restructures the path around classical coding theory (linear codes, the Hamming code, and the CSS/stabilizer trilogy) before ancilla circuits and noisy decoding.
+This is the canonical, corrected roadmap for the repository. It is reading-led: most notebooks pair with a specific external article or documentation source, which the notebook then consolidates through derivation, code, or simulation.
 
-**Learning routine, for every step below:** read the stated source (if any) → complete its consolidation notebook → complete the end-of-notebook exercises → proceed to the next reading.
+**Learning routine, for every step below:** read the stated material → complete the consolidation notebook → complete the end exercises → move forward.
 
-1. `01` — Stim basics
-2. `02` — Classical 3-bit repetition code
-3. `03` — Stabilizers and syndromes
-4. `04` — Classical linear codes and the [7,4,3] Hamming code
+1. `01` — Stim Basics
+2. `02` — Classical 3-Bit Repetition Code
+3. `03` — Stabilizers, Syndromes, and Parity Measurements
+4. `04` — Classical Linear Codes and the Hamming Code
    - Read first: Arthur Pesah, *Classical Error Correction*.
-5. `05` — Stabilizer Trilogy I: codes and CSS construction
-   - Read first: Arthur Pesah, *Stabilizer Trilogy I*.
-6. `06` — Stabilizer Trilogy II: logical operators and code distance
-   - Read first: Arthur Pesah, *Stabilizer Trilogy II*.
-7. `07` — Stabilizer Trilogy III: quantum parity-check matrices and decoding
-   - Read first: Arthur Pesah, *Stabilizer Trilogy III*.
-8. `08` — Ancilla syndrome-extraction circuits
-9. `09` — Noisy repetition-code decoder
-10. `10` — Surface code, then Loom
+5. `05` — Shor Code, CSS Codes, and the Steane Code
+   - Read first: Arthur Pesah, *Stabilizer Formalism I*.
+6. `06` — Logical Operators, Code Distance, and Degeneracy
+   - Read first: Arthur Pesah, *Stabilizer Formalism II*.
+7. `07` — Quantum Parity-Check Matrices and Decoding
+   - Read first: Arthur Pesah, *Stabilizer Formalism III*.
+8. `08` — Noisy Steane-Code Decoding
+9. `09` — Surface-Code Foundations
+10. `10` — Surface-Code Detectors and Decoding with Stim and Loom
+11. `11` — Hardware-Aware QEC with Quantinuum Guppy
 
-The next notebook assumes only the concepts made explicit in the preceding notebook. If a concept is unfamiliar, return to the earlier notebook rather than skipping ahead.
+The next notebook assumes only the concepts made explicit in the preceding notebook. If a concept is unfamiliar, return to the earlier notebook rather than skipping ahead. Obsolete or superseded notebooks are kept out of this active sequence in [`archive/`](archive/) for reference only.
 
 ### Current learner status
 
-- Completed: notebooks 01–03.
-- Already read: Arthur Pesah, *Stabilizer Trilogy I*.
-- Current next task: Notebook 04.
+- Completed: notebooks 01, 02, 03.
+- Already read: Arthur Pesah's *Stabilizer Formalism I* article (listed above as the prerequisite reading for notebook 05, for learners who reach this repository fresh).
+- Current next task: notebook 04.
 
 ## Repository guide
 

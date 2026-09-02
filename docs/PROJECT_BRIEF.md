@@ -32,12 +32,13 @@ Keep the narrative self-contained. Define new terms at first use and avoid refer
 
 ## Learning sequence
 
-1. **Stim basics: measurements, parity checks, and syndromes** — a first runnable view of parity measurement using an ancilla.
-2. **Classical 3-bit repetition code** — redundancy, code distance, syndrome tables, majority-vote decoding, and the distinction between detection and correction.
-3. **Stabilizers and syndromes** — the quantum generalization of parity checks: stabilizer eigenvalues and how syndromes reveal errors without revealing the encoded information.
-4. **Syndrome-extraction circuits** — concrete circuits that measure stabilizers with ancillas.
-5. **Noisy decoding** — decoding syndromes in the presence of realistic noise.
-6. **Surface code with Stim, Loom, and Quantinuum Guppy** — applying the concepts to a practical quantum code and modern tooling.
+The full, current roadmap lives in [README.md](../README.md) under `## Learning roadmap` — README is canonical; this section only summarizes the arc:
+
+1. **Stim basics** and **2. the classical 3-bit repetition code** — parity measurement with an ancilla, then redundancy, code distance, and majority-vote decoding.
+2. **Stabilizers, syndromes, and parity measurements** — the quantum generalization of parity checks.
+3. **Classical linear codes and the Hamming code**, then the **stabilizer/CSS/Steane trilogy** (Shor's code, CSS construction, the Steane code, logical operators, code distance, degeneracy, quantum parity-check matrices, and coset decoding) — each notebook consolidates a specific Arthur Pesah article.
+4. **Noisy Steane-code decoding**, then the **surface code**: foundations, detectors and decoding with Stim and Loom.
+5. **Hardware-aware QEC with Quantinuum Guppy** — applying the concepts with modern tooling.
 
 ## Scope
 
