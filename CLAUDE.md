@@ -49,6 +49,9 @@ When creating or revising material:
 - Include small prediction questions before revealing results, and clearly marked TODO exercises for the learner.
 - Keep instructional cells separate from learner-owned answer areas.
 - Verify affected notebooks by executing them top-to-bottom before reporting completion.
+- Do not create a separate “Answers,” “Your Answers,” “Questions,” reflection, or response section in notebooks.
+- Place prediction questions and TODO exercises inline, immediately beside the concept or code they concern.
+- Do not create blank answer cells or prescribe where the reader must write responses; the reader chooses where, or whether, to record their own answers.
 
 ## Boundaries
 
