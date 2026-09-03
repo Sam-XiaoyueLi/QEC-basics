@@ -44,6 +44,7 @@ When creating or revising material:
 
 ## Notebook conventions
 
+- A notebook's number is its reading order. A notebook may assume only what earlier-numbered notebooks (or its own stated reading) already established — never a tool, library, or concept first introduced in a later-numbered notebook. When in doubt, check what number a dependency was actually introduced at, rather than assuming.
 - Keep notebooks self-contained, concise, and executable top-to-bottom. Do not rely on hidden state or out-of-order execution.
 - Give every new notebook a descriptive title, audience/prerequisite note where useful, learning objectives, expected outputs, and a short “how to use this notebook” note.
 - Use descriptive notebook titles that name the actual content (e.g. “Shor Code, CSS Codes, and the Steane Code”); never a vague series label such as “Stabilizer Trilogy I.”
