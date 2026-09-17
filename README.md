@@ -33,6 +33,7 @@ There will be no project notebooks to open until you select or create one on the
 ## Repository guide
 
 - [Branch workflow](docs/BRANCH_WORKFLOW.md): how the cleanup works and how to curate and publish notebooks.
+- [Notebook review](docs/NOTEBOOK_REVIEW.md): Claude commands for findings first, approved edits, validation, and review PRs.
 - [Project brief](docs/PROJECT_BRIEF.md): audience and authoring approach.
 - [Learning path](docs/LEARNING_PATH.md): curated sequence as it develops.
 - [Current state](docs/CURRENT_STATE.md): progress and next steps.
