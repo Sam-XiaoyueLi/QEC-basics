@@ -23,8 +23,8 @@ When creating or revising material:
 - Define terms at their first use, including symbols and measurement conventions.
 - Use short, precise prose and small runnable examples. Explain code before asking the reader to run it.
 - State what a reader should already know, and link back to the relevant earlier notebook when a prerequisite matters.
-- Use prediction questions, checkpoints, and TODO exercises to turn passive reading into active learning.
-- End each notebook with a clear bridge to the next topic.
+- Keep explanations concise. Add prediction questions, checkpoints, or exercises only when they fit the author's requested scope; no such sections are mandatory.
+- End at the agreed scope; a bridge to another topic is optional.
 - Keep claims technically accurate and distinguish intuition from formal statements.
 - Never refer to “our discussion,” “the user,” “the generation process,” or unstated context.
 - Prefer inclusive phrasing such as “this notebook” and “the reader” over instructions that only make sense for the original author.
@@ -48,11 +48,11 @@ When creating or revising material:
 - Keep notebooks self-contained, concise, and executable top-to-bottom. Do not rely on hidden state or out-of-order execution.
 - Give every new notebook a descriptive title, audience/prerequisite note where useful, learning objectives, expected outputs, and a short “how to use this notebook” note.
 - Use descriptive notebook titles that name the actual content (e.g. “Shor Code, CSS Codes, and the Steane Code”); never a vague series label such as “Stabilizer Trilogy I.”
-- Every notebook begins with `## Read before you begin`, containing direct and specific reading links, exact section names from that reading, and the concrete concepts to extract from each.
-- Each notebook must directly consolidate the stated reading through derivations, experiments, code, or simulation — not merely restate it.
+- Required-reading sections are optional. Cite sources where they support a claim; do not impose a fixed opening structure.
+- If reading is assigned, connect it to the examples rather than merely restating it.
 - Explain concepts before code. Use Markdown cells to define new ideas and interpret results.
-- Include small prediction questions before revealing results, and clearly marked TODO exercises for the learner.
-- Every notebook ends with `## Exercises`.
+- Preserve existing prediction questions and exercises. New exercises require the author's agreement during review.
+- An ending `## Exercises` section is optional, not a review requirement.
 - Keep instructional cells separate from learner-owned answer areas.
 - Verify affected notebooks by executing them top-to-bottom before reporting completion.
 - Never create a separate “Answers,” “Your Answers,” “Solutions,” “Questions,” reflection, or response section in notebooks.
@@ -65,9 +65,17 @@ When creating or revising material:
 - Do not install global tools or change Git settings unless explicitly asked.
 - After making edits, run targeted verification and report exactly what changed.
 
+## Review workflow
+
+- Follow [docs/NOTEBOOK_REVIEW.md](docs/NOTEBOOK_REVIEW.md) for notebook reviews.
+- Review requests default to findings only: do not edit, commit, push, or open a PR until the author selects changes.
+- After scope approval, automate the approved edits, validation, commit, push, and PR into `codex/curation`. Do not repeatedly ask for the same authorization.
+- Never merge a PR or publish notebooks to `main` without explicit approval of that specific action. Automated review comments do not authorize new scope.
+- Do not add distance-verification cells or structural sections unless requested. If an introduction promises omitted work, propose removing the promise.
+
 ## Git workflow
 
-- For every task that changes repository files: verify the changes first, then commit and push the task-scoped changes automatically.
+- For authorized implementation tasks: verify changes, then commit and push only task-scoped changes on a feature/review branch. Findings-only reviews make no commits. Keep notebook reviews based on `codex/curation` and target PRs there.
 - Before editing, run `git status` and `git pull --ff-only`.
 - Stage only files changed for the current task; preserve unrelated user changes.
 - Use a concise, descriptive commit message.

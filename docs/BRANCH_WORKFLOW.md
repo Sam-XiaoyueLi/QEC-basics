@@ -52,6 +52,11 @@ A push backs up the curation branch; it does not change `main`.
 
 ## Publish reviewed material
 
+Before publishing, use the [review-first workflow](NOTEBOOK_REVIEW.md):
+`/review-notebook <path>` proposes findings without edits, then
+`/apply-notebook-review <path> <selected findings>` implements the approved scope
+and opens a review PR into `codex/curation`. Merge only after the author's approval.
+
 Open a pull request on GitHub with base `main` and compare `codex/curation`. Its diff should contain only the notebooks and supporting changes you are ready to publish. Finish our review before merging the pull request.
 
 After merging, update both local branches:
