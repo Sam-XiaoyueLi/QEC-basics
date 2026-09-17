@@ -33,7 +33,11 @@ def main():
     output_dir = Path(tempfile.mkdtemp(prefix="qec-notebook-review-"))
     executed = output_dir / source.name
     nbformat.write(notebook, executed)
-    html, _ = HTMLExporter().from_notebook_node(notebook)
+    # The HTML lives outside the repository: embed images relative to the
+    # source notebook so they remain visible in the temporary review artifact.
+    html, _ = HTMLExporter(embed_images=True).from_notebook_node(
+        notebook, resources={"metadata": {"path": str(source.parent)}}
+    )
     rendered = output_dir / f"{source.stem}.html"
     rendered.write_text(html, encoding="utf-8")
     print(f"PASS: {source.name} executed in a fresh kernel without cell errors.")

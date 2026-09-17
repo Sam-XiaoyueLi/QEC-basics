@@ -69,6 +69,9 @@ uv run python scripts/validate_notebook.py shor_tutorial.ipynb
 
 The script starts a fresh Python kernel in the notebook's directory, fails on a
 cell error, and exports an executed copy and HTML into a temporary directory.
+The HTML embeds local Markdown/HTML images from the notebook's directory so
+relative image links remain visible outside the repository. Remote images and
+other linked resources still require their original locations to be accessible.
 Inspect the HTML for equations, tables, and figures. Notebook code itself can
 have side effects, so read it before running. Temporary artifacts are local and
 are not attached to a PR automatically. Missing dependencies should be reported
