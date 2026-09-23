@@ -8,7 +8,7 @@ Use this guide when drafting or editing this tutorial series. It distills the ef
 
 Start with a physical question: “How can we protect a qubit using checks that involve only nearby qubits?” State the notebook's concrete task and assumed knowledge in a few sentences. Give readers enough context to understand each cell without the original conversation.
 
-Develop one example through the notebook. In Shor, the same encoder and eight checks lead into decoding and a memory experiment. In the surface code, the same numbered distance-three patch leads into states, ancilla measurements, errors, and recovery. Introduce a new tool or representation only when it solves the next problem.
+Develop one example through the notebook. In Shor, the same encoder and eight checks lead into decoding and a memory experiment. In the surface code, the written tutorial's numbered patches lead into states, scheduled ancilla measurements, errors, and lattice surgery. Introduce a new tool or representation only when it solves the next problem.
 
 ## Prose and notation
 
@@ -54,3 +54,11 @@ Do not impose reading assignments, quizzes, a closing exercise section, or blank
 ## Before delivery
 
 Execute from a fresh kernel, inspect the saved diagrams and plots, verify the stated invariants, and check that each promised topic is actually covered. Record limitations truthfully: execution is not a full mathematical or pedagogical review. Keep maintenance guides and validation records on development branches; publish reader-facing notebooks and necessary runtime files to `main` only when authorized.
+
+## Companions to a written tutorial
+
+Use the current written source as the reference for qubit numbering, orientation, colors, check supports, gate orders, logical representatives, and outcome conventions. Identify the companion tutorial by title. Match its section progression; use code to demonstrate the claims rather than replacing it with a separate library-generated example. Explain an intentional change of scale, such as distance five for the schedule and distance three for the seam.
+
+For the surface-code companion, use Loom for quantum operators, circuits, and simulation, including its bundled Clifford simulator. NumPy may verify small linear-algebra identities; Matplotlib may draw diagrams. Do not introduce a second quantum SDK or an external simulator interface. Distinguish selected preparation branches from deterministic encoders, and ideal sequential seam measurements from scheduled noisy surgery.
+
+When explaining gate order, show the actual circuit and separate three questions: does the layer avoid collisions, does interleaving preserve the intended measurements, and how does an ancilla fault spread? Include a collision-free counterexample with inconsistent shared-qubit ordering. Plot from the circuit data so the figure and executed order agree. Keep physical-qubit simulations separate from logical-qubit operator proofs, and state what each verifies.

@@ -19,7 +19,7 @@ Archive branches are reference snapshots. Their notebooks remain in Git history 
 
 ## Learning roadmap
 
-Start with the Shor-code tutorial on `main`. This development branch also contains [Surface Codes and Lattice Surgery](surface_code.ipynb), a complete draft covering patch checks, noisy memory, joint measurements, and a Loom CNOT example. It is awaiting content review before publication.
+Start with the Shor-code tutorial on `main`. This development branch also contains [Surface Codes and Lattice Surgery](surface_code.ipynb), a Loom-based companion to the written rotated-surface-code tutorial, covering patch checks, the exact measurement schedule, hook errors, seam measurements, and logical CNOT. It is awaiting content review before publication.
 
 ## Setup
 

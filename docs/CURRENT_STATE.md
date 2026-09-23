@@ -1,26 +1,30 @@
 # Current state
 
 - `main` contains the published Shor notebook and reader runtime files.
-- `codex/surface-code-tutorial` contains the completed `surface_code.ipynb` draft and the development tools and guides.
-- `docs/NOTEBOOK_STYLE.md` distills the Shor notebook's style into reusable authoring guidance; `CLAUDE.md` links to it.
+- `codex/surface-code-tutorial` contains the `surface_code.ipynb` draft and development guides.
+- `docs/NOTEBOOK_STYLE.md` captures the Shor teaching style and written-tutorial companion conventions.
 - The two `codex/archive/...` branches preserve the older notebook collections.
-- The Overleaf project remains in the sibling `Overleaf/` folder, outside this Git repository.
+- Overleaf remains in the sibling `Overleaf/` folder, outside this repository.
 
-## Surface-code draft validation — 23 September 2026
+## Surface-code revision — 23 September 2026
 
-The notebook has 49 cells. It uses Stim 1.16.0, PyMatching 2.4.0 and Loom 0.4.0. The whole notebook executed without cell errors in a fresh kernel, with verified outputs saved. The memory sweep uses 20,000 shots per point over five rounds, for two distances and two readout bases. Figures and representative rendered Markdown/equations were visually inspected.
+Author requirements: use Loom without Stim examples; closely follow the written tutorial, especially the measurement sequence and why it matters. The reference is the fresh-export `Overleaf/Current/tut2.tex` (Tutorial 03: Rotated Surface Codes). No Overleaf sources or Shor content were changed.
 
-Checks passed:
+The notebook now uses Loom 0.4.0 operators, circuits, and its bundled Clifford simulator. NumPy supports exact state/operator algebra. It matches bottom-up row numbering, horizontal logical X / vertical logical Z, the distance-five neighboring-check orders X:5,0,6,1 and Z:6,7,1,2, and the distance-three side-by-side seam. It includes logical states, scheduled checks, hook propagation, error recovery, ideal merge/split frames, logical ZX, and the three-measurement CNOT. The former external-simulator noisy memory sweep and separate factory AuxCNOT example were removed to follow the tutorial's scope; illustrative repeated-readout histories remain explicitly labeled as prescribed examples.
 
-- All stabilizer commutations and logical-Pauli relations in the stated convention.
-- Ideal lookup recovery for all 27 single-qubit Pauli errors.
-- An additional check confirmed that the serial ancilla round preserves all 108 error eigenstates obtained from those errors on four logical input states.
-- Generated memory check supports agree with the numbered patch after relabeling; CNOT layers have no qubit collisions.
-- The seam product equals logical ZZ; the modified merged checks commute.
-- An additional exact stabilizer check tested every one of 128 seam/bridge outcome combinations with both logical inputs entangled to reference qubits. After the stated frame, each branch equals the intended ZZ projection.
-- The full two-logical-qubit matrix identity holds for all eight ideal CNOT branches.
-- The compiled Loom circuit passes all four Z-basis truth-table cases and Bell-state correlations in both X and Z bases.
+Validation completed:
 
-Limits: noisy performance is demonstrated for memory only. Seam measurements and CNOT demonstrations are ideal/noiseless. This is a completed draft, not an independent review or a proof of the compiled surgery circuit's fault distance. The Shor notebook was not edited.
+- Fresh-kernel execution of all 39 cells, with executed outputs saved.
+- Visual inspection of all five figures: patch layouts, good/bad neighboring circuits, hook orientation, and seam geometry.
+- The good CNOT core matches sequential checks on all 256 basis inputs. A collision-free counterexample differs and has intrinsically random check readouts in Loom.
+- Full distance-three and distance-five four-layer schedules have no collisions, including boundary gates.
+- The full scheduled distance-three round reports the expected syndromes for all 27 single-qubit errors. An additional check covers all 108 combinations with four logical cardinal states, including preservation of the expected logical observable.
+- Lookup corrections restore every single-qubit Pauli error; a two-qubit logical-error counterexample is explicit.
+- All merged checks commute, and measuring an incompatible old boundary check makes the next seam readout random.
+- An additional Loom check verified all 128 seam/bridge branches with both inputs entangled to reference qubits: the split correction restores all old checks and the expected projected logical/reference correlations.
+- Direct logical ZX agrees with the basis-change construction on the demonstrated input.
+- The logical CNOT runs in Loom, and the complete matrix identity holds for all eight outcome branches.
 
-Next: author review of the surface-code draft, then independent findings-only review. Publish only the reviewed notebook and necessary reader runtime changes to `main` when explicitly requested; keep development-only guides and tooling on the work branch.
+Limits: ideal measurements and selected state-preparation branches. No noisy decoder benchmark, compiled physical CNOT fault-distance claim, or proof of fault tolerance. The mixed ZX demonstration is at the logical level, not a physical twisted seam. The notebook remains a draft awaiting author and independent review.
+
+Publish only the reviewed notebook and necessary reader runtime changes to `main` when explicitly requested; keep development-only guides on the work branch.
