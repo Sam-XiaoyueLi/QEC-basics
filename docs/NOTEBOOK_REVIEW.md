@@ -40,9 +40,9 @@ performance under a noise model that was not simulated.
 
 1. Confirm the selected findings and the current baseline still match. If files
    changed since review, recheck the affected findings before applying them.
-2. Save only relevant uncommitted author work as a baseline on `codex/curation`
+2. Save only relevant uncommitted author work as a baseline on the topic branch
    when authorized; never stash, discard, or commit unrelated work. If local edits
-   prevent a safe switch, ask about that concrete blocker. From clean curation,
+   prevent a safe switch, ask about that concrete blocker. From a clean topic branch,
    run `git pull --ff-only` and create a fresh `codex/review-<topic>-<suffix>` branch.
    Do not reuse a closed review branch with rejected changes.
 3. Apply only selected edits. Preserve learner answers, cell IDs where possible,
@@ -54,7 +54,7 @@ performance under a noise model that was not simulated.
 5. Run `git diff --check`, inspect the final diff, commit task-scoped paths, and
    push normally. Never force-push. If validation or publication fails, report the
    exact blocker rather than declaring the review complete.
-6. Open one PR from the new branch into `codex/curation`, using the PR template.
+6. Open one PR from the new branch into the branch that owns the notebook, using the PR template.
    Include accepted finding IDs, before/after behavior, exact validation, and
    deferred findings. Do not send extra comments or mention bots unless asked.
 7. Read automated feedback when available and summarize it for the author.
@@ -80,10 +80,8 @@ or supplied explicitly through uv; do not change the lockfile as a review side e
 ## Author review and publication
 
 The author reviews the rendered notebook, scoped diff, and automated feedback.
-After explicit approval, merge the review PR into `codex/curation`. Publication
-is a separate `codex/curation` -> `main` PR with its own approval. Never merge an
-archive branch, reopen a rejected PR, or publish to main as an implicit next step.
+After explicit approval, merge the review PR into its target branch. Publication
+to `main` is a separate action requiring explicit approval. Never merge an
+archive branch into `main` or reopen a rejected PR to bypass review.
 
-After each approved merge, update local main/curation and synchronize curation
-with main as described in [BRANCH_WORKFLOW.md](BRANCH_WORKFLOW.md). Use a fresh
-review branch for the next notebook or review cycle.
+Start a fresh topic branch from updated `main` for the next notebook.

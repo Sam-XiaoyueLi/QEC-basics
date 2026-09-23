@@ -69,13 +69,13 @@ When creating or revising material:
 
 - Follow [docs/NOTEBOOK_REVIEW.md](docs/NOTEBOOK_REVIEW.md) for notebook reviews.
 - Review requests default to findings only: do not edit, commit, push, or open a PR until the author selects changes.
-- After scope approval, automate the approved edits, validation, commit, push, and PR into `codex/curation`. Do not repeatedly ask for the same authorization.
+- After scope approval, automate the approved edits, validation, commit, push, and PR into `main`. Do not repeatedly ask for the same authorization.
 - Never merge a PR or publish notebooks to `main` without explicit approval of that specific action. Automated review comments do not authorize new scope.
 - Do not add distance-verification cells or structural sections unless requested. If an introduction promises omitted work, propose removing the promise.
 
 ## Git workflow
 
-- For authorized implementation tasks: verify changes, then commit and push only task-scoped changes on a feature/review branch. Findings-only reviews make no commits. Keep notebook reviews based on `codex/curation` and target PRs there.
+- For authorized implementation tasks: verify changes, then commit and push only task-scoped changes on a feature/review branch. Findings-only reviews make no commits. Base notebook reviews on the current topic branch or `main`, and target the branch that owns the notebook.
 - Before editing, run `git status` and `git pull --ff-only`.
 - Stage only files changed for the current task; preserve unrelated user changes.
 - Use a concise, descriptive commit message.

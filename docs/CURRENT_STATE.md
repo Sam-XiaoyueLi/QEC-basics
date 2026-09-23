@@ -1,13 +1,9 @@
-# Current State
+# Current state
 
-Repository reorganized on 2026-09-17.
+- `main` contains the Shor-code tutorial, `shor_tutorial.ipynb`, and the notebook tooling.
+- `codex/surface-code-tutorial` is the working branch for the next notebook.
+- `codex/archive/previous-tutorials` preserves notebooks 01–12, the extra stabilizer notebook, and older archived notebooks, including local learner work.
+- `codex/archive/zixiong-tutorials` preserves the ZiXiong collection and its local edits.
+- The Overleaf project is stored separately in the sibling `Overleaf/` folder of the local `QEC_tutorials/` workspace; it is not part of this Git repository.
 
-- `main` starts with zero notebooks. No new curated notebooks have been completed or reviewed yet.
-- `codex/curation` starts from this clean baseline for manual selection and joint completion/review.
-- `codex/archive/previous-tutorials` preserves notebooks 01–12, the extra stabilizer notebook, and the older notebooks in `archive/`, including the local notebook 10 edits and previously untracked notebook 12.
-- `codex/archive/zixiong-tutorials` preserves the separate ZiXiong collection, including local changes to `1_memory_exp.ipynb`.
-- The archive branches preserve the previous learning records. Their progress and roadmap do not describe the newly curated collection.
-
-Next: manually select or create the first notebook on `codex/curation`, complete and execute it, review it together, then merge the reviewed changes into `main`.
-
-See [branch workflow](BRANCH_WORKFLOW.md) for commands and publication steps.
+Use a topic branch from `main` for each new notebook. Keep the archive branches as reference snapshots. See [branch workflow](BRANCH_WORKFLOW.md).

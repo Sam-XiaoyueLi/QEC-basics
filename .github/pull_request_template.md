@@ -16,5 +16,5 @@ reading/exercise sections or distance verification without author approval.
 
 ## Merge destination
 
-Notebook review: target `codex/curation`. Publication: target `main` only when
+Target the branch that owns the notebook. Publication to `main` occurs only when
 explicitly requested. Leave merging to the author's explicit approval.

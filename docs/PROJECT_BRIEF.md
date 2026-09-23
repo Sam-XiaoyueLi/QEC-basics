@@ -6,9 +6,9 @@ QEC Basics is a beginner-friendly, hands-on learning repository for quantum erro
 
 ## Curation approach
 
-Manually select or create notebooks on `codex/curation`, complete the learning work, execute runnable examples, and review the explanations together. Only completed, reviewed material is merged into `main`.
+Develop each notebook on a topic branch from `main`, execute runnable examples, and review the explanations together. Publish completed material to `main`.
 
-The collection begins with zero notebooks. Decide the learning sequence as material is selected; the historical archive roadmaps are references rather than the current curriculum.
+The collection begins with the Shor-code notebook. Decide later topics as material is selected; the historical archive roadmaps are references rather than the current curriculum.
 
 ## Authoring standard
 
