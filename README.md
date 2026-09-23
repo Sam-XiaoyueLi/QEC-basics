@@ -19,7 +19,7 @@ Archive branches are reference snapshots. Their notebooks remain in Git history 
 
 ## Learning roadmap
 
-Start with the Shor-code tutorial on `main`. The next surface-code notebook is in development; its place in the sequence will be recorded after review.
+Start with the Shor-code tutorial on `main`. This development branch also contains [Surface Codes and Lattice Surgery](surface_code.ipynb), a complete draft covering patch checks, noisy memory, joint measurements, and a Loom CNOT example. It is awaiting content review before publication.
 
 ## Setup
 
@@ -39,4 +39,5 @@ Open `shor_tutorial.ipynb` on `main`. The ZiXiong archive has its own environmen
 - [Project brief](docs/PROJECT_BRIEF.md): audience and authoring approach.
 - [Learning path](docs/LEARNING_PATH.md): curated sequence as it develops.
 - [Current state](docs/CURRENT_STATE.md): progress and next steps.
+- [Notebook style](docs/NOTEBOOK_STYLE.md): reusable writing and code conventions distilled from the notebooks.
 - [Authoring guide](CLAUDE.md): instructions for creating and revising learning material.

@@ -15,6 +15,8 @@ The intended reader has basic Python literacy and curiosity about quantum comput
 
 ## Authoring standard
 
+Read [docs/NOTEBOOK_STYLE.md](docs/NOTEBOOK_STYLE.md) before drafting or editing a tutorial notebook. It captures the concrete style of the Shor and surface-code notebooks.
+
 When creating or revising material:
 
 - Treat the README as the starting point. Every notebook must fit its stated learning path.
