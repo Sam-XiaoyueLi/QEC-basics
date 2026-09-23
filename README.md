@@ -2,6 +2,8 @@
 
 A beginner-friendly, hands-on introduction to quantum error correction (QEC), being manually curated one notebook at a time.
 
+This repository is the `Notebooks/` workspace. The Overleaf source lives in the sibling `Overleaf/` folder of the local `QEC_tutorials/` directory and is managed separately; it is not part of this Git repository. Historical LaTeX files from this branch were moved to `Overleaf/History/`.
+
 `main` is the reviewed collection. It currently contains **zero notebooks**. Notebooks will be selected, completed, executed, and reviewed before being merged into `main`.
 
 ## Branches
