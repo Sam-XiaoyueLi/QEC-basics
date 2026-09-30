@@ -10,6 +10,7 @@ dependencies = [
     "matplotlib>=3.11.1",
     "pymatching>=2.4.0",
     "stim>=1.16.0",
+    "tqec>=0.2.0",
 ]
 
 [project.scripts]
