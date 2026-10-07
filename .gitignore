@@ -13,3 +13,9 @@
 
 # Local notebook review backups
 /.review-backups/
+
+# PDF compilation intermediates
+/output/pdf/*.log
+/output/pdf/*.aux
+/output/pdf/*.out
+/output/pdf/*.toc
