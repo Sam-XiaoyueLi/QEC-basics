@@ -1,43 +1,41 @@
 # QEC Basics
 
-A beginner-friendly, hands-on introduction to quantum error correction (QEC), being manually curated one notebook at a time.
+Learn quantum error correction through written tutorials and runnable Python notebooks. The examples progress from Shor's code to surface-code operations and decoding a noisy logical CNOT.
 
-This repository is the `Notebooks/` workspace. The Overleaf source lives in the sibling `Overleaf/` folder of the local `QEC_tutorials/` directory and is managed separately; it is not part of this Git repository. Historical LaTeX files from this branch were moved to `Overleaf/History/`.
+## Notebooks
 
-`main` contains the Shor-code tutorial, [`shor_tutorial.ipynb`](shor_tutorial.ipynb). New tutorials are developed on topic branches and added to `main` after review.
+Read the notebooks in order. Basic Python and familiarity with quantum gates are helpful.
 
-## Branches
+| Order | Notebook | What it covers |
+| --- | --- | --- |
+| 1 | [Shor's code](shor_tutorial.ipynb) | Encoding, stabilizers, a lookup decoder, Pauli frames, and a memory experiment. |
+| 2 | [Surface codes and lattice surgery](surface_code.ipynb) | Rotated patches, noisy memory, and logical GHZ preparation using Loom and Stim. |
+| 3 | [Decoding the surface code](decoder.ipynb) | A TQEC CNOT, detector error models, a simple lookup decoder, PyMatching, and Sinter. |
 
-| Branch | Purpose |
-| --- | --- |
-| `main` | Published notebook collection, starting with the Shor-code tutorial. |
-| `codex/surface-code-tutorial` | Working branch for the next surface-code notebook. |
-| `codex/archive/previous-tutorials` | Snapshot of notebooks 01–12, the extra stabilizer notebook, and older `archive/` notebooks, including local learner work. |
-| `codex/archive/zixiong-tutorials` | Snapshot of `ZiXiong_tutorials/`, including its local edits, assets, dependency files, and license. |
+## Written tutorials
 
-Archive branches are reference snapshots. Their notebooks remain in Git history and on those branches. Copy individual files into a topic branch when useful; do not merge an archive branch into `main`.
+The [Overleaf sources](overleaf/README.md) cover quantum computing fundamentals, quantum error correction, surface codes and lattice surgery, and fault-tolerant computation. Each `.tex` file is a standalone tutorial. The written series and notebook series have separate numbering.
 
-## Learning roadmap
+## Run the notebooks
 
-Start with the Shor-code tutorial on `main`. This development branch also contains [Surface Codes and Lattice Surgery](surface_code.ipynb), a Loom-based companion to the written rotated-surface-code tutorial, covering patch checks, the exact measurement schedule, hook errors, seam measurements, and logical CNOT. It is awaiting content review before publication.
-
-## Setup
-
-The existing Python tooling is retained for future curation. With Python 3.12 and uv installed:
+Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:
 
 ```bash
 uv sync
 uv run jupyter lab
 ```
 
-Open `shor_tutorial.ipynb` on `main`. The ZiXiong archive has its own environment in `ZiXiong_tutorials/`.
+Open a notebook and run its cells from top to bottom. In VS Code, select the repository's `.venv` Python environment as the notebook kernel. Sampling cells generate random results, so counts and plots can change between runs.
 
-## Repository guide
+The CNOT notebook creates local HTML files for its interactive viewers. These generated files are ignored by Git. Static figures used by the notebooks are in `assets/`.
 
-- [Branch workflow](docs/BRANCH_WORKFLOW.md): how the cleanup works and how to curate and publish notebooks.
-- [Notebook review](docs/NOTEBOOK_REVIEW.md): Claude commands for findings first, approved edits, validation, and review PRs.
-- [Project brief](docs/PROJECT_BRIEF.md): audience and authoring approach.
-- [Learning path](docs/LEARNING_PATH.md): curated sequence as it develops.
-- [Current state](docs/CURRENT_STATE.md): progress and next steps.
-- [Notebook style](docs/NOTEBOOK_STYLE.md): reusable writing and code conventions distilled from the notebooks.
-- [Authoring guide](CLAUDE.md): instructions for creating and revising learning material.
+## Working on the tutorials
+
+`main` contains the current notebook collection and written sources. Develop changes on topic branches. The `codex/archive/...` branches preserve older material for reference.
+
+- [Learning path](docs/LEARNING_PATH.md)
+- [Branch workflow](docs/BRANCH_WORKFLOW.md)
+- [Notebook style](docs/NOTEBOOK_STYLE.md)
+- [Review workflow](docs/NOTEBOOK_REVIEW.md)
+
+Overleaf synchronization is manual. See the [written-tutorial README](overleaf/README.md) for the source layout and build instructions.

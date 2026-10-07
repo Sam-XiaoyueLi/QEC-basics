@@ -1,6 +1,6 @@
 # Branches and archived notebooks
 
-`main` is the published notebook collection. It contains `shor_tutorial.ipynb`. Work on the next notebook in `codex/surface-code-tutorial`, which starts from `main`. Use a fresh topic branch from updated `main` for later notebooks.
+`main` contains the three current notebooks and the written tutorial sources in `overleaf/`. Use a fresh topic branch from updated `main` for new work.
 
 The older notebook collections are preserved on two reference branches:
 
@@ -16,4 +16,4 @@ git restore --source=codex/archive/previous-tutorials -- 01_stim_basics.ipynb
 
 The restore command overwrites a file of the same name in the working tree, so first preserve any edits to that path.
 
-After finishing a new notebook, execute it, review the content and rendered output, update the README and learning path, and publish the reviewed topic branch to `main` when authorized. [Notebook review](NOTEBOOK_REVIEW.md) describes the review procedure. The sibling local `Overleaf/` folder has its own workflow and is outside this Git repository.
+After finishing a new notebook, execute it, review the content and rendered output, update the README and learning path, and publish the reviewed topic branch to `main` when authorized. [Notebook review](NOTEBOOK_REVIEW.md) describes the review procedure. The repository tracks the written sources in `overleaf/`. The sibling local `Overleaf/` workspace holds a working copy and history. Synchronization with the Overleaf website remains manual.

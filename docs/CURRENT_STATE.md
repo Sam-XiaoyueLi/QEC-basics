@@ -1,10 +1,12 @@
 # Current state
 
-- `main` contains the published Shor notebook and reader runtime files.
-- `codex/surface-code-tutorial` contains the `surface_code.ipynb` draft and development guides.
-- `docs/NOTEBOOK_STYLE.md` captures the Shor teaching style and written-tutorial companion conventions.
-- The two `codex/archive/...` branches preserve the older notebook collections.
-- Overleaf remains in the sibling `Overleaf/` folder, outside this repository.
+## Publication — 7 October 2026
+
+The current collection comprises `shor_tutorial.ipynb`, `surface_code.ipynb`, and `decoder.ipynb`, together with written sources in `overleaf/` from the supplied 7 October export. The README is the current learning roadmap.
+
+The decoder notebook was executed in a fresh kernel after its latest review. This publication adds documentation and LaTeX sources without changing notebook code. The two archive branches retain the older notebook collections.
+
+The notes below describe an earlier revision and do not describe the current surface-code notebook.
 
 ## Surface-code revision — 23 September 2026
 

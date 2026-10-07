@@ -1,6 +1,9 @@
 # Learning path
 
-1. [Shor's code](../shor_tutorial.ipynb) — logical states, stabilizers, errors, decoding, Pauli frames, and a memory experiment. Familiarity with Python and basic quantum gates is helpful.
-2. [Surface Codes and Lattice Surgery](../surface_code.ipynb) — development draft on `codex/surface-code-tutorial`. Assumes the Shor notebook; follows the written rotated-surface-code tutorial using Loom: local checks, logical states, four-step ancilla schedules, hook errors, error strings, seam parity and split frames, joint ZX, and logical CNOT.
+1. [Shor's code](../shor_tutorial.ipynb): encoding, stabilizers, lookup decoding, Pauli frames, and memory.
+2. [Surface codes and lattice surgery](../surface_code.ipynb): Loom patches, noisy memory, and logical GHZ preparation. Assumes the Shor notebook.
+3. [Decoding the surface code](../decoder.ipynb): a TQEC CNOT, detector events, DEMs, lookup decoding, PyMatching, and Sinter. Assumes the surface-code notebook.
 
-Older learning sequences remain on the archive branches. See [branch workflow](BRANCH_WORKFLOW.md).
+The [written tutorials](../overleaf/README.md) provide the accompanying theory, beginning with quantum computing fundamentals. Their numbering is separate from the notebook sequence.
+
+Older collections remain on the archive branches. See [branch workflow](BRANCH_WORKFLOW.md).

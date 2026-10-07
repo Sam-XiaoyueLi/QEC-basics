@@ -3,3 +3,10 @@
 # Generated interactive CNOT viewers
 /cnot_view.html
 /cnot_correlation_surface.html
+
+# LaTeX build artifacts
+/overleaf/*.aux
+/overleaf/*.log
+/overleaf/*.out
+/overleaf/*.toc
+/overleaf/*.synctex.gz
