@@ -1,21 +1,20 @@
+# Local Python and notebook files
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
 .DS_Store
 
-# Generated interactive CNOT viewers
+# Local backups
+.review-backups/
+
+# Generated interactive viewers
 /cnot_view.html
 /cnot_correlation_surface.html
 
-# LaTeX build artifacts
-/overleaf/*.aux
-/overleaf/*.log
-/overleaf/*.out
-/overleaf/*.toc
-/overleaf/*.synctex.gz
-
-# Local notebook review backups
-/.review-backups/
-
-# PDF compilation intermediates
-/output/pdf/*.log
-/output/pdf/*.aux
-/output/pdf/*.out
-/output/pdf/*.toc
+# LaTeX compilation intermediates
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

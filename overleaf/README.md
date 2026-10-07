@@ -1,6 +1,6 @@
 # Written tutorials
 
-These are the LaTeX sources from the Overleaf export supplied on 7 October 2026. Each tutorial is a standalone document.
+Each tutorial is a standalone LaTeX document. Read the compiled PDF or use the source to build it yourself.
 
 | Order | PDF | Source | Topic |
 | --- | --- | --- | --- |
@@ -14,8 +14,6 @@ These are the LaTeX sources from the Overleaf export supplied on 7 October 2026.
 Upload these files with the `figures/` directory intact. Select the tutorial you want as the main document and use XeLaTeX. `tut2.tex` includes `figures/diagrams.tex`.
 
 The written tutorials and notebooks have separate numbering. The three notebooks cover Shor's code, surface codes and lattice surgery, and decoding, respectively.
-
-GitHub and Overleaf are separate copies. Changes made on either side must be transferred explicitly. This source snapshot does not configure automatic synchronization.
 
 ## Rebuild the PDFs locally
 

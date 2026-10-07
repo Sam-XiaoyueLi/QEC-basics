@@ -1,28 +1,21 @@
 [project]
 name = "qec-basics"
 version = "0.1.0"
-description = "Add your description here"
+description = "Tutorials on quantum error correction, surface codes, and decoding"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "el-loom>=0.4.0",
-    "guppylang>=0.21.16",
     "matplotlib>=3.11.1",
+    "numpy>=2.2",
     "pymatching>=2.4.0",
     "stim>=1.16.0",
+    "sinter>=1.16.0",
     "tqec>=0.2.0",
 ]
-
-[project.scripts]
-qec-basics = "qec_basics:main"
-
-[build-system]
-requires = ["uv_build>=0.12.7,<0.13.0"]
-build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
     "ipykernel>=7.3.0",
     "jupyterlab>=4.6.3",
-    "pytest>=9.1.1",
 ]

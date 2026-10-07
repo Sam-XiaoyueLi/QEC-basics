@@ -30,14 +30,3 @@ uv run jupyter lab
 Open a notebook and run its cells from top to bottom. In VS Code, select the repository's `.venv` Python environment as the notebook kernel. Sampling cells generate random results, so counts and plots can change between runs.
 
 The CNOT notebook creates local HTML files for its interactive viewers. These generated files are ignored by Git. Static figures used by the notebooks are in `assets/`.
-
-## Working on the tutorials
-
-`main` contains the current notebook collection and written sources. Develop changes on topic branches. The `codex/archive/...` branches preserve older material for reference.
-
-- [Learning path](docs/LEARNING_PATH.md)
-- [Branch workflow](docs/BRANCH_WORKFLOW.md)
-- [Notebook style](docs/NOTEBOOK_STYLE.md)
-- [Review workflow](docs/NOTEBOOK_REVIEW.md)
-
-Overleaf synchronization is manual. See the [written-tutorial README](overleaf/README.md) for the source layout and build instructions.
