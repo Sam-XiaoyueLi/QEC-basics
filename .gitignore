@@ -1,1 +1,5 @@
 .DS_Store
+
+# Generated interactive CNOT viewers
+/cnot_view.html
+/cnot_correlation_surface.html
