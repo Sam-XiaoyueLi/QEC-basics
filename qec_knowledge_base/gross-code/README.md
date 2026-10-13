@@ -34,16 +34,25 @@ S_X(i,j)=X_{L(i+3,j)}X_{L(i,j+1)}X_{L(i,j+2)}
 X_{R(i,j+3)}X_{R(i+1,j)}X_{R(i+2,j)}.
 $$
 
-For the corner check $S_X(0,0)$, this becomes:
+For the corner check $S_X(0,0)$, the table below separates the **qubit address** selected by the recipe from its **position in Figure 1**. The drawing has columns 0–23 and rows 0–11, with rows counted upward from the bottom. Its placement rules are
 
-| Recipe | Term | Selected data qubit |
-| --- | --- | --- |
-| $A$ | $x^3$ | $L(3,0)$ |
-| $A$ | $y$ | $L(0,1)$ |
-| $A$ | $y^2$ | $L(0,2)$ |
-| $B$ | $y^3$ | $R(0,3)$ |
-| $B$ | $x$ | $R(1,0)$ |
-| $B$ | $x^2$ | $R(2,0)$ |
+$$
+L(i,j)\longrightarrow(2i,2j-3),\qquad
+R(i,j)\longrightarrow(2i-3,2j),
+$$
+
+wrapping drawing columns modulo 24 and drawing rows modulo 12. For example, $L(0,1)$ is placed at $(0,-1)$, which wraps to drawing position $(0,11)$; it is not the qubit address $L(0,11)$.
+
+| Recipe | Term | Selected qubit address | Drawing position (column, row) |
+| --- | --- | --- | --- |
+| $A$ | $x^3$ | $L(3,0)$ | $(6,9)$ |
+| $A$ | $y$ | $L(0,1)$ | $(0,11)$ |
+| $A$ | $y^2$ | $L(0,2)$ | $(0,1)$ |
+| $B$ | $y^3$ | $R(0,3)$ | $(21,6)$ |
+| $B$ | $x$ | $R(1,0)$ | $(23,0)$ |
+| $B$ | $x^2$ | $R(2,0)$ | $(1,0)$ |
+
+The next **blue data qubit below** $L(0,1)$ is $L(0,0)$, at drawing position $(0,9)$, with a pink check between them at row 10. Continuing down the blue column gives addresses $L(0,5),L(0,4),L(0,3),L(0,2)$ at rows 7, 5, 3, and 1. These other blue sites orient the drawing; they are not additional data qubits selected by the corner check.
 
 ![Figure 1: a corner check, its six neighbors, paired boundary crossings, and the resulting torus](assets/check-pattern.png)
 
