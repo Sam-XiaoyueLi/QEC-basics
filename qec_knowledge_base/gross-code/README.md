@@ -151,131 +151,55 @@ Six errors cannot be guaranteed. Divide our twelve-site logical `Z` into two set
 
 Thus distance twelve guarantees correction of up to five arbitrary data-qubit errors with ideal syndrome information and appropriate recovery. This is a general distance result, not an experimental performance claim for Gross code. [Quantum error-correction conditions](https://arxiv.org/html/quant-ph/9705052)
 
-## CNOTs between encoded qubits
+## A logical CNOT within one Gross block
 
-### What a logical CNOT must do
+To perform a CNOT from one chosen logical qubit to another, use the same logical measurement recipe as in the [surface-code tutorial](../../surface_code.ipynb): prepare an encoded ancilla in $|+\rangle_L$, measure two joint parities, then measure the ancilla and track corrections.
 
-Choose a logical control qubit $c$ and target qubit $t$. A logical CNOT must flip the target when the control is 1, while preserving the control and acting coherently on superpositions. In the logical computational basis,
+In the surface code, the control, target, and encoded ancilla occupy separate patches. In Gross code, their information shares the same 144 data qubits. Reserve one of the block's logical qubits as ancilla $a$; preparing it in $|+\rangle_L$ prepares that logical degree of freedom while preserving the other logical data.
 
-$$
-|c,t\rangle_L\longrightarrow|c,t\oplus c\rangle_L.
-$$
+### Prepare the logical ancilla and perform the measurements
 
-Here $c,t$ inside the ket denote the logical bit values 0 or 1, and $\oplus$ means addition modulo two.
+For logical control $c$ and target $t$:
 
-To determine whether a physical circuit implements this gate, we can check its action on the logical Pauli operators. These are **tests of the circuit's action**, not additional gates we apply to implement CNOT.
-
-In the rules below, an arrow means: applying the operator on the left **before** the circuit has the same effect as applying the operator on the right **after** it. A logical CNOT must satisfy all four rules:
-
-$$
-\begin{aligned}
-\bar X_c&\longrightarrow\bar X_c\bar X_t,\\
-\bar Z_c&\longrightarrow\bar Z_c,\\
-\bar X_t&\longrightarrow\bar X_t,\\
-\bar Z_t&\longrightarrow\bar Z_c\bar Z_t.
-\end{aligned}
-$$
-
-For example, the first rule compares two hypothetical sequences: flip the logical control and then perform CNOT, or perform CNOT and then flip both logical qubits. Flipping the control before the gate changes whether the target is flipped, so the two sequences have the same effect. **Neither sequence is the recipe for implementing CNOT**; their equivalence describes what CNOT does to a control flip.
-
-Checking all four rules establishes the gate's logical action, up to an irrelevant global phase. An encoded implementation must also preserve the code space and have the intended action on any other logical qubits.
-
-### Implementing twelve paired CNOTs between two Gross blocks
-
-Take two Gross blocks, $C$ and $T$, each with 144 data qubits. Choose the same logical definitions in both blocks, so that corresponding logical operators occupy matching physical sites.
-
-The physical gate sequence is simple: **apply one CNOT from every data qubit in block $C$ to its matching partner in block $T$**. This means $L(i,j)$ controls the matching $L(i,j)$ in the other block, and similarly for $R(i,j)$. There are 144 such physical CNOTs. No extra physical or logical `X` or `Z` gates are required by the operator-transformation test.
-
-Now verify what this gate sequence implements. Each physical CNOT obeys the same four Pauli rules as above, with physical operators replacing the logical ones. A logical `X` is a product of physical `X` operations on its marked sites. Each marked control `X` transforms into `X` on both matching sites; taken together, the transformed pattern is the original logical `X` in $C$ times the matching logical `X` in $T$.
-
-The other three rules follow in the same way. For each logical pair $a=1,\ldots,12$, the physical circuit therefore gives
-
-$$
-\begin{aligned}
-\bar X_{a,C}&\longrightarrow\bar X_{a,C}\bar X_{a,T},\\
-\bar Z_{a,C}&\longrightarrow\bar Z_{a,C},\\
-\bar X_{a,T}&\longrightarrow\bar X_{a,T},\\
-\bar Z_{a,T}&\longrightarrow\bar Z_{a,C}\bar Z_{a,T}.
-\end{aligned}
-$$
-
-These are precisely the required logical CNOT rules. The physical circuit also maps stabilizers into stabilizers or products of matching stabilizers, preserving the code space. It therefore performs the twelve paired logical gates $1_C\to1_T,\ldots,12_C\to12_T$. Applying matching gates across two blocks this way is called a **transversal CNOT**. [CSS-code gate construction](https://arxiv.org/html/quant-ph/9705052#S5.SS3)
-
-Thus the implementation is the 144 matching physical CNOTs; the logical Pauli rules verify their encoded effect. They do not instruct us to apply a control `X` first or to copy an unknown quantum state.
-
-The number 144 counts **physical matching pairs**, not possible logical control–target choices. Within one twelve-qubit logical register, there are $12\times11=132$ directed choices. The factor of two for direction is already included: equivalently, there are 66 unordered pairs and two directions for each. The transversal circuit performs twelve specific pairs across two blocks, not all possible choices within one block.
-
-This construction requires the 144 inter-block couplings or a way to implement them. The sparse inter-module Gross architecture instead uses joint logical measurements. A gate on just one selected logical pair is a different physical procedure, described next.
-
-### Within one Gross block, use the same logical CNOT recipe as surface-code surgery
-
-In the [surface-code tutorial](../../surface_code.ipynb), we used separate patches for the logical control, target, and ancilla. The ancilla patch was prepared in $|+\rangle_L$, and joint logical parity measurements mediated the CNOT.
-
-The **logical recipe is the same for Gross code**. The difference is how the logical qubits are stored: they share the block's 144 physical data qubits, rather than occupying separate patches. Reserve one encoded logical qubit as ancilla $a$ and prepare it in $|+\rangle_L$; this prepares a logical degree of freedom within the block, not every data qubit in $|+\rangle$.
-
-For a selected logical control $c$ and target $t$, perform:
-
-| Step | Measurement | Outcome bit |
+| Step | Operation | Outcome bit |
 | --- | --- | --- |
-| 1 | $\bar Z_c\bar Z_a$ | $u$ |
-| 2 | $\bar X_a\bar X_t$ | $v$ |
-| 3 | $\bar Z_a$ | $w$ |
+| 1 | Prepare logical ancilla $a$ in $|+\rangle_L$ | — |
+| 2 | Measure $\bar Z_c\bar Z_a$ collectively | $u$ |
+| 3 | Measure $\bar X_a\bar X_t$ collectively | $v$ |
+| 4 | Measure $\bar Z_a$ | $w$ |
+| 5 | Track the corrections $\bar Z_c^{\,v}\bar X_t^{\,u\oplus w}$ | — |
 
-Here $+1$ means bit 0 and $-1$ means bit 1. Finish by applying or tracking
+A measured sign $+1$ means bit 0, and $-1$ means bit 1. Thus a logical `Z` correction on the control is needed when $v=1$, and a logical `X` correction on the target when $u$ and $w$ differ. These can be handled in the Pauli frame.
 
-$$
-\bar Z_c^{\,v}\bar X_t^{\,u\oplus w}.
-$$
+For **CNOT $1\to2$**, logical qubit 12 can fill the ancilla role in this logical recipe: prepare it in $|+\rangle_L$, measure $\bar Z_1\bar Z_{12}$, measure $\bar X_{12}\bar X_2$, and measure $\bar Z_{12}$. After the corrections, the operation on qubits 1 and 2 is CNOT. The encoded ancilla is consumed and can be reinitialized; the other logical data retain their information.
 
-The resulting operation on $c,t$ is exactly CNOT; $a$ is consumed and can be reinitialized. For example, the logical recipe for CNOT $1\to2$ can use logical qubit 12 as $a$: measure $\bar Z_1\bar Z_{12}$, then $\bar X_{12}\bar X_2$, then $\bar Z_{12}$, and track the corrections above. Whether these are directly available physical instructions depends on the measurement hardware and compilation described below.
+![Logical CNOT from an encoded ancilla, joint parity measurements, and corrections](assets/measurement-cnot.png)
 
-![Selected logical CNOT from joint parity measurements](assets/measurement-cnot.png)
+### Identify the physical qubits for each joint parity
 
-### Joint parity is the product of the physical patterns
+Each logical operator is represented by a pattern of physical Paulis. To determine the physical observable for $\bar Z_c\bar Z_a$, multiply the two physical `Z` patterns. At a site shared by both, $Z_qZ_q=I$, so the factors cancel. Only sites occurring in exactly one pattern remain. Apply the same rule to the two `X` patterns for $\bar X_a\bar X_t$.
 
-To measure $\bar Z_c\bar Z_a$, first multiply the physical `Z` patterns representing the two logical operators. If both patterns contain the same physical site $q$, its factors cancel because $Z_qZ_q=I$. Only sites that occur in exactly one pattern remain. The same rule applies to the joint `X` measurement.
-
-For a small illustration, suppose the two physical patterns are $Z_pZ_q$ and $Z_qZ_r$. Their joint operator is
+For example, multiplying physical patterns $Z_pZ_q$ and $Z_qZ_r$ gives
 
 $$
 (Z_pZ_q)(Z_qZ_r)=Z_pZ_r.
 $$
 
-This illustrates overlap cancellation; it is not a pair of Gross logical representatives. In the accompanying Gross-code logical basis, $\bar Z_1$ has twelve sites and $\bar Z_{12}$ has twenty-four, with three shared sites. Their product therefore has thirty sites: $12+24-2\times3=30$. Other equivalent representatives can give different physical patterns.
+This small example illustrates cancellation, rather than actual Gross logical supports. For the representatives in our accompanying calculation, $\bar Z_1$ has twelve sites and $\bar Z_{12}$ has twenty-four, with three shared sites. Their joint observable therefore has thirty physical `Z` factors: $12+24-2\times3=30$. That is the size of this chosen operator pattern, not the physical gate count of a protected implementation.
 
-We then **measure that product collectively**, rather than measure the two logical operators separately or read every remaining data qubit individually. The result $+1$ says the two logical `Z` values agree; $-1$ says they differ. An agreement result still leaves $|00\rangle_L$ and $|11\rangle_L$ indistinguishable, preserving their superposition. Thus the measurement supplies the joint parity needed by the CNOT without revealing the individual logical values.
+Measure the resulting **product collectively**. An outcome $+1$ for $\bar Z_1\bar Z_{12}$ says the logical `Z` values agree; $-1$ says they differ. It does not distinguish $|00\rangle_L$ from $|11\rangle_L$, or $|01\rangle_L$ from $|10\rangle_L$, so coherence within either parity group is preserved. Measuring the two logical values separately, or reading every marked data qubit individually, would reveal extra information and would not implement the required measurement.
 
-Canceling shared factors identifies the operator to measure. Collecting only its parity is what avoids the extra information obtained from separate measurements.
+### Use physical auxiliaries to collect and protect the parity
 
-### Physical auxiliary qubits protect the joint measurement
+The **encoded ancilla** $a$ participates in the logical CNOT recipe. Additional **physical measurement auxiliaries** collect the parity; they have a different role.
 
-The encoded ancilla $a$ and the **physical measurement auxiliaries** have different roles. The encoded ancilla participates in the CNOT recipe, just as the auxiliary logical patch did in the surface code. Additional physical auxiliary qubits implement reliable joint measurements; they are not another logical data patch.
+The simplest ideal circuit for a physical `Z` product prepares a measurement ancilla $m$ in $|0\rangle$, applies a CNOT from each marked data qubit to $m$, and measures $m$ in `Z`. The ancilla accumulates just the combined parity. For an `X` product, prepare $m$ in $|+\rangle$, apply CNOTs from $m$ to the marked data qubits, and measure $m$ in `X`.
 
-In a protected Gross implementation, these physical auxiliaries and many small checks form a temporary enlarged code. As in surface-code surgery, the product of appropriate new checks equals the desired logical parity, so we can infer it from their measured outcomes.
+These circuits explain how the selected physical factors enter the measurement, but a single ancilla interacting sequentially with many data qubits can spread faults. A protected Gross implementation instead uses an auxiliary network and small modified checks whose product equals the desired logical parity. As in surface-code surgery, it measures and decodes these checks over repeated rounds, measures out the auxiliary qubits, restores the original code, and tracks the associated corrections. [Protected logical-measurement construction](https://arxiv.org/html/2407.18393v2#S4)
 
-For example, the following three-site illustration has two auxiliary qubits $e_1,e_2$ and checks
+The additional parity-measurement interactions are determined by the chosen physical operator and auxiliary network. Routine error checks still run across the block. Compiled code-preserving permutations may also involve more data qubits, so the total physical gate count depends on the full protected circuit. This procedure is not a blanket CNOT between every matching data pair in two blocks.
 
-$$
-Q_1=Z_{q_1}X_{e_1},\qquad
-Q_2=Z_{q_2}X_{e_1}X_{e_2},\qquad
-Q_3=Z_{q_3}X_{e_2}.
-$$
-
-Multiplying them cancels the auxiliary Paulis, because each occurs twice:
-
-$$
-Q_1Q_2Q_3=Z_{q_1}Z_{q_2}Z_{q_3}.
-$$
-
-![Auxiliary checks whose product is the desired data parity](assets/parity-measurement.png)
-
-The auxiliary qubits begin in $|0\rangle$, so the individual new checks do not reveal individual data-qubit `Z` values. Their product reveals the desired parity. This cancellation picture extends to larger logical supports.
-
-The original stabilizers must also be modified so that they commute with the new checks. The temporary enlarged code is measured repeatedly, then the auxiliary qubits are measured out and the original code restored, with the necessary corrections tracked. This is **code deformation**, closely related to surface-code lattice surgery. The simple path pictured here illustrates the cancellation mechanism; it does not by itself preserve distance or give a fault-tolerant circuit.
-
-Published constructions choose the auxiliary connections and modified checks carefully. Their compact hardware exposes a limited set of logical measurement ports; additional physical permutations that preserve the code, called **automorphisms**, change which logical combinations are accessible. A selected CNOT is compiled into those available operations. In the cited compact gate scheme, one logical qubit is reserved for synthesis, leaving eleven logical data qubits for computation. Twelve-qubit memory capacity therefore does not imply twelve fully independent hardware gate ports. [Gross-code measurement and gate scheme](https://arxiv.org/html/2407.18393v2#S4); [modular architecture and physical measurement protocols](https://arxiv.org/html/2506.03094v1#S2.SS3)
-
-For a gate-by-gate learning example, [selected_cnot_ideal.stim](selected_cnot_ideal.stim) implements a selected CNOT within one Gross block using two extra physical ancillas. It was checked on encoded truth-table inputs and an encoded Bell pair. Its unencoded ancilla and high-weight parity measurements make it **an ideal demonstration, not a fault-tolerant Gross hardware circuit**. A full protected physical schedule for an arbitrary requested logical pair remains a separate compilation task.
+The compact published hardware provides a limited set of logical measurement ports. Requested parities for other logical combinations are compiled using those measurements and physical permutations that preserve the code. Its synthesis scheme reserves one of the twelve logical qubits as ancilla, leaving eleven logical data qubits for computation. The recipe above specifies the requested logical CNOT; a protected physical schedule for the particular pair $1\to2$ has not been compiled in these notes. [Gross-code computing architecture](https://arxiv.org/html/2506.03094v1#S2.SS3)
 
 ## Reading out logical data
 
