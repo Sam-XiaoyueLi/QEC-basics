@@ -6,7 +6,7 @@ This is a growing collection of topic pages developed through independent study 
 
 | Topic | Description | Status |
 | --- | --- | --- |
-| [Gross code](gross-code/README.md) | Periodic check patterns, commuting stabilizers, logical operators, CNOTs, readout, and hardware constraints, with reproducible figures and examples. | Working notes |
+| [Gross code](gross-code/README.md) | Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, and decoded readout, with reproducible examples. | Working notes |
 
 ## Page format
 

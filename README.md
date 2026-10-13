@@ -31,7 +31,7 @@ Read the notebooks in order. Basic Python and familiarity with quantum gates are
 
 The [QEC knowledge base](qec_knowledge_base/README.md) collects evolving notes on advanced QEC topics, developed through study and discussion. Each topic page includes an overview, basic intuitions, formal descriptions, worked examples, limitations, open questions, and related topics.
 
-- [Gross code](qec_knowledge_base/gross-code/README.md) — Introductory notes on periodic check patterns, commuting stabilizers, logical operators, CNOTs, readout, and hardware constraints.
+- [Gross code](qec_knowledge_base/gross-code/README.md) — Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
 ## Run the notebooks
 

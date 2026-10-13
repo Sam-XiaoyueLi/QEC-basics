@@ -415,6 +415,55 @@ assert all(sim.peek_observable_expectation(s) == 1 for s in stabilizers)
     "# First two measurements return u,v; third returns w.\n"
     "# Record-controlled gates implement the Pauli corrections.\n" + str(selected) + "\n")
 
+
+def correction_for_outcomes(checks, outcomes):
+    """Solve the ideal check-sign equations for a physical Z correction.
+
+    The last bit of each augmented row is the measured outcome. Free data
+    variables are set to zero; this finds a valid correction, not a minimum.
+    """
+    augmented = [h | (int(s) << N) for h, s in zip(checks, outcomes)]
+    pivot_columns = []
+    row = 0
+    for column in range(N):
+        candidate = next((j for j in range(row, len(augmented))
+                          if (augmented[j] >> column) & 1), None)
+        if candidate is None:
+            continue
+        augmented[row], augmented[candidate] = augmented[candidate], augmented[row]
+        for j in range(len(augmented)):
+            if j != row and (augmented[j] >> column) & 1:
+                augmented[j] ^= augmented[row]
+        pivot_columns.append(column)
+        row += 1
+    assert all(h == 0 for h in augmented[row:]), "Inconsistent ideal check outcomes"
+    correction = sum(((h >> N) & 1) << q for h, q in zip(augmented, pivot_columns))
+    assert all(dot(h, correction) == s for h, s in zip(checks, outcomes))
+    return correction
+
+
+# Start from physical zeros, project onto X-check eigenspaces, then restore
+# positive signs with physical Zs. Direct ideal Pauli measurements here verify
+# the state-preparation argument; this is not a noisy extraction schedule.
+preparation_trials = []
+for seed in [3, 7, 11, 19]:
+    prep = stim.TableauSimulator(seed=seed)
+    prep.set_num_qubits(N)
+    assert all(prep.peek_observable_expectation(pauli(z, "Z")) == 1 for z in LZ)
+    outcomes = [int(prep.measure_observable(pauli(h, "X"))) for h in HX]
+    assert all(prep.peek_observable_expectation(pauli(z, "Z")) == 1 for z in HZ + LZ)
+    correction = correction_for_outcomes(HX, outcomes)
+    for q in support(correction):
+        prep.z(q["column"])
+    assert all(prep.peek_observable_expectation(pauli(h, "X")) == 1 for h in HX)
+    assert all(prep.peek_observable_expectation(pauli(z, "Z")) == 1 for z in HZ + LZ)
+    preparation_trials.append({"seed": seed, "negative_X_checks": sum(outcomes),
+                               "Z_correction_weight": correction.bit_count(),
+                               "all_stabilizers_positive": True, "all_logical_Zs_positive": True})
+example_z = 1 << index("L", 3, 0)
+flipped_x_checks = [[i // M, i % M] for i, h in enumerate(HX) if dot(h, example_z)]
+assert flipped_x_checks == [[0, 0], [3, 4], [3, 5]]
+
 # Concrete gauging identity for the twelve sites of Z1, using a path of 11
 # auxiliary edge qubits. This illustrates the algebra, NOT distance preservation.
 ordered_sites = [q["column"] for q in support(Z1)]
@@ -486,6 +535,11 @@ report = {
     "distance_evidence": {"verified_upper_bound": 12, "local_lower_bound_certification": "not performed",
                           "source_for_exact_distance": "Bravyi et al., arXiv:2308.07915v2 Table 3 and Section 6"},
     "CNOT_gadget_branches": branches,
+    "ideal_logical_zero_preparation": {
+        "procedure": "physical zeros, ideal X-check measurements, physical Z sign correction",
+        "trials": preparation_trials,
+        "physical_Z_L_3_0_flips_X_checks": flipped_x_checks,
+        "scope": "noiseless state-preparation verification, not a fault-tolerant physical schedule"},
     "selected_physical_CNOT": {
         "control_logical_index": 1, "target_logical_index": 2,
         "control_Z_support": support(LZ[0]), "target_X_support": support(LX[1]),

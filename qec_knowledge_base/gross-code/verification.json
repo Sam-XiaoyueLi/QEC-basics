@@ -3499,6 +3499,54 @@
       "matrix_residual": 0.0
     }
   ],
+  "ideal_logical_zero_preparation": {
+    "procedure": "physical zeros, ideal X-check measurements, physical Z sign correction",
+    "trials": [
+      {
+        "seed": 3,
+        "negative_X_checks": 39,
+        "Z_correction_weight": 33,
+        "all_stabilizers_positive": true,
+        "all_logical_Zs_positive": true
+      },
+      {
+        "seed": 7,
+        "negative_X_checks": 40,
+        "Z_correction_weight": 28,
+        "all_stabilizers_positive": true,
+        "all_logical_Zs_positive": true
+      },
+      {
+        "seed": 11,
+        "negative_X_checks": 39,
+        "Z_correction_weight": 39,
+        "all_stabilizers_positive": true,
+        "all_logical_Zs_positive": true
+      },
+      {
+        "seed": 19,
+        "negative_X_checks": 36,
+        "Z_correction_weight": 32,
+        "all_stabilizers_positive": true,
+        "all_logical_Zs_positive": true
+      }
+    ],
+    "physical_Z_L_3_0_flips_X_checks": [
+      [
+        0,
+        0
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "scope": "noiseless state-preparation verification, not a fault-tolerant physical schedule"
+  },
   "selected_physical_CNOT": {
     "control_logical_index": 1,
     "target_logical_index": 2,
