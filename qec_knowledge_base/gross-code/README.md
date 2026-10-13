@@ -17,7 +17,7 @@ $$
 L(i,j),\quad R(i,j),\qquad i=0,\ldots,11,\quad j=0,\ldots,5.
 $$
 
-Increasing $i$ past 11 returns to 0; increasing $j$ past 5 also returns to 0. Thus there are $2\times12\times6=144$ data qubits. There is also one $X$ check and one $Z$ check per address.
+Increasing $i$ past 11 returns to 0; increasing $j$ past 5 also returns to 0. Thus there are $2\times12\times6=144$ data qubits. There is also one `X` check and one `Z` check per address.
 
 We need a compact way to specify the six data qubits touched by each check. Let $x$ mean “increase the first address by one” and $y$ mean “increase the second address by one.” Define two **check pattern recipes**:
 
@@ -25,9 +25,9 @@ $$
 A=x^3+y+y^2,\qquad B=y^3+x+x^2.
 $$
 
-**Algebraic addresses are not the drawn Cartesian positions.** The drawing interleaves four kinds of vertices: $L$ data, $R$ data, $X$ checks, and $Z$ checks. Consequently, increasing an address does not necessarily mean stepping to the next dot on the page. Follow the vertex labels when interpreting $x$ and $y$.
+**Algebraic addresses are not the drawn Cartesian positions.** The drawing interleaves four kinds of vertices: $L$ data, $R$ data, `X` checks, and `Z` checks. Consequently, increasing an address does not necessarily mean stepping to the next dot on the page. Follow the vertex labels when interpreting $x$ and $y$.
 
-Each term selects one data qubit relative to the check's address. The plus signs collect these positions; they are not extra gates. An $X$ check uses recipe $A$ in the $L$ group and recipe $B$ in the $R$ group:
+Each term selects one data qubit relative to the check's address. The plus signs collect these positions; they are not extra gates. An `X` check uses recipe $A$ in the $L$ group and recipe $B$ in the $R$ group:
 
 $$
 S_X(i,j)=X_{L(i+3,j)}X_{L(i,j+1)}X_{L(i,j+2)}
@@ -56,7 +56,7 @@ The next **blue data qubit below** $L(0,1)$ is $L(0,0)$, at drawing position $(0
 
 ![Figure 1: a corner check, its six neighbors, paired boundary crossings, and the resulting torus](assets/check-pattern.png)
 
-Blue and orange circles are $L$ and $R$ data; pink and green squares are $X$ and $Z$ checks. Dashed edges follow $A$, and solid edges follow $B$. The gray grid shows the short connections; other checks' extra connections are omitted for clarity.
+Blue and orange circles are $L$ and $R$ data; pink and green squares are `X` and `Z` checks. Dashed edges follow $A$, and solid edges follow $B$. The gray grid shows the short connections; other checks' extra connections are omitted for clarity.
 
 The four non-cubic terms give four short connections in this drawing. Two of those cross the cut: the edge to $L(0,1)$ leaves at **a** and returns at **a**, while the edge to $R(1,0)$ leaves at **c** and returns at **c**. They are short on the periodic grid even though their endpoints appear on opposite sides of the rectangle. The cubic terms give the two extra connections, which also cross the cut here, at **b** and **d**.
 
@@ -66,36 +66,36 @@ The same recipes work everywhere. For example, applying $A$ and $B$ at address $
 
 ### The Z-check recipe and why it commutes with the X checks
 
-To construct a $Z$ check, exchange the recipes between $L$ and $R$ and reverse their shifts. Thus $x^3$ becomes a shift by minus three, and similarly for the other terms:
+To construct a `Z` check, exchange the recipes between $L$ and $R$ and reverse their shifts. Thus $x^3$ becomes a shift by minus three, and similarly for the other terms:
 
 $$
 S_Z(i,j)=Z_{L(i,j-3)}Z_{L(i-1,j)}Z_{L(i-2,j)}
 Z_{R(i-3,j)}Z_{R(i,j-1)}Z_{R(i,j-2)}.
 $$
 
-All addresses are still periodic. Compare the corner $X$ check with $S_Z(3,3)$:
+All addresses are still periodic. Compare the corner `X` check with $S_Z(3,3)$:
 
 | Check | $L$ data positions | $R$ data positions |
 | --- | --- | --- |
 | $S_X(0,0)$ | $(3,0),(0,1),(0,2)$ | $(0,3),(1,0),(2,0)$ |
 | $S_Z(3,3)$ | $(3,0),(2,3),(1,3)$ | $(0,3),(3,2),(3,1)$ |
 
-They share exactly $L(3,0)$ and $R(0,3)$. Exchanging $X$ and $Z$ on either shared qubit gives a minus sign; the two minus signs cancel.
+They share exactly $L(3,0)$ and $R(0,3)$. Exchanging `X` and `Z` on either shared qubit gives a minus sign; the two minus signs cancel.
 
 ![An X check and a Z check share two qubits, so their minus signs cancel](assets/commuting-checks.png)
 
-There is also a simple reason this pairing works for **every** check. Suppose an $X$ check is at address $u$, and a $Z$ check is at address $v$. Use $a$ for one of the three shifts in $A$ and $b$ for one of the three shifts in $B$.
+There is also a simple reason this pairing works for **every** check. Suppose an `X` check is at address $u$, and a `Z` check is at address $v$. Use $a$ for one of the three shifts in $A$ and $b$ for one of the three shifts in $B$.
 
 - A shared $L$ qubit has address $u+a=v-b$, so $v=u+a+b$.
 - That same pair of shifts gives a shared $R$ qubit: $u+b=v-a$.
 
-Every overlap in $L$ therefore has a matching overlap in $R$. For these particular recipes, the nine possible summed shifts $a+b$ are distinct even after wrapping, so any given $X$–$Z$ check pair shares either zero or two data qubits. Either way, the checks commute. Reversing and exchanging the recipes is what guarantees this pairing. [Check construction](https://arxiv.org/html/2407.18393v2#S4)
+Every overlap in $L$ therefore has a matching overlap in $R$. For these particular recipes, the nine possible summed shifts $a+b$ are distinct even after wrapping, so any given `X`–`Z` check pair shares either zero or two data qubits. Either way, the checks commute. Reversing and exchanging the recipes is what guarantees this pairing. [Check construction](https://arxiv.org/html/2407.18393v2#S4)
 
 Why choose these shifts rather than some other six connections? Commuting checks are only the first requirement. Different choices can store different numbers of logical qubits or admit short logical errors. These recipes and periodic dimensions were selected through a search for a useful combination of storage efficiency, protection, and hardware connectivity. The torus alone does not determine the parameters.
 
 ## Why there are twelve logical qubits
 
-There are 72 $X$ checks and 72 $Z$ checks, but they do not impose 144 independent constraints. Some can be obtained by multiplying others. For the Gross pattern, only **66 checks of each type are independent**; there are six redundant relations in each set.
+There are 72 `X` checks and 72 `Z` checks, but they do not impose 144 independent constraints. Some can be obtained by multiplying others. For the Gross pattern, only **66 checks of each type are independent**; there are six redundant relations in each set.
 
 Using the stabilizer counting rule from the basic tutorial,
 
@@ -111,27 +111,27 @@ The counts come from checking dependencies among the actual stabilizer patterns,
 
 A Gross logical operator is a pattern of physical Paulis that escapes all stabilizer checks but acts on encoded information. It need not resemble a single string running around the torus.
 
-Here is one published logical $Z$ pattern. Apply $Z$ on these twelve data qubits:
+Here is one published logical `Z` pattern. Apply `Z` on these twelve data qubits:
 
 | Group | Data addresses |
 | --- | --- |
 | $L$ | $(2,3),(2,5),(3,0),(3,3),(3,4),(3,5)$ |
 | $R$ | $(1,3),(1,5),(2,0),(2,4),(3,2),(3,4)$ |
 
-Its paired logical $X$ uses the sixteen sites shown in the top row of the next figure. Every stabilizer has the required even overlap with the opposite-type logical pattern, so neither pattern creates a syndrome.
+Its paired logical `X` uses the sixteen sites shown in the top row of the next figure. Every stabilizer has the required even overlap with the opposite-type logical pattern, so neither pattern creates a syndrome.
 
 ![A logical X and Z pair, distributed across the L and R data groups](assets/logical-operators.png)
 
-The two logical patterns share only $R(1,5)$, circled in black. Their odd overlap means they anticommute, as $X$ and $Z$ must for one logical qubit. It also proves these are not stabilizers: a stabilizer would commute with every pattern that escapes all checks. These representatives are given in equations (64)–(67) of [Cross et al.](https://arxiv.org/html/2407.18393v2#S4.SS1); we call the pair logical qubit 1.
+The two logical patterns share only $R(1,5)$, circled in black. Their odd overlap means they anticommute, as `X` and `Z` must for one logical qubit. It also proves these are not stabilizers: a stabilizer would commute with every pattern that escapes all checks. These representatives are given in equations (64)–(67) of [Cross et al.](https://arxiv.org/html/2407.18393v2#S4.SS1); we call the pair logical qubit 1.
 
 ### How to find a logical pattern
 
 Conceptually, a search works by placing Pauli marks on data qubits and enforcing two conditions:
 
-1. **No syndrome:** a candidate $Z$ pattern must overlap every $X$ check an even number of times; exchange $X$ and $Z$ for an $X$ pattern.
+1. **No syndrome:** a candidate `Z` pattern must overlap every `X` check an even number of times; exchange `X` and `Z` for an `X` pattern.
 2. **Nontrivial action:** discard patterns that are merely products of stabilizers. Those also have no syndrome, but do not change encoded information.
 
-To find a paired $X$, require an odd overlap with the chosen logical $Z$. To find the other logical qubits, keep patterns whose action cannot be reproduced by multiplying the logical patterns already retained and the stabilizers. Pair them so that each logical $X$ anticommutes with its own $Z$ and commutes with the other eleven logical $Z$s.
+To find a paired `X`, require an odd overlap with the chosen logical `Z`. To find the other logical qubits, keep patterns whose action cannot be reproduced by multiplying the logical patterns already retained and the stabilizers. Pair them so that each logical `X` anticommutes with its own `Z` and commutes with the other eleven logical `Z` operators.
 
 For 144 data qubits this is a computer calculation, not a practical exercise in guessing dots. The published pair above provides a concrete example whose overlaps can be checked directly; the [accompanying script](build_examples.py) verifies it and constructs a complete twelve-pair set.
 
@@ -139,7 +139,7 @@ Multiplying a logical representative by a stabilizer changes its physical patter
 
 ## Why the distance is twelve
 
-The smallest nontrivial logical pattern touches twelve data qubits. The displayed logical $Z$ supplies a twelve-qubit example, but that alone establishes only that the distance is **at most** twelve. To conclude that it is twelve, smaller nontrivial patterns must also be ruled out.
+The smallest nontrivial logical pattern touches twelve data qubits. The displayed logical `Z` supplies a twelve-qubit example, but that alone establishes only that the distance is **at most** twelve. To conclude that it is twelve, smaller nontrivial patterns must also be ruled out.
 
 The original paper reports that this final distance calculation was performed using integer programming: a computer searches for the smallest pattern satisfying the no-syndrome and nontrivial-action requirements. It distinguishes that calculation from the faster heuristic searches used to screen code candidates. We rely on the paper for exclusion of smaller logical patterns; our examples verify the displayed twelve-qubit pattern. [Table 3 and Section 6](https://arxiv.org/html/2308.07915)
 
@@ -147,27 +147,65 @@ The original paper reports that this final distance calculation was performed us
 
 If two error explanations each touch at most five data qubits, their difference touches at most ten. If they give the same syndrome, that difference is invisible to the checks. With distance twelve, it cannot be a nontrivial logical operator: the explanations must have the same encoded effect, and recovery can correct either.
 
-Six errors cannot be guaranteed. Divide our twelve-site logical $Z$ into two sets of six. Applying $Z$ on the first set and applying it on the second set give the same syndrome, because their difference is the full logical $Z$. Yet the two explanations differ logically, so recovery cannot always distinguish them.
+Six errors cannot be guaranteed. Divide our twelve-site logical `Z` into two sets of six. Applying `Z` on the first set and applying it on the second set give the same syndrome, because their difference is the full logical `Z`. Yet the two explanations differ logically, so recovery cannot always distinguish them.
 
 Thus distance twelve guarantees correction of up to five arbitrary data-qubit errors with ideal syndrome information and appropriate recovery. This is a general distance result, not an experimental performance claim for Gross code. [Quantum error-correction conditions](https://arxiv.org/html/quant-ph/9705052)
 
 ## CNOTs between encoded qubits
 
-### A block-to-block CNOT acts on twelve pairs at once
+### What a logical CNOT must do
 
-Take two identically encoded Gross blocks, $C$ and $T$, with matching choices of logical operators. Apply a physical CNOT from each of the 144 data qubits in $C$ to its matching partner in $T$.
-
-A physical CNOT sends a control $X$ to an $X$ on both control and target. It therefore copies the entire physical pattern of each logical control $X$ to the other block:
+Choose a logical control qubit $c$ and target qubit $t$. A logical CNOT must flip the target when the control is 1, while preserving the control and acting coherently on superpositions. In the logical computational basis,
 
 $$
-\bar X_{a,C}\longrightarrow\bar X_{a,C}\bar X_{a,T}.
+|c,t\rangle_L\longrightarrow|c,t\oplus c\rangle_L.
 $$
 
-Likewise, a target logical $Z$ propagates back to the corresponding control pattern. The other two logical Paulis are unchanged. These are the logical CNOT rules, simultaneously for $a=1,\ldots,12$. The circuit performs the twelve paired gates $1_C\to1_T,\ldots,12_C\to12_T$. This bitwise operation is called a **transversal CNOT**. [CSS-code gate construction](https://arxiv.org/html/quant-ph/9705052#S5.SS3)
+Here $c,t$ inside the ket denote the logical bit values 0 or 1, and $\oplus$ means addition modulo two.
 
-The number 144 counts **physical matching pairs**, not possible logical control–target choices. Within one twelve-qubit logical register, there are $12\times11=132$ directed choices. The factor of two for direction is already included: equivalently, there are 66 unordered pairs and two directions for each.
+To determine whether a physical circuit implements this gate, we can check its action on the logical Pauli operators. These are **tests of the circuit's action**, not additional gates we apply to implement CNOT.
 
-The blockwise circuit requires the 144 inter-block couplings or a way to implement them. It is a useful mathematical construction, but the sparse inter-module Gross architecture uses joint logical measurements instead of assuming all these direct connections.
+In the rules below, an arrow means: applying the operator on the left **before** the circuit has the same effect as applying the operator on the right **after** it. A logical CNOT must satisfy all four rules:
+
+$$
+\begin{aligned}
+\bar X_c&\longrightarrow\bar X_c\bar X_t,\\
+\bar Z_c&\longrightarrow\bar Z_c,\\
+\bar X_t&\longrightarrow\bar X_t,\\
+\bar Z_t&\longrightarrow\bar Z_c\bar Z_t.
+\end{aligned}
+$$
+
+For example, the first rule compares two hypothetical sequences: flip the logical control and then perform CNOT, or perform CNOT and then flip both logical qubits. Flipping the control before the gate changes whether the target is flipped, so the two sequences have the same effect. **Neither sequence is the recipe for implementing CNOT**; their equivalence describes what CNOT does to a control flip.
+
+Checking all four rules establishes the gate's logical action, up to an irrelevant global phase. An encoded implementation must also preserve the code space and have the intended action on any other logical qubits.
+
+### Implementing twelve paired CNOTs between two Gross blocks
+
+Take two Gross blocks, $C$ and $T$, each with 144 data qubits. Choose the same logical definitions in both blocks, so that corresponding logical operators occupy matching physical sites.
+
+The physical gate sequence is simple: **apply one CNOT from every data qubit in block $C$ to its matching partner in block $T$**. This means $L(i,j)$ controls the matching $L(i,j)$ in the other block, and similarly for $R(i,j)$. There are 144 such physical CNOTs. No extra physical or logical `X` or `Z` gates are required by the operator-transformation test.
+
+Now verify what this gate sequence implements. Each physical CNOT obeys the same four Pauli rules as above, with physical operators replacing the logical ones. A logical `X` is a product of physical `X` operations on its marked sites. Each marked control `X` transforms into `X` on both matching sites; taken together, the transformed pattern is the original logical `X` in $C$ times the matching logical `X` in $T$.
+
+The other three rules follow in the same way. For each logical pair $a=1,\ldots,12$, the physical circuit therefore gives
+
+$$
+\begin{aligned}
+\bar X_{a,C}&\longrightarrow\bar X_{a,C}\bar X_{a,T},\\
+\bar Z_{a,C}&\longrightarrow\bar Z_{a,C},\\
+\bar X_{a,T}&\longrightarrow\bar X_{a,T},\\
+\bar Z_{a,T}&\longrightarrow\bar Z_{a,C}\bar Z_{a,T}.
+\end{aligned}
+$$
+
+These are precisely the required logical CNOT rules. The physical circuit also maps stabilizers into stabilizers or products of matching stabilizers, preserving the code space. It therefore performs the twelve paired logical gates $1_C\to1_T,\ldots,12_C\to12_T$. Applying matching gates across two blocks this way is called a **transversal CNOT**. [CSS-code gate construction](https://arxiv.org/html/quant-ph/9705052#S5.SS3)
+
+Thus the implementation is the 144 matching physical CNOTs; the logical Pauli rules verify their encoded effect. They do not instruct us to apply a control `X` first or to copy an unknown quantum state.
+
+The number 144 counts **physical matching pairs**, not possible logical control–target choices. Within one twelve-qubit logical register, there are $12\times11=132$ directed choices. The factor of two for direction is already included: equivalently, there are 66 unordered pairs and two directions for each. The transversal circuit performs twelve specific pairs across two blocks, not all possible choices within one block.
+
+This construction requires the 144 inter-block couplings or a way to implement them. The sparse inter-module Gross architecture instead uses joint logical measurements. A gate on just one selected logical pair is a different physical procedure, described next.
 
 ### A CNOT on two selected logical qubits uses joint parities
 
@@ -209,7 +247,7 @@ $$
 
 ![Auxiliary checks whose product is the desired data parity](assets/parity-measurement.png)
 
-The auxiliary qubits begin in $|0\rangle$, so the individual new checks do not reveal individual data-qubit $Z$ values. Their product reveals the desired parity. This cancellation picture extends to larger logical supports.
+The auxiliary qubits begin in $|0\rangle$, so the individual new checks do not reveal individual data-qubit `Z` values. Their product reveals the desired parity. This cancellation picture extends to larger logical supports.
 
 The original stabilizers must also be modified so that they commute with the new checks. The temporary enlarged code is measured repeatedly, then the auxiliary qubits are measured out and the original code restored, with the necessary corrections tracked. This is **code deformation**, closely related to surface-code lattice surgery. The simple path pictured here illustrates the cancellation mechanism; it does not by itself preserve distance or give a fault-tolerant circuit.
 
@@ -219,28 +257,28 @@ For a gate-by-gate learning example, [selected_cnot_ideal.stim](selected_cnot_id
 
 ## Reading out logical data
 
-For final readout in the $Z$ basis, measure all 144 data qubits in $Z$. For each logical $Z$, multiply the measured signs on its marked sites. For the twelve-site example,
+For final readout in the `Z` basis, measure all 144 data qubits in `Z`. For each logical `Z`, multiply the measured signs on its marked sites. For the twelve-site example,
 
 $$
 \bar z_1^{\rm raw}=\prod_{q\ \text{in the logical pattern}}m_q,
 \qquad m_q\in\{+1,-1\}.
 $$
 
-The individual outcomes can be random even for a known encoded computational-basis state; the collective parities give the twelve logical results. The decoder uses the preceding syndrome history and compatible final check parities to decide which raw logical results need flipping. No physical corrections are required after this destructive readout. Whole-block $X$ readout works in the corresponding basis.
+The individual outcomes can be random even for a known encoded computational-basis state; the collective parities give the twelve logical results. The decoder uses the preceding syndrome history and compatible final check parities to decide which raw logical results need flipping. No physical corrections are required after this destructive readout. Whole-block `X` readout works in the corresponding basis.
 
 To read one logical qubit while preserving the others, use the collective auxiliary measurement described above. Measuring every physical qubit on its support individually would reveal more information than the chosen logical parity. [Logical measurement protocols and whole-block readout](https://arxiv.org/html/2506.03094v1)
 
 ### A single-error readout example
 
-Prepare all twelve logical qubits in $|0\rangle_L$. Every correct logical $Z$ result is then $+1$. Now inject $X$ on $R(1,5)$, the circled site of our logical pair.
+Prepare all twelve logical qubits in $|0\rangle_L$. Every correct logical `Z` result is then $+1$. Now inject `X` on $R(1,5)$, the circled site of our logical pair.
 
-The reversed $Z$ recipe shows that this data qubit participates in exactly these checks:
+The reversed `Z` recipe shows that this data qubit participates in exactly these checks:
 
 $$
 S_Z(1,0),\qquad S_Z(1,1),\qquad S_Z(4,5).
 $$
 
-All three signs flip. Because $R(1,5)$ belongs to the displayed logical $Z$ pattern, its raw readout parity also flips to $-1$. In this noiseless-syndrome, single-error example, exactly one data-qubit $X$ error explains the three changed checks: the error at $R(1,5)$. The decoder flips the raw logical answer back to $+1$.
+All three signs flip. Because $R(1,5)$ belongs to the displayed logical `Z` pattern, its raw readout parity also flips to $-1$. In this noiseless-syndrome, single-error example, exactly one data-qubit `X` error explains the three changed checks: the error at $R(1,5)$. The decoder flips the raw logical answer back to $+1$.
 
 With noisy check measurements and continuing data errors, we need the repeated history rather than this single-round lookup. This is the same distinction emphasized in the [decoding tutorial](../../decoder.ipynb).
 
