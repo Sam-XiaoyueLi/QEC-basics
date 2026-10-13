@@ -207,9 +207,13 @@ The number 144 counts **physical matching pairs**, not possible logical controlâ
 
 This construction requires the 144 inter-block couplings or a way to implement them. The sparse inter-module Gross architecture instead uses joint logical measurements. A gate on just one selected logical pair is a different physical procedure, described next.
 
-### A CNOT on two selected logical qubits uses joint parities
+### Within one Gross block, use the same logical CNOT recipe as surface-code surgery
 
-To act on just a chosen control $c$ and target $t$, introduce an ancilla logical qubit $a$ in $|+\rangle_L$ and perform:
+In the [surface-code tutorial](../../surface_code.ipynb), we used separate patches for the logical control, target, and ancilla. The ancilla patch was prepared in $|+\rangle_L$, and joint logical parity measurements mediated the CNOT.
+
+The **logical recipe is the same for Gross code**. The difference is how the logical qubits are stored: they share the block's 144 physical data qubits, rather than occupying separate patches. Reserve one encoded logical qubit as ancilla $a$ and prepare it in $|+\rangle_L$; this prepares a logical degree of freedom within the block, not every data qubit in $|+\rangle$.
+
+For a selected logical control $c$ and target $t$, perform:
 
 | Step | Measurement | Outcome bit |
 | --- | --- | --- |
@@ -223,13 +227,31 @@ $$
 \bar Z_c^{\,v}\bar X_t^{\,u\oplus w}.
 $$
 
-The resulting operation on $c,t$ is exactly CNOT; $a$ is consumed. The joint measurements learn parities without learning the individual input values, preserving the coherence needed for the gate.
+The resulting operation on $c,t$ is exactly CNOT; $a$ is consumed and can be reinitialized. For example, the logical recipe for CNOT $1\to2$ can use logical qubit 12 as $a$: measure $\bar Z_1\bar Z_{12}$, then $\bar X_{12}\bar X_2$, then $\bar Z_{12}$, and track the corrections above. Whether these are directly available physical instructions depends on the measurement hardware and compilation described below.
 
 ![Selected logical CNOT from joint parity measurements](assets/measurement-cnot.png)
 
-### What the physical hardware measures
+### Joint parity is the product of the physical patterns
 
-In a protected Gross implementation, a logical-parity box is built from auxiliary qubits and many small checks. The useful idea is that the product of the new check operators equals the logical observable being measured.
+To measure $\bar Z_c\bar Z_a$, first multiply the physical `Z` patterns representing the two logical operators. If both patterns contain the same physical site $q$, its factors cancel because $Z_qZ_q=I$. Only sites that occur in exactly one pattern remain. The same rule applies to the joint `X` measurement.
+
+For a small illustration, suppose the two physical patterns are $Z_pZ_q$ and $Z_qZ_r$. Their joint operator is
+
+$$
+(Z_pZ_q)(Z_qZ_r)=Z_pZ_r.
+$$
+
+This illustrates overlap cancellation; it is not a pair of Gross logical representatives. In the accompanying Gross-code logical basis, $\bar Z_1$ has twelve sites and $\bar Z_{12}$ has twenty-four, with three shared sites. Their product therefore has thirty sites: $12+24-2\times3=30$. Other equivalent representatives can give different physical patterns.
+
+We then **measure that product collectively**, rather than measure the two logical operators separately or read every remaining data qubit individually. The result $+1$ says the two logical `Z` values agree; $-1$ says they differ. An agreement result still leaves $|00\rangle_L$ and $|11\rangle_L$ indistinguishable, preserving their superposition. Thus the measurement supplies the joint parity needed by the CNOT without revealing the individual logical values.
+
+Canceling shared factors identifies the operator to measure. Collecting only its parity is what avoids the extra information obtained from separate measurements.
+
+### Physical auxiliary qubits protect the joint measurement
+
+The encoded ancilla $a$ and the **physical measurement auxiliaries** have different roles. The encoded ancilla participates in the CNOT recipe, just as the auxiliary logical patch did in the surface code. Additional physical auxiliary qubits implement reliable joint measurements; they are not another logical data patch.
+
+In a protected Gross implementation, these physical auxiliaries and many small checks form a temporary enlarged code. As in surface-code surgery, the product of appropriate new checks equals the desired logical parity, so we can infer it from their measured outcomes.
 
 For example, the following three-site illustration has two auxiliary qubits $e_1,e_2$ and checks
 
