@@ -31,7 +31,7 @@ Read the notebooks in order. Basic Python and familiarity with quantum gates are
 
 The [QEC knowledge base](qec_knowledge_base/README.md) collects evolving notes on advanced QEC topics, developed through study and discussion. Each topic page includes an overview, basic intuitions, formal descriptions, worked examples, limitations, open questions, and related topics.
 
-No topic pages have been added yet. New pages will be listed here and in the knowledge-base index.
+- [Gross code](qec_knowledge_base/gross-code/README.md) — Draft teaching notes with connection diagrams, binary checks, logical operators, distance, CNOTs, readout, and hardware constraints.
 
 ## Run the notebooks
 

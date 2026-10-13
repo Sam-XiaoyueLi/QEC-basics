@@ -1,0 +1,15 @@
+# Ideal logical CNOT 1 -> 2 within one already-encoded Gross block.
+# Qubits 0..143 are data; 144 is an UNENCODED ancilla; 145 is a check ancilla.
+# Requires input in the code space. Not a fault-tolerant hardware schedule.
+# First two measurements return u,v; third returns w.
+# Record-controlled gates implement the Pauli corrections.
+RX 144
+R 145
+CX 15 145 17 145 18 145 21 145 22 145 23 145 81 145 83 145 84 145 88 145 92 145 94 145 144 145
+M 145
+RX 145
+CX 145 3 145 6 145 12 145 15 145 18 145 24 145 39 145 42 145 48 145 51 145 54 145 60 145 144
+MX 145
+M 144
+CZ rec[-2] 15 rec[-2] 17 rec[-2] 18 rec[-2] 21 rec[-2] 22 rec[-2] 23 rec[-2] 81 rec[-2] 83 rec[-2] 84 rec[-2] 88 rec[-2] 92 rec[-2] 94
+CX rec[-3] 3 rec[-1] 3 rec[-3] 6 rec[-1] 6 rec[-3] 12 rec[-1] 12 rec[-3] 15 rec[-1] 15 rec[-3] 18 rec[-1] 18 rec[-3] 24 rec[-1] 24 rec[-3] 39 rec[-1] 39 rec[-3] 42 rec[-1] 42 rec[-3] 48 rec[-1] 48 rec[-3] 51 rec[-1] 51 rec[-3] 54 rec[-1] 54 rec[-3] 60 rec[-1] 60

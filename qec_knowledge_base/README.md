@@ -4,7 +4,9 @@ This is a growing collection of topic pages developed through independent study 
 
 ## Topic index
 
-No topic pages have been added yet. Each new topic page will be linked here with a short description and its current status.
+| Topic | Description | Status |
+| --- | --- | --- |
+| [Gross code](gross-code/README.md) | Connection recipes, commuting binary checks, logical operators, distance, CNOTs, readout, and hardware constraints, with reproducible figures and examples. | Draft |
 
 ## Page format
 
