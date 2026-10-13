@@ -163,7 +163,7 @@ For logical control $c$ and target $t$:
 
 | Step | Operation | Outcome bit |
 | --- | --- | --- |
-| 1 | Prepare logical ancilla $a$ in $|+\rangle_L$ | — |
+| 1 | Prepare logical ancilla $a$ in $\lvert+\rangle_L$ | — |
 | 2 | Measure $\bar Z_c\bar Z_a$ collectively | $u$ |
 | 3 | Measure $\bar X_a\bar X_t$ collectively | $v$ |
 | 4 | Measure $\bar Z_a$ | $w$ |
