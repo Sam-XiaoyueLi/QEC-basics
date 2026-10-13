@@ -164,37 +164,105 @@ def location(register, i, j):
     return ((2 * i + di) % 24, (2 * j + dj) % 12)
 
 
-fig, ax = plt.subplots(figsize=(14, 7))
+# A check at the cut's lower-left corner makes both periodic seams visible.
+# Split a wrapped edge at the boundary instead of drawing a spurious line
+# across the interior of the cut-open torus.
+fig = plt.figure(figsize=(16, 8))
+ax = fig.add_axes([.045, .17, .66, .72])
+left, right, bottom, top = -.5, 23.5, -.5, 11.5
 for i in range(24):
-    for j in range(12):
-        ax.plot([i, i + 1], [j, j], color="#cfd7dd", lw=.65, zorder=0)
-        ax.plot([i, i], [j, j + 1], color="#cfd7dd", lw=.65, zorder=0)
+    ax.plot([i, i], [bottom, top], color="#dbe2e8", lw=.65, zorder=0)
+for j in range(12):
+    ax.plot([left, right], [j, j], color="#dbe2e8", lw=.65, zorder=0)
 for register in ["L", "R", "X", "Z"]:
     points = np.array([location(register, i, j) for i in range(ELL) for j in range(M)])
     ax.scatter(points[:, 0], points[:, 1], color=COLORS[register],
-               marker="o" if register in "LR" else "s", s=25, alpha=.5)
-origin = (4, 2)
+               marker="o" if register in "LR" else "s", s=19, alpha=.42)
+# Blue boundaries are identified with each other; purple boundaries likewise.
+for x in [left, right]:
+    ax.plot([x, x], [bottom, top], color="#275dad", lw=2.2, zorder=1)
+for y in [bottom, top]:
+    ax.plot([left, right], [y, y], color="#8c55ad", lw=2.2, zorder=1)
+ax.text(11.5, 12.1, "top ↔ bottom (purple seam)", ha="center", color="#8c55ad", fontsize=11)
+ax.text(11.5, -1.25, "left ↔ right (blue seam)", ha="center", color="#275dad", fontsize=11)
+origin = (0, 0)
 ox, oy = location("X", *origin)
+label_positions = {"x³": (7.1, 9.5), "y": (1.1, 10.7), "y²": (1.7, 1.2),
+                   "y³": (18.2, 6.8), "x": (20.0, .8), "x²": (3.3, .15)}
+wrap_channels = {"x³": "b", "y": "a", "y³": "d", "x": "c"}
 for register, offsets, terms in [("L", A, ["x³", "y", "y²"]), ("R", B, ["y³", "x", "x²"])]:
     for (di, dj), term in zip(offsets, terms):
-        i, j = (origin[0] + di) % ELL, (origin[1] + dj) % M
+        i, j = di % ELL, dj % M
         px, py = location(register, i, j)
-        ax.plot([ox, px], [oy, py], color=COLORS[register], lw=2.5,
-                ls="--" if register == "L" else "-", zorder=3)
-        ax.scatter([px], [py], color=COLORS[register], s=95, edgecolor="white", zorder=4)
-        offset = {"x": (-92, 16), "x²": (12, 16), "y": (12, -23), "y²": (12, 12)}.get(term, (7, 12))
-        ax.annotate(f"{register}({i},{j}) : {term}", (px, py), xytext=offset,
-                    textcoords="offset points", fontsize=10, fontweight="bold",
-                    bbox=dict(facecolor="white", alpha=.9, edgecolor="none", pad=1))
-ax.scatter([ox], [oy], color=COLORS["X"], marker="s", s=120, edgecolor="black", zorder=5)
-ax.annotate("X check (4,2)", (ox, oy), xytext=(-142, -58), textcoords="offset points",
-            arrowprops=dict(arrowstyle="->"), bbox=dict(facecolor="white", edgecolor="none"))
-ax.set(xlim=(-1, 25), ylim=(-1, 13), xticks=[], yticks=[], aspect="equal",
-       title="One Gross-code check: four short connections + two extra connections")
-ax.text(12, 12.4, "left ↔ right; bottom ↔ top (periodic)", ha="center", color="#475569")
-legend = [Line2D([], [], marker="o" if r in "LR" else "s", ls="", color=COLORS[r], label=r + (" data" if r in "LR" else " check")) for r in ["L", "R", "X", "Z"]]
-legend += [Line2D([], [], ls="--", color="black", label="A edge"), Line2D([], [], color="black", label="B edge")]
-ax.legend(handles=legend, loc="lower center", bbox_to_anchor=(.5, -.13), ncol=6)
+        # Position before applying periodic wrapping in the drawing.
+        dx0, dy0 = {"L": (0, -3), "R": (-3, 0)}[register]
+        ux, uy = 2 * di + dx0, 2 * dj + dy0
+        color, style = COLORS[register], "--" if register == "L" else "-"
+        if ux < left:
+            t = (left - ox) / (ux - ox)
+            exit_point = (left, oy + t * (uy - oy))
+            entry_point = (right, exit_point[1])
+        elif uy < bottom:
+            t = (bottom - oy) / (uy - oy)
+            exit_point = (ox + t * (ux - ox), bottom)
+            entry_point = (exit_point[0], top)
+        else:
+            exit_point = entry_point = None
+        if exit_point:
+            for p0, p1 in [((ox, oy), exit_point), (entry_point, (px, py))]:
+                ax.annotate("", xy=p1, xytext=p0,
+                            arrowprops=dict(arrowstyle="->", color=color, lw=2.1, linestyle=style), zorder=4)
+            letter = wrap_channels[term]
+            for point in [exit_point, entry_point]:
+                ax.scatter(*point, s=85, facecolors="white", edgecolors=color, lw=1.8, zorder=6, clip_on=False)
+                # Matching letters identify the continuation of the same edge.
+                dy_label = -.25 if point[1] == bottom else .28 if point[1] == top else .28
+                dx_label = -.35 if point[0] == left else .35 if point[0] == right else 0
+                ax.text(point[0] + dx_label, point[1] + dy_label, letter,
+                        ha="center", va="center", color=color, fontsize=10, fontweight="bold", zorder=7)
+        else:
+            ax.plot([ox, px], [oy, py], color=color, lw=2.1, ls=style, zorder=4)
+        ax.scatter([px], [py], color=color, s=90, edgecolor="white", zorder=5)
+        ax.annotate(f"{register}({i},{j}) : {term}", (px, py), xytext=label_positions[term],
+                    textcoords="data", fontsize=10, fontweight="bold",
+                    arrowprops=dict(arrowstyle="-", color="#475569", lw=.8),
+                    bbox=dict(facecolor="white", alpha=.95, edgecolor="none", pad=1), zorder=8)
+ax.scatter([ox], [oy], color=COLORS["X"], marker="s", s=110, edgecolor="black", zorder=8)
+ax.annotate("X check (0,0)", (ox, oy), xytext=(1.7, 3.3),
+            arrowprops=dict(arrowstyle="->", color="#334155"), fontsize=11,
+            bbox=dict(facecolor="white", edgecolor="none"), zorder=8)
+ax.set(xlim=(-1.5, 24.5), ylim=(-1.8, 12.8), xticks=[], yticks=[], aspect="equal")
+ax.axis("off")
+ax.set_title("Figure 1 · A boundary check on the cut-open torus", pad=16, fontsize=15)
+legend = [Line2D([], [], marker="o" if r in "LR" else "s", ls="", color=COLORS[r],
+                 label=r + (" data" if r in "LR" else " check")) for r in ["L", "R", "X", "Z"]]
+legend += [Line2D([], [], ls="--", color="black", label="A edge"),
+           Line2D([], [], color="black", label="B edge")]
+fig.legend(handles=legend, loc="lower left", bbox_to_anchor=(.065, .08), ncol=6, fontsize=10)
+fig.text(.365, .03, "An edge leaving the rectangle returns at the matching letter on the opposite boundary.",
+         ha="center", fontsize=10, color="#475569")
+# The adjacent torus visual makes the two boundary identifications concrete.
+ax3 = fig.add_axes([.73, .32, .26, .43], projection="3d", computed_zorder=False)
+u, v = np.meshgrid(np.linspace(0, 2 * np.pi, 65), np.linspace(0, 2 * np.pi, 33))
+major, minor = 2.0, .72
+xx = (major + minor * np.cos(v)) * np.cos(u)
+yy = (major + minor * np.cos(v)) * np.sin(u)
+zz = minor * np.sin(v)
+ax3.plot_surface(xx, yy, zz, color="#d7e7ed", alpha=.18, linewidth=0,
+                 antialiased=True, shade=False, zorder=1)
+ax3.plot_wireframe(xx, yy, zz, rstride=4, cstride=4, color="#9caeb9", lw=.45, alpha=.4, zorder=2)
+curve = np.linspace(0, 2 * np.pi, 200)
+ax3.plot((major + minor * np.cos(curve)), np.zeros_like(curve), minor * np.sin(curve),
+         color="#275dad", lw=3, zorder=3)
+ax3.plot((major + minor) * np.cos(curve), (major + minor) * np.sin(curve), np.zeros_like(curve),
+         color="#8c55ad", lw=3, zorder=3)
+ax3.set_box_aspect((1, 1, .3))
+ax3.view_init(elev=62, azim=-58)
+ax3.axis("off")
+fig.text(.86, .80, "Identify both pairs of boundaries", ha="center", fontsize=12, fontweight="bold")
+fig.text(.86, .25, "left + right → cylinder\nthen top + bottom → torus", ha="center", fontsize=11, linespacing=1.8)
+fig.text(.86, .14, "The torus depicts connectivity.\nThe chip need not be donut-shaped.",
+         ha="center", fontsize=10, color="#475569")
 save(fig, "check-pattern")
 
 # Two shared data sites explain commutation without a dense graph.

@@ -6,7 +6,7 @@ This is a growing collection of topic pages developed through independent study 
 
 | Topic | Description | Status |
 | --- | --- | --- |
-| [Gross code](gross-code/README.md) | Connection recipes, commuting binary checks, logical operators, distance, CNOTs, readout, and hardware constraints, with reproducible figures and examples. | Draft |
+| [Gross code](gross-code/README.md) | Periodic check patterns, commuting stabilizers, logical operators, CNOTs, readout, and hardware constraints, with reproducible figures and examples. | Working notes |
 
 ## Page format
 
