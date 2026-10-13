@@ -22,10 +22,8 @@ Pages also include references, a status, and a last-updated date. Open questions
 
 ## Study and writing workflow
 
-Study a topic first, then discuss it with Codex in this workspace. When ready, ask Codex to create or update the topic page using the `qec-knowledge-base` skill.
+Study a topic first, discuss and refine the ideas, then consolidate them into a topic page.
 
-When a topic page is added or updated, Codex checks existing knowledge-base pages and notebook explanations for meaningful connections, updates related-topic links where relevant, and maintains this index. New Markdown topic pages are also listed in the repository README. Notebook additions and substantive discussions prompt the same related-topic check; discussion alone does not require creating a full topic page.
+When a topic page is added or updated, check existing knowledge-base pages and notebook explanations for meaningful connections and update related-topic links where relevant. List new pages in this index and in the repository README. Notebook additions and substantive discussions are also opportunities to revisit these connections.
 
 Related topics link to existing material using relative paths and explain the connection. Topics without a page can be listed as future reading, clearly marked as such. Drafts and uncertainties remain visible so readers can follow how the knowledge base develops.
-
-The reusable workflow is maintained in [the skill](../skills/qec-knowledge-base/SKILL.md).

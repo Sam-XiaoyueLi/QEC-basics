@@ -1,4 +1,0 @@
-interface:
-  display_name: "QEC Knowledge Base"
-  short_description: "Write QEC topic pages and maintain related links"
-  default_prompt: "Use $qec-knowledge-base to turn our discussion into a topic page and update the README indexes and related topics."

@@ -18,3 +18,10 @@ __pycache__/
 *.out
 *.toc
 *.synctex.gz
+
+# Local agent instructions and skills
+AGENTS.md
+/skills/
+/.agents/
+/.codex/
+/local/
