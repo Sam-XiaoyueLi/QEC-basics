@@ -7,4 +7,4 @@ This is a growing collection of topic pages developed through independent study 
 | Topic | Description | Status |
 | --- | --- | --- |
 | [Gross code](gross-code/README.md) | Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, and decoded readout, with reproducible examples. | Finished |
-| [Quantum computing hardware](quantum-computing-hardware/README.md) | Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison. | Working notes |
+| [Quantum computing hardware](quantum-computing-hardware/README.md) | Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions. | Working notes |
