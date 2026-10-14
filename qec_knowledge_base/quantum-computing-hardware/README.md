@@ -30,6 +30,8 @@ The possible results of an energy measurement are still $E_0$ and $E_1$. Before 
 
 ### Relaxation and phase stability
 
+Even with these protections, the environment can still exchange energy with the qubit or disturb its relative phase. Two time scales, $T_1$ and $T_2$, quantify how long its populations and phase information survive.
+
 On the Bloch sphere introduced in Tutorial 0, the north pole is $|0\rangle$ and the south pole is $|1\rangle$. The height encodes the population difference, and the angle around the vertical axis encodes the relative phase. Noise can shorten the Bloch vector, moving its tip inside the sphere.
 
 | Time scale | Physical change | Bloch-sphere picture |
