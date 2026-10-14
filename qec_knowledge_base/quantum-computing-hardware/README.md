@@ -50,7 +50,7 @@ On the Bloch sphere introduced in Tutorial 0, the north pole is $|0\rangle$ and 
 | $T_1$: energy relaxation | The excited-state population decays as the qubit releases energy. | For relaxation to the ground state, the vector approaches the north pole. |
 | $T_2$: loss of phase coherence | Phase fluctuations wash out interference across repeated runs. Energy relaxation also contributes. | The component in the equatorial plane shrinks. Pure phase noise leaves the height unchanged. |
 
-For relaxation toward $|0\rangle$ and simple exponential decay,
+For hyperfine ground-state encodings, population relaxation can approach a mixture of zero and one. For relaxation toward $|0\rangle$ and simple exponential decay,
 
 $$
 p_1(t)=p_1(0)e^{-t/T_1},
@@ -69,6 +69,8 @@ Qubits can be encoded in superconducting circuit levels, atomic states, semicond
 Superconducting qubits, trapped ions, and neutral atoms are prominent gate-based platforms with demonstrated multi-qubit control and error-correction experiments. They illustrate three useful hardware choices: fast electrical control on a chip, precise atomic control through shared ion motion, and large rearrangeable atom arrays. Their different interactions determine native gates and connectivity.
 
 ## Superconducting qubits
+
+### Qubit and initialization
 
 A **Josephson junction** consists of two superconductors separated by a thin insulating barrier. Cooper pairs tunnel coherently through the barrier, making the junction act as a **nonlinear inductor**. Connecting it in parallel with a large capacitor forms an **anharmonic oscillator**, commonly implemented as a transmon.
 
@@ -90,6 +92,8 @@ $$
 
 Typical transmon circuit parameters give transition frequencies of a few gigahertz, in the microwave range. An optical laser's carrier frequency is far above this transition. [Circuit and control review](https://www.nature.com/articles/s41534-016-0004-0)
 
+**Initialize to zero:** cooling favours the ground state. An active-reset option measures the qubit and applies an $X$ pulse if it is in $|1\rangle$, returning it to $|0\rangle$. Each qubit has an individually addressable control channel. [Reset protocols](https://www.nature.com/articles/s41467-021-26205-y)
+
 ### Single-qubit control: X, Y, and Z
 
 The energy states $|0\rangle$ and $|1\rangle$ define the computational $Z$ basis, used for readout. In a frame rotating at the qubit frequency, a resonant microwave pulse rotates around an axis in the Bloch sphere's **$X$–$Y$ plane**. Pulse strength and duration set the angle $\theta$. Pulse phase $\phi_d$, measured relative to the controller's reference, sets the axis:
@@ -109,33 +113,79 @@ By convention, $\phi_d=0$ gives $R_X(\theta)$ and $\phi_d=\pi/2$ gives $R_Y(\the
 
 A virtual $Z$ needs no separate physical pulse. Its logical effect is carried by the updated reference for subsequent gates. Merely choosing pulse phase $\pi$ produces an axis along $-X$, rather than a $Z$ rotation. [Microwave control and virtual Z gates](https://arxiv.org/abs/1612.00858)
 
-A readout resonator converts the qubit state into a measurable microwave response. Cooling, low-loss materials, and shielding help preserve the state between operations. [Readout](https://www.nature.com/articles/s41534-016-0004-0)
+A readout resonator converts the qubit state into a measurable microwave response. [Readout](https://www.nature.com/articles/s41534-016-0004-0)
+
+### Interaction and protection
+
+Capacitive or inductive couplings connect selected circuits, often through tunable couplers. They exchange excitations or shift joint-state energies. A calibrated conditional phase gives a gate such as $CZ$. [Coupled-circuit example](https://www.nature.com/articles/ncomms11059)
+
+Low-loss materials, millikelvin cooling, filtered control lines, and shielding suppress unwanted energy exchange and phase noise. Material defects, stray radiation, and frequency fluctuations remain error sources. **Coherence example:** Willow reports mean $T_1=68\,\mu\mathrm{s}$ and $T_{2,\mathrm{CPMG}}=89\,\mu\mathrm{s}$. CPMG is a refocusing pulse sequence, so this $T_2$ includes active suppression of phase noise. [Willow experiment](https://www.nature.com/articles/s41586-024-08449-y)
 
 ![A capacitor and Josephson junction in parallel, junction materials, and unequal circuit energy levels](assets/superconducting.png)
 
 ## Trapped ions
 
-Electromagnetic fields hold charged atoms in vacuum. Their bound electrons and nuclear spin provide discrete internal levels. A common qubit uses two **hyperfine states**, with different configurations of the coupled electron and nuclear angular momenta. The trap controls position, while these internal states store $|0\rangle$ and $|1\rangle$.
+### Qubit and initialization
 
-**Control:** microwaves or a pair of lasers coherently drive the selected transition. In a Raman drive, the lasers' frequency difference matches the qubit splitting. Pulse strength, duration, and phase control the resulting superposition. Laser cooling reduces motion, and high vacuum suppresses collisions. State-dependent fluorescence distinguishes the two internal states during readout. [Ion architecture review](https://www.nature.com/articles/npjqi201634)
+Electromagnetic fields hold charged atoms in vacuum. **One ion carries one qubit in two selected internal states.** A common choice is two hyperfine levels in the electronic ground state, distinguished by the coupled electron and nuclear angular momenta. Both levels can therefore be long-lived. [Ion architecture review](https://www.nature.com/articles/npjqi201634)
 
-Ions repel electrically and share vibrational modes. A state-dependent force makes this motion respond differently to each qubit state. Closing the motional trajectory leaves an entangling phase while removing the qubit's entanglement with motion. Electrode voltages can also shuttle ions between storage and gate zones in a **QCCD**, or quantum charge-coupled device. [Motion-mediated gates](https://www.nature.com/articles/s41534-021-00489-w), [QCCD operation](https://docs.quantinuum.com/systems/user_guide/hardware_user_guide/helios.html)
+**Initialize to zero:** optical pumping repeatedly excites unwanted states and lets them decay by emitting photons. The laser frequencies and polarization make the chosen $|0\rangle$ a state that stops absorbing the pumping light, so population accumulates there. This can prepare an entire register in $|00\ldots0\rangle$. [State preparation](https://www.nature.com/articles/s41467-020-20330-w)
+
+### Individual control: X and Z
+
+Ions are separated by micrometres. A tightly focused laser beam addresses one ion, while beam steering selects another. A QCCD (quantum charge-coupled device) can instead shuttle selected ions into gate zones. [Individual addressing experiment](https://www.nature.com/articles/s41467-024-53405-z), [QCCD operation](https://docs.quantinuum.com/systems/user_guide/hardware_user_guide/helios.html)
+
+A **Raman drive** uses two laser frequencies whose difference matches the qubit splitting. It drives the internal transition without storing the qubit in an optically excited state. Pulse strength and duration set the rotation angle, and relative laser phase sets the $X$–$Y$ axis.
+
+| Operation | Representative implementation |
+| --- | --- |
+| $X$ | Address the ion with an $X$-axis Raman pulse calibrated for a $\pi$ rotation. It exchanges $\lvert0\rangle$ and $\lvert1\rangle$. |
+| $Z$ | Update the tracked phase frame by $\pi$. A physical alternative shifts the two levels differently with light, accumulating a calibrated relative phase. |
+| Readout | Illuminate a state-dependent optical transition. Photon counts distinguish a bright state from a dark state. |
+
+Microwaves can also drive hyperfine qubits, with additional spatial or frequency selection needed for individual addressing. Helios implements $R_z$ virtually and exposes phase-controlled single-qubit rotations. [Ion controls](https://www.nature.com/articles/npjqi201634), [Native gates](https://docs.quantinuum.com/systems/user_guide/hardware_user_guide/helios.html)
+
+### Interaction and protection
+
+The ions' electric repulsion couples their motion into shared vibrational modes. State-dependent laser forces couple selected qubits to those modes. A timed pulse sequence returns the motion to its initial condition while leaving an entangling operation on the internal states, such as $XX$ or $ZZ$ up to basis rotations. [Motion-mediated gates](https://www.nature.com/articles/s41534-021-00489-w)
+
+High vacuum suppresses collisions. Laser cooling controls motion, while stable fields, magnetic shielding, and stable drive references preserve phase. Cooling ions of another species can remove motional energy without resonantly exciting the stored qubit. **$T_1$:** ground-state hyperfine qubits have weak spontaneous relaxation. Practical population errors often come from unwanted light or microwave driving.
+
+**Coherence example:** a single $^{171}\mathrm{Yb}^{+}$ memory experiment measured unrefocused Ramsey coherence of $1.6\,\mathrm{s}$. With dynamical decoupling, measurements up to $960\,\mathrm{s}$ gave a fitted coherence time near $5500\,\mathrm{s}$. [Memory experiment](https://www.nature.com/articles/s41467-020-20330-w)
 
 ![Trapped ions, their internal qubit levels, and shared motion used for entangling gates](assets/trapped-ions.png)
 
 ## Neutral atoms
 
-Focused lasers hold uncharged atoms in **optical tweezers**. The light induces an electric dipole in each atom, creating a trapping potential. As with ions, two internal levels supply the qubit. Hyperfine ground states are a common choice because they can retain phase information for long periods. Laser cooling reduces motion, and high vacuum limits collisions. [Optical-tweezer review](https://www.nature.com/articles/s41567-021-01357-2)
+### Qubit and initialization
 
-**Control:** microwave or Raman pulses drive the chosen pair of internal states. Steering the tweezers moves atoms into useful gate arrangements. Fluorescence and state-selective procedures provide readout.
+Focused lasers hold uncharged atoms in **optical tweezers**, through the interaction between the light and the atom's induced electric dipole. **One atom carries a qubit in two internal states**, commonly two ground-state hyperfine levels. Optical pumping prepares the chosen zero state, using repeated excitation and decay to concentrate population there. [Optical-tweezer review](https://www.nature.com/articles/s41567-021-01357-2)
 
-Ground-state atoms interact weakly at typical tweezer separations. Lasers temporarily excite them to a **Rydberg state**, whose large electronic extent enables strong interactions. For identical atoms with single-atom excitation energy $E_r$, the energy of a doubly excited pair shifts by an interaction energy $V$:
+### Individual control: X and Z
+
+Focused Raman beams address selected atoms. Other implementations combine global microwave rotations with local light-induced energy shifts. Steering the tweezers changes the spatial arrangement.
+
+| Operation | Representative implementation |
+| --- | --- |
+| $X$ | Apply a resonant $\pi$ rotation with the drive phase defining the $X$ axis. Use local addressing to select the atom. |
+| $Z$ | Shift the two qubit levels differently with focused light and let them accumulate a relative phase of $\pi$. Phase-frame updates are also possible with compatible control tracking. |
+| Readout | State-selective fluorescence or state-to-position/loss mapping distinguishes the internal states. Atom retention depends on the method. |
+
+Pulse strength and duration set the angle, while drive phase selects the $X$–$Y$ axis, as for ions and superconducting qubits. [Single-qubit control](https://www.nature.com/articles/s41586-023-06481-y), [Local addressing and readout](https://www.nature.com/articles/s41586-025-09848-5)
+
+### Interaction and protection
+
+Ground-state atoms interact weakly at typical tweezer separations. Lasers temporarily excite them to a **Rydberg state**, whose large electronic extent enables strong interactions. For identical atoms with single-atom excitation energy $E_r$, the doubly excited pair has energy
 
 $$
-E_{rr}=2E_r+V.
+E_{rr}=2E_r+V,
 $$
 
-When $|V|\gg\hbar\Omega$, with $\Omega$ the Rabi angular frequency (coherent drive strength), exciting one atom suppresses resonant excitation of the second. This **Rydberg blockade** makes the laser response conditional on the neighbouring qubit, enabling entangling gates. The pulse sequence returns population to the storage levels. [Rydberg gate experiment](https://www.nature.com/articles/s41586-023-06481-y)
+where $V$ is the interaction shift. When $|V|\gg\hbar\Omega$, with $\Omega$ the Rabi angular frequency, exciting one atom suppresses resonant excitation of the second. This **Rydberg blockade** makes the response conditional on the neighbouring qubit, enabling a gate such as $CZ$. The sequence returns population to the storage states. Moving atoms into gate range selects interacting pairs. [Rydberg gate experiment](https://www.nature.com/articles/s41586-023-06481-y)
+
+Vacuum suppresses collisions, laser cooling reduces motion, and stable fields and trapping light limit phase noise. Trap-light scattering can change internal states, while intensity variations shift their energies. Atom loss is an additional error, separate from internal-state $T_1/T_2$.
+
+**Coherence example:** a 6,100-atom caesium array reported $T_1=119\,\mathrm{s}$ for hyperfine depolarization, ensemble Ramsey $T_2^*=14\,\mathrm{ms}$, and $T_2=12.6\,\mathrm{s}$ with XY16 refocusing. Here $T_2^*$ is measured without refocusing pulses. The large difference shows how trapping inhomogeneity and active noise suppression affect the reported time. [Array experiment](https://www.nature.com/articles/s41586-025-09641-4)
 
 ![An optical tweezer array, Rydberg excitation, and the shifted double-excitation level behind blockade](assets/neutral-atoms.png)
 
