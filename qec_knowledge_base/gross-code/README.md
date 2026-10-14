@@ -5,19 +5,28 @@ Last updated: 2026-10-14
 
 ## Overview
 
-The Gross code stores twelve logical qubits in 144 data qubits, with distance twelve: $[[144,12,12]]$. Its original memory implementation adds 144 check ancillas, for 288 physical qubits. “Gross” means twelve dozen. The code belongs to the bivariate bicycle family introduced by IBM researchers in a 2023 preprint and published in 2024. [Original paper](https://www.nature.com/articles/s41586-024-07107-7)
+The Gross code stores 12 logical qubits in 144 data qubits, with distance 12: $[[144,12,12]]$.
+A gross means 12 dozens, and hence the name, "Gross code".
+Its original memory implementation adds 144 check ancillas, for 288 physical qubits.
+The high code rate is a major attraction, together with strong error protection.
+The code belongs to the bivariate bicycle family introduced by IBM researchers in a 2023 preprint and published in 2024 [Original paper](https://www.nature.com/articles/s41586-024-07107-7).
 
-This page assumes the stabilizers, logical operators, and syndrome measurements covered in the [basic QEC tutorial](../../qec_basic_notes/tut1.pdf). The central change from a surface code is that twelve logical qubits share one block of data. We follow five questions: how are its checks connected, what represents a logical qubit, how do we prepare the block, how do we perform a selected CNOT, and how do we read out the answer? The logical-qubit count and distance explain what the block protects; the final hardware section explains what makes its connections difficult to build.
+In this page, we follow five questions: 
+1. How are its checks connected?
+2. What represents a logical qubit?
+3. How do we prepare the block?
+4. How do we perform a selected CNOT within and across blocks?
+5. How do we read out the answer?
 
 ## Check pattern recipes
 
-There are two groups of data qubits, called $L$ and $R$. Each has a periodic $12\times6$ set of addresses:
+There are two groups of data qubits, called $L$ and $R$. Each has a periodic $12\times6$ set of independent addresses:
 
 $$
 L(i,j),\quad R(i,j),\qquad i=0,\ldots,11,\quad j=0,\ldots,5.
 $$
 
-Increasing $i$ past 11 returns to 0; increasing $j$ past 5 also returns to 0. Thus there are $2\times12\times6=144$ data qubits. There is also one `X` check and one `Z` check per address.
+Increasing $i$ past 11 returns to 0; increasing $j$ past 5 also returns to 0. Thus, there are $2\times12\times6=144$ data qubits. There is also one `X` check and one `Z` check per address, for 144 check ancillas.
 
 We need a compact way to specify the six data qubits touched by each check. Let $x$ mean “increase the first address by one” and $y$ mean “increase the second address by one.” Define two **check pattern recipes**:
 
@@ -25,23 +34,23 @@ $$
 A=x^3+y+y^2,\qquad B=y^3+x+x^2.
 $$
 
-**Algebraic addresses are not the drawn Cartesian positions.** The drawing interleaves four kinds of vertices: $L$ data, $R$ data, `X` checks, and `Z` checks. Consequently, increasing an address does not necessarily mean stepping to the next dot on the page. Follow the vertex labels when interpreting $x$ and $y$.
+Here, we treat the plus signs as a collection of connections, so each check uses both recipes once, and each recipe includes 3 shifts. All together, each check touches 6 data qubits specified by the check pattern.
 
-Each term selects one data qubit relative to the check's address. The plus signs collect these positions; they are not extra gates. An `X` check uses recipe $A$ in the $L$ group and recipe $B$ in the $R$ group:
+An `X` check uses recipe $A$ in the $L$ group and recipe $B$ in the $R$ group:
 
 $$
 S_X(i,j)=X_{L(i+3,j)}X_{L(i,j+1)}X_{L(i,j+2)}
 X_{R(i,j+3)}X_{R(i+1,j)}X_{R(i+2,j)}.
 $$
 
-For the corner check $S_X(0,0)$, the table below separates the **qubit address** selected by the recipe from its **position in Figure 1**. The drawing has columns 0–23 and rows 0–11, with rows counted upward from the bottom. Its placement rules are
+The drawing interleaves four kinds of vertices: $L$ data, $R$ data, `X` checks, and `Z` checks. Its placement rules are
 
 $$
 L(i,j)\longrightarrow(2i,2j-3),\qquad
 R(i,j)\longrightarrow(2i-3,2j),
 $$
 
-wrapping drawing columns modulo 24 and drawing rows modulo 12. For example, $L(0,1)$ is placed at $(0,-1)$, which wraps to drawing position $(0,11)$; it is not the qubit address $L(0,11)$.
+wrapping drawing columns modulo 24 and drawing rows modulo 12. For example, $L(0,1)$ is placed at $(0,-1)$, which wraps to drawing position $(0,11)$. It is not the qubit address $L(0,11)$.
 
 | Recipe | Term | Selected qubit address | Drawing position (column, row) |
 | --- | --- | --- | --- |
@@ -52,7 +61,8 @@ wrapping drawing columns modulo 24 and drawing rows modulo 12. For example, $L(0
 | $B$ | $x$ | $R(1,0)$ | $(23,0)$ |
 | $B$ | $x^2$ | $R(2,0)$ | $(1,0)$ |
 
-For orientation, the next **blue data qubit below** $L(0,1)$ is $L(0,0)$ at drawing position $(0,9)$, with a pink check between them at row 10. It is not an additional qubit selected by the corner check. The highlighted edges identify the six selected sites.
+For orientation, the next **blue data qubit below** $L(0,1)$ is $L(0,0)$ at drawing position $(0,9)$, with a pink check between them at row 10. 
+The highlighted edges identify the six selected sites.
 
 ![Figure 1: a corner check, its six neighbors, paired boundary crossings, and the resulting torus](assets/check-pattern.png)
 
@@ -95,7 +105,7 @@ Why choose these shifts rather than some other six connections? Commuting checks
 
 ## Why there are twelve logical qubits
 
-There are 72 `X` checks and 72 `Z` checks, but they do not impose 144 independent constraints. Some can be obtained by multiplying others. For the Gross pattern, only **66 checks of each type are independent**; there are six redundant relations in each set.
+There are 72 `X` checks and 72 `Z` checks, but they do not impose 144 independent constraints. Some can be obtained by multiplying others. For the Gross pattern, only **66 checks of each type are independent** and there are six redundant relations in each set.
 
 Using the stabilizer counting rule from the basic tutorial,
 
@@ -141,17 +151,25 @@ Multiplying a logical representative by a stabilizer changes its physical patter
 
 ## Why the distance is twelve
 
-The smallest nontrivial logical pattern touches twelve data qubits. The displayed logical `Z` supplies a twelve-qubit example, but that alone establishes only that the distance is **at most** twelve. To conclude that it is twelve, smaller nontrivial patterns must also be ruled out.
+**The smallest nontrivial logical pattern touches twelve data qubits.** The displayed logical `Z` supplies a twelve-qubit example, but that alone establishes only that the distance is **at most** twelve. To conclude that it is twelve, smaller nontrivial patterns must also be ruled out.
 
 The original paper reports that this final distance calculation was performed using integer programming: a computer searches for the smallest pattern satisfying the no-syndrome and nontrivial-action requirements. It distinguishes that calculation from the faster heuristic searches used to screen code candidates. We rely on the paper for exclusion of smaller logical patterns; our examples verify the displayed twelve-qubit pattern. [Table 3 and Section 6](https://arxiv.org/html/2308.07915)
 
-### Why twelve gives a five-error guarantee
+### Why distance twelve guarantees correction of five errors
+Distance twelve means that the smallest Pauli pattern that passes every check while changing the logical information touches twelve data qubits. Smaller invisible patterns can be stabilizers, which leave the encoded information unchanged.
+The decoder sees the syndrome, not the actual errors. It therefore chooses an error pattern that explains the check results and applies its inverse as a correction.
+Suppose the actual error touches at most five qubits. An appropriate decoder can choose an explanation that also touches at most five. The actual error followed by that correction then touches at most
+$$
+5+5=10
+$$
+qubits.
 
-If two error explanations each touch at most five data qubits, their difference touches at most ten. If they give the same syndrome, that difference is invisible to the checks. With distance twelve, it cannot be a nontrivial logical operator: the explanations must have the same encoded effect, and recovery can correct either.
+Because the correction accounts for the syndrome, the combined operation passes every check. Because it touches fewer than twelve qubits, it cannot be a harmful logical operator. The logical information is therefore restored—even if the decoder chose a different physical error pattern.
 
-Six errors cannot be guaranteed. Divide our twelve-site logical `Z` into two sets of six. Applying `Z` on the first set and applying it on the second set give the same syndrome, because their difference is the full logical `Z`. Yet the two explanations differ logically, so recovery cannot always distinguish them.
+Why can we not guarantee correction of six errors? Divide a twelve-qubit logical \(Z\) into two halves. Applying \(Z\) to the first six qubits and applying \(Z\) to the remaining six produce the same syndrome: combining those patterns gives the full logical \(Z\), which is invisible to the checks.
 
-This establishes correction of up to five arbitrary data-qubit errors with ideal syndrome information and appropriate recovery. Faulty measurement circuits require a separate analysis, discussed in the hardware section. [Quantum error-correction conditions](https://arxiv.org/html/quant-ph/9705052)
+A correction that cancels one possibility completes the logical \(Z\) for the other. The syndrome cannot distinguish them, so no recovery can guarantee success for both.
+Thus, every error affecting at most five data qubits is correctable with ideal syndrome information and appropriate recovery. Some six-qubit errors are also correctable, but not all. Faults during check measurements require a separate circuit analysis.
 
 ## Preparing all twelve logical qubits in zero
 
