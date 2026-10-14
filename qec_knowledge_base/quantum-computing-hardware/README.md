@@ -64,29 +64,19 @@ where $r_\perp$ is the length of the Bloch vector's projection onto the equatori
 
 ## Superconducting qubits
 
-A **Josephson junction** consists of two superconductors separated by a thin insulating barrier. Cooper pairs tunnel coherently across it, producing a current that depends on the superconducting phase difference $\phi$:
+A **Josephson junction** consists of two superconductors separated by a thin insulating barrier. Cooper pairs tunnel coherently through the barrier, making the junction act as a **nonlinear inductor**. Connecting it in parallel with a large capacitor forms an **anharmonic oscillator**, commonly implemented as a transmon.
+
+The circuit's charge and superconducting phase are quantum variables. Its wavefunction is confined in a potential well, which admits only certain stationary states with discrete energies. These states form the oscillator's energy levels, labelled $|0\rangle,|1\rangle,|2\rangle,\ldots$.
+
+A harmonic oscillator has equally spaced energy levels. The Josephson junction adds a nonlinear correction, making the gaps different:
 
 $$
-I=I_c\sin\phi.
+E_1-E_0\ne E_2-E_1.
 $$
 
-Here $I_c$ is the critical current. This nonlinear, nondissipative response lets the junction act as a nonlinear inductive element. Connecting it in parallel with a large capacitor gives a **transmon**, operated with $E_J\gg E_C$. The capacitor stores charge energy, and the junction provides the phase-dependent energy. With $h$ the Planck constant and $\hbar=h/(2\pi)$, its Hamiltonian, neglecting offset charge, is
+A microwave pulse tuned to the $|0\rangle\leftrightarrow|1\rangle$ transition can therefore control the lowest pair while avoiding the next transition. We use this pair as the qubit and prepare superpositions $\alpha|0\rangle+\beta|1\rangle$. Exciting higher levels is **leakage**. [Transmon paper](https://arxiv.org/abs/cond-mat/0703002)
 
-$$
-H=4E_C n^2-E_J\cos\phi,
-\qquad E_C=\frac{e^2}{2C},
-\qquad E_J=\frac{\hbar I_c}{2e}.
-$$
-
-$n$ is the number of excess Cooper pairs, $C$ is capacitance, $e$ is the elementary charge, and $E_J$ is the junction's coupling energy. Charge and phase are conjugate quantum variables, like momentum and position. Their dynamics produces discrete oscillator levels. The cosine potential makes the spacing unequal:
-
-$$
-E_2-E_1\ne E_1-E_0.
-$$
-
-A drive at $(E_1-E_0)/h$ can address the lowest pair without resonantly driving the next transition. These levels form the qubit. Low-loss superconducting materials and operation at tens of millikelvin let this electrical mode retain phase information and suppress thermal excitation. [Transmon review](https://arxiv.org/abs/0812.1865), [Circuit review](https://arxiv.org/abs/2006.10433)
-
-**Control:** microwave pulse strength and duration set the rotation angle. Pulse phase sets the rotation axis. A readout resonator converts the qubit state into a measurable microwave response. Leaving the lowest pair is **leakage**. [Control and readout](https://www.nature.com/articles/s41534-016-0004-0)
+**Control:** microwave pulse strength and duration set the rotation angle. Pulse phase sets the rotation axis. A readout resonator converts the qubit state into a measurable microwave response. Cooling, low-loss materials, and shielding help preserve the state between operations. [Control and readout](https://www.nature.com/articles/s41534-016-0004-0)
 
 ![A capacitor and Josephson junction in parallel, junction materials, and unequal circuit energy levels](assets/superconducting.png)
 
