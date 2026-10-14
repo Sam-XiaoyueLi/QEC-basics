@@ -153,20 +153,8 @@ A laser sequence turns this conditional response into a phase, producing **$CZ$*
 
 ## Comparison
 
-| Platform | Qubit | Control and readout | Interaction and native gates | Advantages and limitations |
-| --- | --- | --- | --- | --- |
-| Superconducting | Two lowest transmon levels on a cold chip. | Microwaves, virtual $Z$, resonator readout. | Engineered couplings. $CZ$, ECR, or exchange gates. | Fast gates, but short memory and extra routing for distant pairs. |
-| Trapped ions | Two internal ion states in an electric trap. | Raman or microwave drives, fluorescence readout. | Shared motion. $XX$/$ZZ$ gates, with pair access through shared modes or transport. | Longer memory, but gates, transport, and cooling consume time. |
-| Neutral atoms | Two internal atom states in optical tweezers. | Raman/microwave drives, local light shifts, imaging. | Rydberg interactions. $CZ$ gates, with pair access through atom movement or beam addressing. | Large rearrangeable arrays. Movement, atom loss, and measurement/reset affect the schedule. |
-
-## Research directions
-
-The goal is to run larger, longer computations with fewer errors.
-
-| Platform | What researchers are improving |
-| --- | --- |
-| Superconducting | Cleaner materials, more accurate gates, and connections between chips. |
-| Trapped ions | Faster gates, less heating during movement, and more gates running in parallel. |
-| Neutral atoms | More accurate Rydberg gates, readout that keeps atoms, and replacement of lost atoms. |
-
-All three are developing **quantum error correction**: repeatedly detecting and correcting errors while computing. This needs accurate gates, fast measurement and reset, and timely classical feedback.
+| Platform | Qubit | Control and readout | Interaction and native gates | Advantages and limitations | Research directions |
+| --- | --- | --- | --- | --- | --- |
+| Superconducting | Two lowest transmon levels on a cold chip. | Microwaves, virtual $Z$, resonator readout. | Engineered couplings. $CZ$, ECR, or exchange gates. | Fast gates, but short memory and extra routing for distant pairs. | Cleaner materials, more accurate gates, chip connections, and error correction. |
+| Trapped ions | Two internal ion states in an electric trap. | Raman or microwave drives, fluorescence readout. | Shared motion. $XX$/$ZZ$ gates, with pair access through shared modes or transport. | Longer memory, but gates, transport, and cooling consume time. | Faster gates, less heating during movement, more parallel gates, and error correction. |
+| Neutral atoms | Two internal atom states in optical tweezers. | Raman/microwave drives, local light shifts, imaging. | Rydberg interactions. $CZ$ gates, with pair access through atom movement or beam addressing. | Large rearrangeable arrays. Movement, atom loss, and measurement/reset affect the schedule. | More accurate Rydberg gates, readout that keeps atoms, replacement of lost atoms, and error correction. |
