@@ -9,9 +9,10 @@ OUT = Path(__file__).parent / 'assets'
 OUT.mkdir(exist_ok=True)
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 12, 'svg.fonttype': 'none'})
 BLUE, RED, INK, GREEN = '#2563eb', '#dc2626', '#172b4d', '#0f766e'
-fig, axs = plt.subplots(3, 1, figsize=(13, 13.5))
-fig.subplots_adjust(top=.945, bottom=.045, left=.035, right=.985, hspace=.25)
-fig.suptitle('Three physical pictures of quantum hardware', fontsize=23, color=INK)
+figures = [plt.subplots(figsize=(13, 4.5)) for _ in range(3)]
+axs = [ax for fig, ax in figures]
+for fig, ax in figures:
+    fig.subplots_adjust(top=.98, bottom=.1, left=.02, right=.98)
 
 def setup(ax, title):
     ax.set(xlim=(0,13), ylim=(0,4)); ax.set_aspect('equal'); ax.axis('off')
@@ -22,7 +23,7 @@ def txt(ax,x,y,s,**kw):
     ax.text(x,y,s,**kw)
 def arrow(ax,a,b,color=INK): ax.annotate('',xy=b,xytext=a,arrowprops=dict(arrowstyle='->',color=color,lw=2))
 
-ax=axs[0]; setup(ax,'1  Superconducting: an engineered quantum circuit on a cold chip')
+ax=axs[0]; setup(ax,'Superconducting qubits: quantum circuits on a cold chip')
 ax.add_patch(Rectangle((.15,.8),5.5,2.2,facecolor='#f1f5f9',edgecolor='#94a3b8'))
 for x,label in [(1.45,'Qubit A'),(4.3,'Qubit B')]:
     ax.add_patch(Rectangle((x-.7,1.5),.55,.8,facecolor=BLUE))
@@ -48,7 +49,7 @@ for y,l in [(1.42,'|0⟩'),(2.05,'|1⟩'),(2.56,'|2⟩')]:
 txt(ax,11.2,3.03,'Circuit levels',ha='center',fontsize=11)
 txt(ax,11.2,.69,'Use 0 and 1;\navoid leakage to 2',ha='center',fontsize=11)
 
-ax=axs[1]; setup(ax,'2  Trapped ions: charged atoms suspended above electrodes in vacuum')
+ax=axs[1]; setup(ax,'Trapped ions: charged atoms suspended above electrodes in vacuum')
 ax.add_patch(Rectangle((.3,.85),7,1.9,facecolor='#f8fafc',edgecolor='#94a3b8',ls='--'))
 for x in [.5,1.55,2.6,3.65,4.7,5.75,6.8]:
     ax.add_patch(Rectangle((x,.87),.7,.35,facecolor='#94a3b8'))
@@ -66,7 +67,7 @@ for x in [11.15,11.8]: ax.add_patch(Circle((x,1.9),.12,facecolor=BLUE))
 arrow(ax,(9.15,1.9),(10.45,1.9),GREEN)
 txt(ax,10.2,.5,'Qubit = internal atomic states, not the position',ha='center',fontsize=11)
 
-ax=axs[2]; setup(ax,'3  Neutral atoms: uncharged atoms held in focused laser traps in vacuum')
+ax=axs[2]; setup(ax,'Neutral atoms: uncharged atoms held in focused laser traps in vacuum')
 for y in [1.25,2.05,2.85]:
     for x in [1,1.8,2.6,3.4]:
         ax.add_patch(Ellipse((x,y),.45,.64,facecolor='#fee2e2',edgecolor='#fca5a5'))
@@ -86,10 +87,11 @@ for y,l in [(1.3,'|0⟩'),(1.85,'|1⟩'),(2.95,'|r⟩')]:
     ax.plot([10.3,11.3],[y,y],color=INK,lw=2); txt(ax,11.45,y,l,va='center')
 arrow(ax,(10.75,1.97),(10.75,2.83),RED)
 txt(ax,11,.55,'Store in 0 and 1;\nuse r during entangling',ha='center',fontsize=11)
-fig.text(.5,.017,'Original conceptual schematics • not to scale • layouts and encodings vary by device',ha='center',fontsize=11,color=INK)
-fig.savefig(OUT/'platform-schematics.png',dpi=160)
-fig.savefig(OUT/'platform-schematics.svg')
-svg_path = OUT/'platform-schematics.svg'
-svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines()) + '\n')
-plt.close(fig)
-print('Saved platform-schematics.png and .svg')
+for (fig, ax), name in zip(figures, ['superconducting', 'trapped-ions', 'neutral-atoms']):
+    fig.text(.5,.035,'Conceptual schematic; not to scale',ha='center',fontsize=10,color=INK)
+    fig.savefig(OUT/f'{name}.png',dpi=160)
+    fig.savefig(OUT/f'{name}.svg')
+    svg_path = OUT/f'{name}.svg'
+    svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines()) + '\n')
+    plt.close(fig)
+print('Saved separate PNG and SVG diagrams for all three platforms.')

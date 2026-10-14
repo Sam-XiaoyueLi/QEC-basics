@@ -29,11 +29,11 @@ Read the notebooks in order. Basic Python and familiarity with quantum gates are
 
 ## Knowledge base
 
-The [QEC knowledge base](qec_knowledge_base/README.md) collects evolving notes on advanced QEC topics, developed through study and discussion. Each topic page includes an overview, basic intuitions, formal descriptions, worked examples, limitations, open questions, and related topics.
+The [QEC knowledge base](qec_knowledge_base/README.md) collects concise references on QEC and quantum computing hardware, developed through study and discussion.
 
 - [Gross code](qec_knowledge_base/gross-code/README.md) — **Finished.** Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
-- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Draft.** General requirements, physical schematics, native gates and connectivity, and a dated comparison of superconducting, trapped-ion, and neutral-atom milestones.
+- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** General requirements, physical schematics, native gates and connectivity, and a dated comparison of superconducting, trapped-ion, and neutral-atom milestones.
 
 ## Run the notebooks
 
