@@ -33,7 +33,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Gross code](qec_knowledge_base/gross-code/README.md) — **Finished.** Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
-- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** Quantum-to-classical behaviour, two-level hardware principles, native gates and connectivity, and demonstrated milestones.
+- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** Quantum-to-classical behaviour, hardware platforms, two-level principles, microwave X/Z control, native gates and connectivity, and demonstrated milestones.
 
 ## Run the notebooks
 

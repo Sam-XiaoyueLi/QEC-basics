@@ -62,6 +62,12 @@ where $r_\perp$ is the length of the Bloch vector's projection onto the equatori
 
 ![Bloch-sphere views of energy relaxation toward the ground state and loss of phase coherence at fixed populations](assets/bloch-coherence.png)
 
+## Hardware platforms
+
+Qubits can be encoded in superconducting circuit levels, atomic states, semiconductor spins, or photons. Each platform supplies different controls, interactions, and noise sources. [Semiconductor example](https://www.nature.com/articles/s41586-025-09531-9), [photonic example](https://www.nature.com/articles/s41586-024-08406-9)
+
+Superconducting qubits, trapped ions, and neutral atoms are prominent gate-based platforms with demonstrated multi-qubit control and error-correction experiments. They illustrate three useful hardware choices: fast electrical control on a chip, precise atomic control through shared ion motion, and large rearrangeable atom arrays. Their different interactions determine native gates and connectivity.
+
 ## Superconducting qubits
 
 A **Josephson junction** consists of two superconductors separated by a thin insulating barrier. Cooper pairs tunnel coherently through the barrier, making the junction act as a **nonlinear inductor**. Connecting it in parallel with a large capacitor forms an **anharmonic oscillator**, commonly implemented as a transmon.
@@ -74,9 +80,36 @@ $$
 E_1-E_0\ne E_2-E_1.
 $$
 
-A microwave pulse tuned to the $|0\rangle\leftrightarrow|1\rangle$ transition can therefore control the lowest pair while avoiding the next transition. We use this pair as the qubit and prepare superpositions $\alpha|0\rangle+\beta|1\rangle$. Exciting higher levels is **leakage**. [Transmon paper](https://arxiv.org/abs/cond-mat/0703002)
+The unequal gaps let a selective pulse address $|0\rangle\leftrightarrow|1\rangle$ without significantly exciting $|2\rangle$. The lowest pair therefore serves as a qubit, supporting superpositions $\alpha|0\rangle+\beta|1\rangle$. Population in higher levels is **leakage**. [Transmon paper](https://arxiv.org/abs/cond-mat/0703002)
 
-**Control:** microwave pulse strength and duration set the rotation angle. Pulse phase sets the rotation axis. A readout resonator converts the qubit state into a measurable microwave response. Cooling, low-loss materials, and shielding help preserve the state between operations. [Control and readout](https://www.nature.com/articles/s41534-016-0004-0)
+**Why microwaves?** For resonant control, the drive frequency matches the energy gap:
+
+$$
+f_{01}=\frac{E_1-E_0}{h}.
+$$
+
+Typical transmon circuit parameters give transition frequencies of a few gigahertz, in the microwave range. An optical laser's carrier frequency is far above this transition. [Circuit and control review](https://www.nature.com/articles/s41534-016-0004-0)
+
+### Single-qubit control: X, Y, and Z
+
+The energy states $|0\rangle$ and $|1\rangle$ define the computational $Z$ basis, used for readout. In a frame rotating at the qubit frequency, a resonant microwave pulse rotates around an axis in the Bloch sphere's **$X$–$Y$ plane**. Pulse strength and duration set the angle $\theta$. Pulse phase $\phi_d$, measured relative to the controller's reference, sets the axis:
+
+$$
+R_{\phi_d}(\theta)
+=\exp\!\left[-\frac{i\theta}{2}
+\left(\cos\phi_d\,X+\sin\phi_d\,Y\right)\right].
+$$
+
+By convention, $\phi_d=0$ gives $R_X(\theta)$ and $\phi_d=\pi/2$ gives $R_Y(\theta)$. For a constant resonant drive, $\theta=\Omega\tau$, where $\Omega$ is the Rabi angular frequency and $\tau$ the pulse duration.
+
+| Gate | How to implement it | Example |
+| --- | --- | --- |
+| $X$ | Use an $X$-axis pulse calibrated for $\theta=\pi$. It gives $R_X(\pi)=-iX$, equivalent to $X$ up to global phase. | Exchanges $\lvert0\rangle$ and $\lvert1\rangle$. |
+| $Z$ | Apply a **virtual $Z$**: update the qubit's tracked phase frame by $\pi$ and adjust subsequent control phases accordingly. | Changes $\alpha\lvert0\rangle+\beta\lvert1\rangle$ to $\alpha\lvert0\rangle-\beta\lvert1\rangle$, so $\lvert+\rangle\to\lvert-\rangle$. |
+
+A virtual $Z$ needs no separate physical pulse. Its logical effect is carried by the updated reference for subsequent gates. Merely choosing pulse phase $\pi$ produces an axis along $-X$, rather than a $Z$ rotation. [Microwave control and virtual Z gates](https://arxiv.org/abs/1612.00858)
+
+A readout resonator converts the qubit state into a measurable microwave response. Cooling, low-loss materials, and shielding help preserve the state between operations. [Readout](https://www.nature.com/articles/s41534-016-0004-0)
 
 ![A capacitor and Josephson junction in parallel, junction materials, and unequal circuit energy levels](assets/superconducting.png)
 
@@ -140,5 +173,3 @@ Selected milestones checked **2026-10-14**. Physical-qubit counts, array sizes, 
 | Trapped ions | Helios: 98 qubits, transport-enabled all-to-all access, average two-qubit infidelity $7.9(2)\times10^{-4}$ across operation zones. November 2025 preprint. [Paper](https://arxiv.org/abs/2511.05465) | Precise gates and flexible routing at system scale. Gate fidelity alone does not predict algorithm success. |
 | Neutral atoms | A reconfigurable processor with up to 448 atoms demonstrated repeated QEC, logical operations, and qubit reuse. *Nature* (online 2025, volume 2026). [Paper](https://www.nature.com/articles/s41586-025-09848-5) | Integration of key fault-tolerant mechanisms. Performance depends on protocol, decoding, and acceptance conditions. |
 | Neutral atoms | A separate experiment trapped over 6,100 atoms and measured 12.6(1) s coherence with XY16 dynamical decoupling (a refocusing pulse sequence). *Nature* (2025). [Paper](https://www.nature.com/articles/s41586-025-09641-4) | Large coherent arrays, not a demonstrated 6,100-qubit universal entangling processor. |
-
-These three platforms are useful starting points for gate-based hardware: fast engineered circuits, precise motion-mediated ion gates, and large rearrangeable atom arrays. Semiconductor spins and photonics are also active approaches. [Silicon experiment](https://www.nature.com/articles/s41586-025-09531-9), [photonic experiment](https://www.nature.com/articles/s41586-024-08406-9)
