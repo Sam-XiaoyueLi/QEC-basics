@@ -149,7 +149,9 @@ Ground-state atoms interact weakly at typical tweezer separations. A laser tempo
 
 A laser sequence turns this conditional response into a phase, producing **$CZ$** while returning population to the storage states. Moving atoms into range or addressing nearby atoms selects interacting pairs.
 
-![Optical tweezer confinement, rubidium zero and one states, and Rydberg blockade](assets/neutral-atoms.png)
+![Optical tweezer confinement and rubidium internal states](assets/neutral-atoms.png)
+
+![The same laser excites atom B when atom A is unexcited, but misses the shifted transition when A is in a Rydberg state](assets/rydberg-blockade.png)
 
 ## Comparison
 

@@ -116,7 +116,11 @@ txt(ax,11.55,1.65,'State-dependent forces\n↓\nJoint phase on the qubits',ha='c
 txt(ax,11.55,.6,'QCCD: move ions between gate zones',ha='center',fontsize=11)
 save(fig,'trapped-ions')
 
-fig,ax=panel()
+fig, ax = plt.subplots(figsize=(9,4.4))
+fig.subplots_adjust(left=.02,right=.98,top=.98,bottom=.03)
+ax.set(xlim=(0,9),ylim=(0,4.2))
+ax.set_aspect('equal')
+ax.axis('off')
 txt(ax,2.25,3.85,'Optical tweezer',ha='center',fontsize=16,weight='bold')
 ax.add_patch(Ellipse((2.2,2.85),.5,.85,facecolor='#fee2e2',edgecolor='#fca5a5'))
 ax.add_patch(Circle((2.2,2.85),.075,facecolor=BLUE))
@@ -137,16 +141,45 @@ txt(ax,6.45,1.53,'F = 2, mF = 0',ha='center',fontsize=10)
 arrow(ax,(5.35,1.12),(5.35,1.72),RED)
 arrow(ax,(6.65,1.9),(6.65,2.9),GREEN)
 txt(ax,6.65,2.4,'  Rydberg laser',color=GREEN,fontsize=11)
-txt(ax,11.6,3.85,'Rydberg blockade',ha='center',fontsize=16,weight='bold')
-line(ax,9.7,11.15,2.05,color='#94a3b8',ls='--')
-line(ax,9.7,11.15,3.15,color=GREEN)
-txt(ax,11.3,3.15,'|rr⟩',va='center',fontsize=14)
-txt(ax,11.3,2.05,'Without interaction',va='center',fontsize=10,color='#64748b')
-arrow(ax,(10.8,2.13),(10.8,3.07),GREEN,both=True)
-txt(ax,10.45,2.6,'V',ha='right',fontsize=15,color=GREEN)
-line(ax,9.7,11.15,1.1)
-txt(ax,11.3,1.1,'One Rydberg excitation',va='center',fontsize=10)
-arrow(ax,(10.1,1.2),(10.1,1.96),RED)
-txt(ax,11.5,.55,'Pair shift detunes the second excitation',ha='center',fontsize=11)
 save(fig,'neutral-atoms')
+
+fig, ax = plt.subplots(figsize=(12,6.2))
+fig.subplots_adjust(left=.02,right=.98,top=.98,bottom=.02)
+ax.set(xlim=(0,12),ylim=(0,6.2))
+ax.axis('off')
+txt(ax,6,5.9,'Rydberg blockade: exciting A suppresses excitation of B',ha='center',fontsize=19,weight='bold')
+for left,blocked in [(0,False),(6,True)]:
+    center=left+3
+    title='A is not excited' if not blocked else 'A is already in a Rydberg state'
+    txt(ax,center,5.35,title,ha='center',fontsize=14,weight='bold')
+    for x,label,color in [(left+1.9,'A',GREEN if blocked else BLUE),(left+4.0,'B',BLUE)]:
+        ax.add_patch(Circle((x,4.75),.16,facecolor=color))
+        txt(ax,x,4.35,label,ha='center',fontsize=12,weight='bold')
+    if blocked:
+        arrow(ax,(left+2.2,4.75),(left+3.7,4.75),GREEN,both=True)
+        txt(ax,center,4.08,'Interaction raises B’s excitation energy',ha='center',fontsize=11,color=GREEN)
+    else:
+        txt(ax,center,4.08,'No Rydberg interaction',ha='center',fontsize=11)
+    x1,x2=left+1.0,left+3.65
+    low,normal,shifted=1.25,2.65,3.5
+    line(ax,x1,x2,low)
+    txt(ax,x2+.12,low,'B: |1⟩',va='center',fontsize=12)
+    if blocked:
+        line(ax,x1,x2,normal,color='#94a3b8',ls='--')
+        line(ax,x1,x2,shifted,color=GREEN)
+        txt(ax,x2+.12,shifted,'B: |r⟩',va='center',fontsize=12,color=GREEN)
+        arrow(ax,(x2-.18,normal+.04),(x2-.18,shifted-.04),GREEN,both=True)
+        txt(ax,x2+.12,normal,'Original level',va='center',fontsize=10,color='#64748b')
+    else:
+        line(ax,x1,x2,normal,color=GREEN)
+        txt(ax,x2+.12,normal,'B: |r⟩',va='center',fontsize=12,color=GREEN)
+    arrow(ax,(left+1.75,low+.08),(left+1.75,normal-.06),RED)
+    txt(ax,left+1.98,1.95,'Same laser\ndrive energy',va='center',fontsize=11,color=RED)
+    if blocked:
+        ax.plot([left+1.63,left+1.87],[normal-.17,normal+.07],color=RED,lw=2)
+        ax.plot([left+1.63,left+1.87],[normal+.07,normal-.17],color=RED,lw=2)
+    result='Laser matches → B can be excited' if not blocked else 'Laser no longer matches → B’s excitation is suppressed'
+    txt(ax,center,.65,result,ha='center',fontsize=12,weight='bold',color=GREEN if not blocked else RED)
+txt(ax,6,.16,'|1⟩: stored qubit state     |r⟩: highly excited Rydberg state',ha='center',fontsize=11)
+save(fig,'rydberg-blockade')
 print('Generated hardware diagrams.')
