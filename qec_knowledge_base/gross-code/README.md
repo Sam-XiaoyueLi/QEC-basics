@@ -326,7 +326,9 @@ The [example script](build_examples.py) reproduces the figures, checks all stabi
 .venv/bin/python qec_knowledge_base/gross-code/build_examples.py
 ```
 
-Useful connections to the basic material:
+Useful connections to related material:
+
+- [Quantum computing hardware](../quantum-computing-hardware/README.md): physical couplings, native gates, and movement explain the cost of realizing the Gross code's required connections.
 
 - [Shor-code notebook](../../shor_tutorial.ipynb): independent stabilizers, logical pairs, and tracked corrections.
 - [Surface-code and lattice-surgery notebook](../../surface_code.ipynb): the joint-parity measurement idea behind logical gates.

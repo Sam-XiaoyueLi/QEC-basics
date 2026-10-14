@@ -33,6 +33,8 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects evolving notes o
 
 - [Gross code](qec_knowledge_base/gross-code/README.md) — **Finished.** Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
+- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Draft.** General requirements, physical schematics, native gates and connectivity, and a dated comparison of superconducting, trapped-ion, and neutral-atom milestones.
+
 ## Run the notebooks
 
 Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:
