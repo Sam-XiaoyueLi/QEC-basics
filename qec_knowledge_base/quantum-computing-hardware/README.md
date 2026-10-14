@@ -37,7 +37,7 @@ A resonant electromagnetic drive couples the levels and prepares a chosen superp
 
 **Using these states as qubits requires protecting them from their surroundings.** Collisions with air, fluctuating fields, and coupling to uncontrolled motion can exchange energy or disturb the relative phase. When the environment acquires information that distinguishes the components of a superposition, their observable interference is lost. This is **decoherence**. Cooling reduces thermal excitation and unwanted motion. Vacuum, shielding, and controlled fields reduce other disturbances.
 
-**The goal of quantum computing hardware is to select two addressable states, suppress unwanted interactions, and provide controlled coupling for gates and readout.** Trapped ions and neutral atoms use internal atomic states. Superconducting qubits use discrete levels of an engineered electrical circuit. In either case, populations and phase information must survive long enough to perform many operations.
+**The goal of quantum computing hardware is to select two addressable states, suppress unwanted interactions, and provide controlled coupling for gates and readout.** A gate-based computer needs scalable, well-characterized qubits that can be initialized in known states, controlled with universal gates, and measured individually. Their populations and phase information must survive long enough to perform the required operations. These are the five **DiVincenzo criteria**. [Original paper](https://arxiv.org/abs/quant-ph/0002077)
 
 ### Relaxation and phase stability
 
@@ -61,20 +61,6 @@ $$
 where $r_\perp$ is the length of the Bloch vector's projection onto the equatorial plane. The figure starts both examples at $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$, with equal populations and relative phase zero. The vectors show the state averaged over repeated runs, with predictable phase rotation omitted. Compare $T_1$ and $T_2$ with gate and idle durations to judge how much information is lost during a computation.
 
 ![Bloch-sphere views of energy relaxation toward the ground state and loss of phase coherence at fixed populations](assets/bloch-coherence.png)
-
-## Requirements for gate-based quantum computing
-
-The five **DiVincenzo criteria** specify the essential capabilities. [Original paper](https://arxiv.org/abs/quant-ph/0002077)
-
-| Requirement | Hardware capability |
-| --- | --- |
-| Scalable, well-characterized qubits | Known states and interactions, with a route to larger systems. |
-| Initialization | Prepare a known state. |
-| Long enough coherence | Preserve information over the required operations. |
-| Universal gate control | Combine operations to approximate arbitrary quantum circuits. |
-| Qubit-specific measurement | Read the required qubit outcomes. |
-
-Fault-tolerant computation adds repeated error checks, reset, decoding, and feedback. Storage favours isolation. Gates and measurement require carefully controlled coupling.
 
 ## Superconducting qubits
 
