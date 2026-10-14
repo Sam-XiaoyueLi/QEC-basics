@@ -12,25 +12,36 @@ $$
 \qquad |\alpha|^2+|\beta|^2=1.
 $$
 
-The amplitudes set the measurement probabilities, $P(0)=|\alpha|^2$ and $P(1)=|\beta|^2$. Their **relative phase**, $\arg\beta-\arg\alpha$, determines how the two components interfere during later gates. Hardware must preserve both the populations and the phase information long enough to perform the computation.
+The amplitudes set the measurement probabilities, $P(0)=|\alpha|^2$ and $P(1)=|\beta|^2$. Their **relative phase**, $\arg\beta-\arg\alpha$, determines how the two components interfere during later gates.
 
-**Atoms and electron spins provide physical states for qubits.** An atom has discrete internal energy levels. It can occupy one level, or a coherent superposition of two levels. For two different energies $E_0$ and $E_1$, that superposition evolves as
+**Atoms, ions, and electron spins provide natural two-level systems.** Neutral atoms and ions have discrete internal energy levels. For two chosen levels with energies $E_0$ and $E_1$, a superposition evolves as
 
 $$
+\begin{aligned}
 |\psi(t)\rangle
-=\alpha e^{-iE_0t/\hbar}|0\rangle
-+\beta e^{-iE_1t/\hbar}|1\rangle.
+&=\alpha e^{-iE_0t/\hbar}|0\rangle
++\beta e^{-iE_1t/\hbar}|1\rangle\\
+&=e^{-iE_0t/\hbar}
+\left(\alpha|0\rangle+\beta e^{-i\Delta E\,t/\hbar}|1\rangle\right),
+\qquad \Delta E=E_1-E_0.
+\end{aligned}
 $$
 
-The possible results of an energy measurement are still $E_0$ and $E_1$. Before measurement, the relative phase evolves at a rate set by their energy difference. A resonant electromagnetic drive couples the levels and prepares a chosen superposition. Electron spin works similarly: along a chosen axis, its two basis states are spin up and spin down. A controlled drive can prepare a superposition of them.
+Here $\hbar=h/(2\pi)$, with $h$ Planck's constant. The common factor $e^{-iE_0t/\hbar}$ is a **global phase** and does not affect measurement probabilities. The energy difference determines the evolving relative phase:
 
-**Ordinary objects also obey quantum mechanics.** But light, air, surrounding materials, and internal motion continually interact with them. When those interactions carry away information that distinguishes the components of a superposition, observable interference is lost. This is **decoherence**. For everyday objects, it usually happens too quickly to preserve and manipulate superpositions of macroscopically different states.
+$$
+\varphi(t)=\varphi(0)-\frac{\Delta E\,t}{\hbar}.
+$$
 
-**Quantum computing hardware selects two addressable states, suppresses unwanted interactions, and retains controlled coupling for gates and readout.** Trapped ions and neutral atoms use selected internal atomic states, with vacuum and carefully controlled fields helping preserve them. Superconducting qubits instead use discrete energy levels of an engineered electrical circuit, protected by low-loss materials, cooling, and shielding. Each platform needs drives that control individual qubits, interactions that entangle qubits, and a way to measure them.
+A resonant electromagnetic drive couples the levels and prepares a chosen superposition. Electron spins follow the same description when a magnetic field separates the energies of spin up and spin down.
+
+**Using these states as qubits requires protecting them from their surroundings.** Collisions with air, fluctuating fields, and coupling to uncontrolled motion can exchange energy or disturb the relative phase. When the environment acquires information that distinguishes the components of a superposition, their observable interference is lost. This is **decoherence**. Cooling reduces thermal excitation and unwanted motion. Vacuum, shielding, and controlled fields reduce other disturbances.
+
+**The goal of quantum computing hardware is to select two addressable states, suppress unwanted interactions, and provide controlled coupling for gates and readout.** Trapped ions and neutral atoms use internal atomic states. Superconducting qubits use discrete levels of an engineered electrical circuit. In either case, populations and phase information must survive long enough to perform many operations.
 
 ### Relaxation and phase stability
 
-Even with these protections, the environment can still exchange energy with the qubit or disturb its relative phase. Two time scales, $T_1$ and $T_2$, quantify how long its populations and phase information survive.
+Two time scales quantify this survival: **$T_1$ measures energy relaxation**, which changes the populations, and **$T_2$ measures the decay of phase coherence**, which reduces interference. Both can be visualized on the Bloch sphere.
 
 On the Bloch sphere introduced in Tutorial 0, the north pole is $|0\rangle$ and the south pole is $|1\rangle$. The height encodes the population difference, and the angle around the vertical axis encodes the relative phase. Noise can shorten the Bloch vector, moving its tip inside the sphere.
 
