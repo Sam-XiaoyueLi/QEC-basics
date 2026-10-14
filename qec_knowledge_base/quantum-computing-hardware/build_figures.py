@@ -1,4 +1,4 @@
-"""Original conceptual schematics; no measured device data. Run from repo root."""
+"""Generate the hardware reference diagrams. Run from the repository root."""
 from pathlib import Path
 import matplotlib
 matplotlib.use('Agg')
@@ -9,89 +9,120 @@ OUT = Path(__file__).parent / 'assets'
 OUT.mkdir(exist_ok=True)
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 12, 'svg.fonttype': 'none'})
 BLUE, RED, INK, GREEN = '#2563eb', '#dc2626', '#172b4d', '#0f766e'
-figures = [plt.subplots(figsize=(13, 4.5)) for _ in range(3)]
-axs = [ax for fig, ax in figures]
-for fig, ax in figures:
-    fig.subplots_adjust(top=.98, bottom=.1, left=.02, right=.98)
 
-def setup(ax, title):
-    ax.set(xlim=(0,13), ylim=(0,4)); ax.set_aspect('equal'); ax.axis('off')
-    ax.text(.1,3.7,title,fontsize=18,weight='bold',color=INK)
+def panel():
+    fig, ax = plt.subplots(figsize=(14,4.4))
+    fig.subplots_adjust(left=.02,right=.98,top=.98,bottom=.03)
+    ax.set(xlim=(0,14),ylim=(0,4.2))
+    ax.set_aspect('equal'); ax.axis('off')
+    return fig, ax
 
 def txt(ax,x,y,s,**kw):
-    kw.setdefault('color', INK)
+    kw.setdefault('color',INK)
     ax.text(x,y,s,**kw)
-def arrow(ax,a,b,color=INK): ax.annotate('',xy=b,xytext=a,arrowprops=dict(arrowstyle='->',color=color,lw=2))
 
-ax=axs[0]; setup(ax,'Superconducting qubits: quantum circuits on a cold chip')
-ax.add_patch(Rectangle((.15,.8),5.5,2.2,facecolor='#f1f5f9',edgecolor='#94a3b8'))
-for x,label in [(1.45,'Qubit A'),(4.3,'Qubit B')]:
-    ax.add_patch(Rectangle((x-.7,1.5),.55,.8,facecolor=BLUE))
-    ax.add_patch(Rectangle((x+.15,1.5),.55,.8,facecolor=BLUE))
-    ax.plot([x-.15,x+.15],[1.9,1.9],color=INK,lw=2)
-    ax.plot([x-.08,x+.08],[1.81,1.99],color=INK,lw=2)
-    ax.plot([x-.08,x+.08],[1.99,1.81],color=INK,lw=2)
-    txt(ax,x,1.18,label,ha='center')
-    arrow(ax,(x,2.9),(x,2.35),RED)
-txt(ax,2.9,3.14,'Microwave controls',ha='center',color=RED)
-ax.plot([2.15,3.6],[1.9,1.9],color=GREEN,lw=4)
-txt(ax,2.87,2.13,'Coupling',ha='center',fontsize=11)
-txt(ax,2.9,.46,'Pads + junction form the qubit circuit',ha='center')
-txt(ax,8.2,2.88,'Josephson junction\nConceptual cross-section',ha='center',fontsize=12,weight='bold')
-for x,w,c in [(6.4,1.7,BLUE),(8.1,.18,'#f59e0b'),(8.28,1.7,BLUE)]:
-    ax.add_patch(Rectangle((x,1.72),w,.68,facecolor=c))
-txt(ax,7.2,1.45,'Superconductor',ha='center',fontsize=10)
-txt(ax,9.2,1.45,'Superconductor',ha='center',fontsize=10)
-arrow(ax,(8.19,1.03),(8.19,1.7))
-txt(ax,8.19,.78,'Thin insulating barrier',ha='center',fontsize=11)
-for y,l in [(1.42,'|0⟩'),(2.05,'|1⟩'),(2.56,'|2⟩')]:
-    ax.plot([10.5,11.55],[y,y],color=INK,lw=2); txt(ax,11.65,y,l,va='center')
-txt(ax,11.2,3.03,'Circuit levels',ha='center',fontsize=11)
-txt(ax,11.2,.69,'Use 0 and 1;\navoid leakage to 2',ha='center',fontsize=11)
+def arrow(ax,a,b,color=INK,both=False):
+    ax.annotate('',xy=b,xytext=a,arrowprops=dict(arrowstyle='<->' if both else '->',color=color,lw=2))
 
-ax=axs[1]; setup(ax,'Trapped ions: charged atoms suspended above electrodes in vacuum')
-ax.add_patch(Rectangle((.3,.85),7,1.9,facecolor='#f8fafc',edgecolor='#94a3b8',ls='--'))
-for x in [.5,1.55,2.6,3.65,4.7,5.75,6.8]:
-    ax.add_patch(Rectangle((x,.87),.7,.35,facecolor='#94a3b8'))
-for x in [1.6,3.4,5.2]: ax.add_patch(Circle((x,1.95),.13,facecolor=BLUE))
-ax.annotate('',xy=(5.1,2.3),xytext=(1.7,2.3),arrowprops=dict(arrowstyle='<->',color=GREEN,lw=2))
-txt(ax,3.4,2.49,'Collective motion mediates a gate',ha='center',fontsize=11)
-arrow(ax,(.65,3.05),(3.3,2.02),RED); txt(ax,.3,3.1,'Laser control',color=RED,fontsize=11)
-txt(ax,3.65,.5,'Electric fields confine the ions; ions do not sit on the metal',ha='center',fontsize=11)
-txt(ax,8.1,3.02,'QCCD variant: move ions to gate zones',fontsize=13,weight='bold')
-for x,label in [(8.2,'Storage'),(10.6,'Gate zone')]:
-    ax.add_patch(Rectangle((x,1.4),1.85,1,facecolor='#eff6ff',edgecolor=BLUE))
-    txt(ax,x+.925,1.1,label,ha='center',fontsize=11)
-ax.add_patch(Circle((8.9,1.9),.12,facecolor=BLUE))
-for x in [11.15,11.8]: ax.add_patch(Circle((x,1.9),.12,facecolor=BLUE))
-arrow(ax,(9.15,1.9),(10.45,1.9),GREEN)
-txt(ax,10.2,.5,'Qubit = internal atomic states, not the position',ha='center',fontsize=11)
+def line(ax,x1,x2,y,color=INK,**kw):
+    ax.plot([x1,x2],[y,y],color=color,lw=2,**kw)
 
-ax=axs[2]; setup(ax,'Neutral atoms: uncharged atoms held in focused laser traps in vacuum')
-for y in [1.25,2.05,2.85]:
-    for x in [1,1.8,2.6,3.4]:
-        ax.add_patch(Ellipse((x,y),.45,.64,facecolor='#fee2e2',edgecolor='#fca5a5'))
-        ax.add_patch(Circle((x,y),.08,facecolor=BLUE))
-txt(ax,2.2,.65,'Optical tweezer array',ha='center')
-arrow(ax,(4,2.9),(3.55,2.85),RED); txt(ax,4.02,2.91,'Focused laser trap',fontsize=11,color=RED)
-arrow(ax,(4.1,1.55),(6.4,1.55),GREEN)
-txt(ax,5.25,1.95,'Move selected atoms',ha='center',fontsize=11)
-for x in [7.15,8.3]:
-    ax.add_patch(Ellipse((x,1.55),.45,.64,facecolor='#fee2e2',edgecolor='#fca5a5'))
-    ax.add_patch(Circle((x,1.55),.09,facecolor=BLUE))
-    ax.add_patch(Circle((x,1.55),.62,fill=False,edgecolor=GREEN,ls='--',lw=2))
-ax.annotate('',xy=(8.15,1.55),xytext=(7.3,1.55),arrowprops=dict(arrowstyle='<->',color=GREEN,lw=2))
-txt(ax,7.8,2.7,'Rydberg excitation enables\nstrong interactions for a gate',ha='center',fontsize=11)
-txt(ax,7.8,.55,'Dashed halos symbolize interactions,\nnot literal electron trajectories',ha='center',fontsize=10)
-for y,l in [(1.3,'|0⟩'),(1.85,'|1⟩'),(2.95,'|r⟩')]:
-    ax.plot([10.3,11.3],[y,y],color=INK,lw=2); txt(ax,11.45,y,l,va='center')
-arrow(ax,(10.75,1.97),(10.75,2.83),RED)
-txt(ax,11,.55,'Store in 0 and 1;\nuse r during entangling',ha='center',fontsize=11)
-for (fig, ax), name in zip(figures, ['superconducting', 'trapped-ions', 'neutral-atoms']):
-    fig.text(.5,.035,'Conceptual schematic; not to scale',ha='center',fontsize=10,color=INK)
+def save(fig,name):
     fig.savefig(OUT/f'{name}.png',dpi=160)
     fig.savefig(OUT/f'{name}.svg')
-    svg_path = OUT/f'{name}.svg'
-    svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines()) + '\n')
+    p=OUT/f'{name}.svg'
+    p.write_text('\n'.join(s.rstrip() for s in p.read_text().splitlines())+'\n')
     plt.close(fig)
-print('Saved separate PNG and SVG diagrams for all three platforms.')
+
+fig,ax=panel()
+txt(ax,2.5,3.85,'Transmon circuit',ha='center',fontsize=16,weight='bold')
+# Capacitor and Josephson junction connect the same two nodes.
+line(ax,1.2,3.8,3); line(ax,1.2,3.8,1.2)
+ax.plot([1.2,1.2],[3,2.2],color=INK,lw=2)
+ax.plot([1.2,1.2],[1.95,1.2],color=INK,lw=2)
+line(ax,.75,1.65,2.2,BLUE); line(ax,.75,1.65,1.95,BLUE)
+ax.plot([3.8,3.8],[3,1.2],color=INK,lw=2)
+ax.add_patch(Rectangle((3.65,1.96),.3,.3,facecolor='white',edgecolor=INK,lw=2))
+ax.plot([3.65,3.95],[1.96,2.26],color=INK,lw=2)
+ax.plot([3.65,3.95],[2.26,1.96],color=INK,lw=2)
+txt(ax,.65,2.05,'C',ha='right',color=BLUE,fontsize=16)
+txt(ax,4.05,2.1,'JJ',color=INK,fontsize=14)
+txt(ax,2.5,.65,'Capacitor ∥ junction',ha='center',fontsize=13)
+arrow(ax,(2.5,3.6),(2.5,3.05),RED)
+txt(ax,2.5,3.65,'Microwave drive',ha='center',fontsize=11,color=RED)
+txt(ax,7.5,3.85,'Josephson junction',ha='center',fontsize=16,weight='bold')
+for x,w,c in [(5.5,1.8,BLUE),(7.3,.2,'#f59e0b'),(7.5,1.8,BLUE)]:
+    ax.add_patch(Rectangle((x,2.1),w,.7,facecolor=c))
+txt(ax,6.4,1.8,'Superconductor',ha='center',fontsize=11)
+txt(ax,8.4,1.8,'Superconductor',ha='center',fontsize=11)
+arrow(ax,(7.4,1.25),(7.4,2.05))
+txt(ax,7.4,1.02,'Insulating barrier',ha='center',fontsize=12)
+txt(ax,7.4,.55,'Coherent Cooper-pair tunnelling',ha='center',fontsize=11)
+txt(ax,11.9,3.85,'Circuit levels',ha='center',fontsize=16,weight='bold')
+for y,label in [(1.05,'|0⟩'),(2.2,'|1⟩'),(3.05,'|2⟩')]:
+    line(ax,10.8,12.6,y); txt(ax,12.75,y,label,va='center',fontsize=14)
+arrow(ax,(11.3,1.12),(11.3,2.12),RED)
+txt(ax,10.65,1.64,'Drive',ha='right',color=RED,fontsize=11)
+txt(ax,11.9,.55,'Unequal gaps select the lowest pair',ha='center',fontsize=11)
+save(fig,'superconducting')
+
+fig,ax=panel()
+txt(ax,2.7,3.85,'Electromagnetic trap',ha='center',fontsize=16,weight='bold')
+for x in [.55,1.55,2.55,3.55,4.55]:
+    ax.add_patch(Rectangle((x,1.05),.65,.4,facecolor='#94a3b8'))
+for x in [1.3,2.65,4]: ax.add_patch(Circle((x,2.25),.12,facecolor=BLUE))
+arrow(ax,(.5,3.15),(2.55,2.3),RED)
+txt(ax,.55,3.22,'Laser control',fontsize=11,color=RED)
+txt(ax,2.7,.65,'Fields confine charged atoms in vacuum',ha='center',fontsize=11)
+txt(ax,7.2,3.85,'Internal qubit levels',ha='center',fontsize=16,weight='bold')
+for y,label in [(1.25,'|0⟩'),(2.75,'|1⟩')]:
+    line(ax,6.1,7.7,y); txt(ax,7.9,y,label,va='center',fontsize=14)
+arrow(ax,(6.65,1.4),(6.65,2.6),RED)
+txt(ax,7.2,.6,'Two hyperfine states\nElectron + nuclear angular momenta',ha='center',fontsize=11)
+txt(ax,7.1,3.13,'Microwave or Raman drive',ha='center',fontsize=11,color=RED)
+txt(ax,11.6,3.85,'Entangling interaction',ha='center',fontsize=16,weight='bold')
+for x in [10.5,12.6]: ax.add_patch(Circle((x,2.75),.14,facecolor=BLUE))
+arrow(ax,(10.7,2.75),(12.4,2.75),GREEN,both=True)
+txt(ax,11.55,2.3,'Shared vibrational mode',ha='center',fontsize=12,color=GREEN)
+txt(ax,11.55,1.65,'State-dependent forces\n↓\nJoint phase on the qubits',ha='center',va='center',fontsize=12)
+txt(ax,11.55,.6,'QCCD: move ions between gate zones',ha='center',fontsize=11)
+save(fig,'trapped-ions')
+
+fig,ax=panel()
+txt(ax,2.25,3.85,'Optical tweezer array',ha='center',fontsize=16,weight='bold')
+for y in [1.15,2,2.85]:
+    for x in [1,1.8,2.6,3.4]:
+        ax.add_patch(Ellipse((x,y),.4,.6,facecolor='#fee2e2',edgecolor='#fca5a5'))
+        ax.add_patch(Circle((x,y),.075,facecolor=BLUE))
+txt(ax,2.2,.6,'Focused lasers confine neutral atoms',ha='center',fontsize=11)
+txt(ax,6.9,3.85,'Atomic levels',ha='center',fontsize=16,weight='bold')
+for y,label in [(1.05,'|0⟩'),(1.8,'|1⟩'),(3,'|r⟩')]:
+    line(ax,5.65,7.25,y); txt(ax,7.45,y,label,va='center',fontsize=14)
+arrow(ax,(6.1,1.12),(6.1,1.72),RED)
+arrow(ax,(6.65,1.9),(6.65,2.9),GREEN)
+txt(ax,6.65,2.4,'  Rydberg laser',color=GREEN,fontsize=11)
+txt(ax,6.6,.6,'Store in 0 and 1',ha='center',fontsize=11)
+txt(ax,11.6,3.85,'Rydberg blockade',ha='center',fontsize=16,weight='bold')
+line(ax,9.7,11.15,2.05,color='#94a3b8',ls='--')
+line(ax,9.7,11.15,3.15,color=GREEN)
+txt(ax,11.3,3.15,'|rr⟩',va='center',fontsize=14)
+txt(ax,11.3,2.05,'Without interaction',va='center',fontsize=10,color='#64748b')
+arrow(ax,(10.8,2.13),(10.8,3.07),GREEN,both=True)
+txt(ax,10.45,2.6,'V',ha='right',fontsize=15,color=GREEN)
+line(ax,9.7,11.15,1.1)
+txt(ax,11.3,1.1,'One Rydberg excitation',va='center',fontsize=10)
+arrow(ax,(10.1,1.2),(10.1,1.96),RED)
+txt(ax,11.5,.55,'Pair shift detunes the second excitation',ha='center',fontsize=11)
+save(fig,'neutral-atoms')
+import numpy as np
+fig, ax = plt.subplots(figsize=(8, 3.4))
+phase = np.linspace(0, 2*np.pi, 250)
+for visibility, label, color in [(1, 'Stable phase: V = 1', BLUE), (.4, 'Partial phase noise: V = 0.4', GREEN), (0, 'Random phase: V = 0', RED)]:
+    ax.plot(phase, (1+visibility*np.cos(phase))/2, label=label, color=color, lw=2)
+ax.set(xlim=(0,2*np.pi), ylim=(-.04,1.04), xlabel='Applied phase φ', ylabel='Probability of measuring 0')
+ax.set_xticks([0,np.pi/2,np.pi,3*np.pi/2,2*np.pi], ['0','π/2','π','3π/2','2π'])
+ax.legend(loc='upper center', bbox_to_anchor=(.5,1.29), ncol=3, frameon=False, fontsize=10)
+ax.spines[['top','right']].set_visible(False)
+fig.tight_layout()
+save(fig, 'phase-coherence')
+print('Generated hardware and phase-coherence diagrams.')
