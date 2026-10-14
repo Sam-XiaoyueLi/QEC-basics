@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="374.4pt" viewBox="0 0 864 374.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-14T19:34:51.127463</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 374.4
+L 864 374.4
+L 864 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 41.472 315.432
+L 822.528 315.432
+L 822.528 54.864
+L 41.472 54.864
+z
+" clip-path="url(#p541d796080)" style="fill: #f8fafc; stroke: #cbd5e1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 176.256 247.752
+L 214.272 247.752
+L 214.272 200.376
+L 176.256 200.376
+z
+" clip-path="url(#p541d796080)" style="fill: #2563eb"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 235.008 247.752
+L 273.024 247.752
+L 273.024 200.376
+L 235.008 200.376
+z
+" clip-path="url(#p541d796080)" style="fill: #2563eb"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 590.976 247.752
+L 628.992 247.752
+L 628.992 200.376
+L 590.976 200.376
+z
+" clip-path="url(#p541d796080)" style="fill: #2563eb"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 649.728 247.752
+L 687.744 247.752
+L 687.744 200.376
+L 649.728 200.376
+z
+" clip-path="url(#p541d796080)" style="fill: #2563eb"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 404.352 247.752
+L 459.648 247.752
+L 459.648 200.376
+L 404.352 200.376
+z
+" clip-path="url(#p541d796080)" style="fill: #ccfbf1; stroke: #0f766e; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 65.664 81.936
+L 798.336 81.936
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #7c3aed; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 214.272 224.064
+L 235.008 224.064
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 219.1104 230.832
+L 230.1696 217.296
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 219.1104 217.296
+L 230.1696 230.832
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 248.832 193.608
+L 248.832 180.072
+L 200.448 180.072
+L 200.448 163.152
+L 248.832 163.152
+L 248.832 146.232
+L 200.448 146.232
+L 200.448 129.312
+L 248.832 129.312
+L 248.832 92.088
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #d97706; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 158.976 301.896
+L 158.976 240.984
+L 171.4176 234.216
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 628.992 224.064
+L 649.728 224.064
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 633.8304 230.832
+L 644.8896 217.296
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 633.8304 217.296
+L 644.8896 230.832
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #172b4d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_10">
+    <path d="M 663.552 193.608
+L 663.552 180.072
+L 615.168 180.072
+L 615.168 163.152
+L 663.552 163.152
+L 663.552 146.232
+L 615.168 146.232
+L 615.168 129.312
+L 663.552 129.312
+L 663.552 92.088
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #d97706; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 573.696 301.896
+L 573.696 240.984
+L 586.1376 234.216
+" clip-path="url(#p541d796080)" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 279.936 224.064
+L 404.352 224.064
+" clip-path="url(#p541d796080)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #0f766e; stroke-width: 2"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 459.648 224.064
+L 584.064 224.064
+" clip-path="url(#p541d796080)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #0f766e; stroke-width: 2"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b4d" x="432" y="31.176" transform="rotate(-0 432 31.176)">Transmons, resonators, and couplers on a chip</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="432" y="68.4" transform="rotate(-0 432 68.4)">Readout line: probe in, measurement signal out</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b4d" x="224.64" y="270.0864" transform="rotate(-0 224.64 270.0864)">Transmon A</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #b45309" x="276.48" y="149.616" transform="rotate(-0 276.48 149.616)">Readout resonator</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 158.976 310.044533
+Q 158.976 295.126988 158.976 282.44551
+" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 156.576 287.24551
+L 158.976 282.44551
+L 161.376 287.24551
+" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #dc2626" x="158.976" y="333.7056" transform="rotate(-0 158.976 333.7056)">Control line</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b4d" x="639.36" y="270.0864" transform="rotate(-0 639.36 270.0864)">Transmon B</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #b45309" x="691.2" y="149.616" transform="rotate(-0 691.2 149.616)">Readout resonator</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 573.696 310.044533
+Q 573.696 295.126988 573.696 282.44551
+" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 571.296 287.24551
+L 573.696 282.44551
+L 576.096 287.24551
+" style="fill: none; stroke: #dc2626; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #dc2626" x="573.696" y="333.7056" transform="rotate(-0 573.696 333.7056)">Control line</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f766e" x="432" y="226.662047" transform="rotate(-0 432 226.662047)">Coupler</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #0f766e" x="432" y="180.072" transform="rotate(-0 432 180.072)">Sets the A–B interaction</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p541d796080">
+   <rect x="17.28" y="7.488" width="829.44" height="351.936"/>
+  </clipPath>
+ </defs>
+</svg>

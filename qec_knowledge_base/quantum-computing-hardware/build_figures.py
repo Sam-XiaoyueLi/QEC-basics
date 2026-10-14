@@ -34,6 +34,34 @@ def save(fig,name):
     p.write_text('\n'.join(s.rstrip() for s in p.read_text().splitlines())+'\n')
     plt.close(fig)
 
+fig, ax = plt.subplots(figsize=(12, 5.2))
+fig.subplots_adjust(left=.02,right=.98,top=.98,bottom=.04)
+ax.set(xlim=(0,12),ylim=(0,5.2)); ax.axis('off')
+ax.add_patch(Rectangle((.35,.65),11.3,3.85,facecolor='#f8fafc',edgecolor='#cbd5e1'))
+txt(ax,6,4.85,'Transmons, resonators, and couplers on a chip',ha='center',fontsize=18,weight='bold')
+line(ax,.7,11.3,4.1,color='#7c3aed')
+txt(ax,6,4.3,'Readout line: probe in, measurement signal out',ha='center',fontsize=12,color='#7c3aed')
+for x,label in [(3,'A'),(9,'B')]:
+    for offset in [-.7,.15]:
+        ax.add_patch(Rectangle((x+offset,1.65),.55,.7,facecolor=BLUE))
+    line(ax,x-.15,x+.15,2)
+    ax.plot([x-.08,x+.08],[1.9,2.1],color=INK,lw=2)
+    ax.plot([x-.08,x+.08],[2.1,1.9],color=INK,lw=2)
+    txt(ax,x,1.32,f'Transmon {label}',ha='center',fontsize=12)
+    # Resonator end near the qubit and opposite end near the readout line.
+    ax.plot([x+.35,x+.35,x-.35,x-.35,x+.35,x+.35,x-.35,x-.35,x+.35,x+.35],
+            [2.45,2.65,2.65,2.9,2.9,3.15,3.15,3.4,3.4,3.95],color='#d97706',lw=2.5)
+    txt(ax,x+.75,3.1,'Readout resonator',ha='left',fontsize=10,color='#b45309')
+    ax.plot([x-.95,x-.95,x-.77],[.85,1.75,1.85],color=RED,lw=2)
+    arrow(ax,(x-.95,.7),(x-.95,1.2),RED)
+    txt(ax,x-.95,.38,'Control line',ha='center',fontsize=11,color=RED)
+ax.add_patch(Rectangle((5.6,1.65),.8,.7,facecolor='#ccfbf1',edgecolor=GREEN,lw=2))
+ax.plot([3.8,5.6],[2,2],color=GREEN,lw=2,ls='--')
+ax.plot([6.4,8.2],[2,2],color=GREEN,lw=2,ls='--')
+txt(ax,6,2,'Coupler',ha='center',va='center',fontsize=10,color=GREEN)
+txt(ax,6,2.65,'Sets the A–B interaction',ha='center',fontsize=12,color=GREEN)
+save(fig,'chip-layout')
+
 fig,ax=panel()
 txt(ax,2.5,3.85,'Transmon circuit',ha='center',fontsize=16,weight='bold')
 # Capacitor and Josephson junction connect the same two nodes.
