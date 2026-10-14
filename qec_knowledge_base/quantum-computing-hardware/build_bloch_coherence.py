@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 out = Path(__file__).parent / 'assets'
 out.mkdir(exist_ok=True)
-plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 11, 'svg.fonttype': 'none'})
-fig = plt.figure(figsize=(11, 5.2), facecolor='white')
+plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 14, 'svg.fonttype': 'none'})
+fig = plt.figure(figsize=(12, 4.8), facecolor='white')
 u = np.linspace(0, 2*np.pi, 49)
 v = np.linspace(0, np.pi, 25)
 sx, sy, sz = np.outer(np.cos(u),np.sin(v)), np.outer(np.sin(u),np.sin(v)), np.outer(np.ones_like(u),np.cos(v))
@@ -19,10 +19,10 @@ for panel in range(2):
     for direction in [(1.14,0,0),(0,1.14,0),(0,0,1.16)]:
         d=np.array(direction)
         ax.plot([-d[0],d[0]],[-d[1],d[1]],[-d[2],d[2]],color='#94a3b8',lw=.8)
-    ax.text(0,0,1.27,r'$|0\rangle$',ha='center',fontsize=13)
-    ax.text(0,0,-1.29,r'$|1\rangle$',ha='center',fontsize=13)
-    ax.text(1.16,0,0,r'$|+\rangle$',fontsize=12)
-    ax.text(0,1.19,0,'y',fontsize=10,color='#64748b')
+    ax.text(0,0,1.27,r'$|0\rangle$',ha='center',fontsize=16)
+    ax.text(0,0,-1.29,r'$|1\rangle$',ha='center',fontsize=16)
+    ax.text(1.16,0,0,r'$|+\rangle$',fontsize=16)
+    ax.text(0,1.19,0,'y',fontsize=14,color='#64748b')
     times=[0,.65,1.8,4]
     for j,t in enumerate(times):
         if panel==0: x,z=np.exp(-t/2),1-np.exp(-t)
@@ -32,19 +32,19 @@ for panel in range(2):
     t=np.linspace(0,6,200)
     if panel==0:
         ax.plot(np.exp(-t/2),0*t,1-np.exp(-t),color='#334155',lw=1.2,ls='--')
-        ax.set_title(r'$T_1$: energy relaxation',fontsize=15,pad=0)
-        caption='Population relaxes into the ground state.\nThe transverse component also shrinks.'
+        ax.set_title(r'$T_1$: energy relaxation',fontsize=18,pad=0)
+        caption='Relaxation toward |0⟩'
     else:
         ax.plot(np.exp(-t),0*t,0*t,color='#334155',lw=1.2,ls='--')
-        ax.set_title(r'Phase loss contributing to $T_2$',fontsize=15,pad=0)
-        caption='Pure phase noise: equal populations remain.\nThe average vector shrinks toward the centre.'
-    ax.text2D(.5,-.015,caption,transform=ax.transAxes,ha='center',va='top',fontsize=11,linespacing=1.5)
+        ax.set_title(r'$T_2$: loss of phase coherence',fontsize=18,pad=0)
+        caption='Phase noise with unchanged populations'
+    ax.text2D(.5,-.015,caption,transform=ax.transAxes,ha='center',va='top',fontsize=14,linespacing=1.5)
     ax.set(xlim=(-1.2,1.2),ylim=(-1.2,1.2),zlim=(-1.2,1.2))
     ax.set_box_aspect((1,1,1)); ax.view_init(elev=19,azim=-64); ax.set_axis_off()
 handles=[plt.Line2D([0],[0],color=c,lw=3) for c in colors]
 fig.legend(handles,['Start','Later','Later','Late'],ncol=4,loc='lower center',bbox_to_anchor=(.5,.005),frameon=False)
 fig.subplots_adjust(left=.02,right=.98,top=.92,bottom=.18,wspace=.02)
-fig.savefig(out/'bloch-coherence.png',dpi=180,facecolor='white')
+fig.savefig(out/'bloch-coherence.png',dpi=120,facecolor='white')
 fig.savefig(out/'bloch-coherence.svg',facecolor='white')
 plt.close(fig)
 p=out/'bloch-coherence.svg'

@@ -58,9 +58,11 @@ p_1(t)=p_1(0)e^{-t/T_1},
 r_\perp(t)=r_\perp(0)e^{-t/T_2},
 $$
 
-where $r_\perp$ is the length of the Bloch vector's projection onto the equatorial plane. The figure starts at $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$. Its vectors show averages over repeated runs, with predictable phase rotation omitted. Compare $T_1$ and $T_2$ with gate and idle durations to judge how much information is lost during a computation.
+where $r_\perp$ is the length of the Bloch vector's projection onto the equatorial plane. Compare $T_1$ and $T_2$ with gate and idle durations to judge how much information is lost during a computation.
 
-![Bloch-sphere views of energy relaxation toward the ground state and loss of phase coherence at fixed populations](assets/bloch-coherence.png)
+<img src="assets/bloch-coherence.png" alt="Bloch vectors under relaxation and phase noise" width="720">
+
+*Figure 1. Starting from $|+\rangle$, relaxation moves the average Bloch vector toward $|0\rangle$. Pure phase noise shrinks it without changing populations. Colours show successive times.*
 
 ## Hardware platforms
 
@@ -80,11 +82,17 @@ $$
 
 A selective pulse can therefore control the lowest pair while avoiding $|2\rangle$. Unwanted population in higher levels is **leakage**.
 
+<img src="assets/superconducting.png" alt="Transmon circuit, Josephson junction, and energy levels" width="720">
+
+*Figure 2. A junction and capacitor form a transmon. Unequal energy gaps let a microwave pulse address the two qubit levels while limiting excitation of the next level.*
+
 Picture a chip with transmons, readout resonators, couplers, and control lines patterned on its surface, mounted at the coldest stage of a dilution refrigerator. Cooling to tens of millikelvin suppresses thermal excitation. Low-loss materials, shielding, and filtered control lines reduce energy exchange and phase noise. Defects, stray radiation, and crosstalk remain error sources.
 
 A **readout resonator** is often a winding transmission line that supports a microwave electromagnetic mode. Its response shifts depending on whether the coupled transmon is in zero or one. A **3D cavity** supports a similar mode inside a metal enclosure. **Control lines** carry gate pulses to the qubits, and **readout lines** carry probe and measurement signals.
 
-![Two transmons connected by a coupler, with separate readout resonators and control lines](assets/chip-layout.png)
+<img src="assets/chip-layout.png" alt="Transmons, coupler, resonators, and control lines on a chip" width="720">
+
+*Figure 3. Control lines deliver gates, resonators reveal qubit states, and the coupler connects the two qubits.*
 
 The resonant frequency is $f_{01}=(E_1-E_0)/h$, typically **a few gigahertz**. This energy gap calls for **microwaves**. In the frame rotating at $f_{01}$, pulse phase selects an axis in the $X$–$Y$ plane. Strength and duration set the angle.
 
@@ -94,8 +102,6 @@ The resonant frequency is $f_{01}=(E_1-E_0)/h$, typically **a few gigahertz**. T
 - **Readout:** send a microwave probe through the readout resonator and classify the returning response as zero or one.
 
 A **coupler** sets the interaction between qubits. It can be a capacitive or inductive connection, a coupling resonator, or a tunable circuit containing additional Josephson junctions. Adjusting the interaction exchanges excitations or shifts joint-state energies. A conditional phase of $\pi$ on $|11\rangle$, after compensating single-qubit phases, gives **$CZ$**. One implementation exploits coupling to the nearby $|02\rangle$ level. Other designs favour exchange or ECR gates.
-
-![A capacitor and Josephson junction in parallel, junction materials, and unequal circuit energy levels](assets/superconducting.png)
 
 ## Trapped ions
 
@@ -121,7 +127,9 @@ Electric repulsion couples the ions' motion into shared vibrational modes. State
 
 Shared modes let different pairs interact. In segmented traps, electrodes move ions between storage and gate zones. The number of gate zones limits parallel operations.
 
-![Trapped ions, their internal qubit levels, and shared motion used for entangling gates](assets/trapped-ions.png)
+<img src="assets/trapped-ions.png" alt="Ion confinement, internal states, and shared motion" width="720">
+
+*Figure 4. Electric fields hold the ions. Drives control their internal states, and shared motion carries the interaction needed for two-qubit gates.*
 
 ## Neutral atoms
 
@@ -137,6 +145,10 @@ $$
 
 These states differ in how electron and nuclear angular momenta combine. They occupy the same trap and electronic ground manifold. A drive prepares their superposition.
 
+<img src="assets/neutral-atoms.png" alt="Optical tweezer confinement and atomic energy levels" width="720">
+
+*Figure 5. The laser focus traps the atom. Internal levels store zero and one, while a temporary Rydberg excitation enables interactions with neighbours.*
+
 Vacuum suppresses collisions, laser cooling reduces motion, and stable fields and trapping light limit phase noise. Trap-light scattering can change populations, intensity variations shift the levels, and atoms can be lost.
 
 Optical pumping prepares zero. Focused Raman beams address selected atoms, while other implementations combine global microwave rotations with local light-induced energy shifts. Pulse strength and duration set the rotation angle, and drive phase selects the $X$–$Y$ axis. Steering the tweezers rearranges the atoms.
@@ -149,9 +161,9 @@ Ground-state atoms interact weakly at typical tweezer separations. A laser tempo
 
 A laser sequence turns this conditional response into a phase, producing **$CZ$** while returning population to the storage states. Moving atoms into range or addressing nearby atoms selects interacting pairs.
 
-![Optical tweezer confinement and rubidium internal states](assets/neutral-atoms.png)
+<img src="assets/rydberg-blockade.png" alt="The same drive matches or misses atom B depending on atom A" width="720">
 
-![The same laser excites atom B when atom A is unexcited, but misses the shifted transition when A is in a Rydberg state](assets/rydberg-blockade.png)
+*Figure 6. Exciting A shifts the energy needed to excite B. The same laser drive then misses B’s transition, providing the conditional response used for two-qubit gates.*
 
 ## Comparison
 
