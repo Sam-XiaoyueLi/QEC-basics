@@ -70,8 +70,6 @@ Superconducting qubits, trapped ions, and neutral atoms are prominent gate-based
 
 ## Superconducting qubits
 
-### What are zero and one?
-
 A **Josephson junction** has two superconductors separated by a thin insulating barrier. Coherent Cooper-pair tunnelling makes it a **nonlinear inductor**. In parallel with a large capacitor, it forms a transmon's **anharmonic oscillator**. Its quantum wavefunctions have discrete energies. We use the ground level as $|0\rangle$ and the first excited level as $|1\rangle$.
 
 The junction's nonlinearity makes successive gaps unequal:
@@ -80,26 +78,18 @@ $$
 E_1-E_0\ne E_2-E_1.
 $$
 
-A selective pulse can therefore control the lowest pair while avoiding $|2\rangle$. The pair supports $\alpha|0\rangle+\beta|1\rangle$. Occupying higher levels is **leakage**. [Transmon paper](https://arxiv.org/abs/cond-mat/0703002)
+A selective pulse can therefore control the lowest pair while avoiding $|2\rangle$, which is what we call a **leakage**.
 
-### Protection and coherence
+When we think about superconducting qubits, we can picture a chip with transmon circuits patterned on its surface, mounted at the coldest stage of a dilution refrigerator. Cooling to tens of millikelvin suppresses thermal excitation. Low-loss materials, shielding, and filtered control lines help preserve the qubits’ states, while material defects, stray radiation, and crosstalk can still cause errors.
 
-Millikelvin cooling suppresses thermal excitation. Low-loss materials, shielding, and filtered control lines reduce unwanted energy exchange and phase noise. Defects, stray radiation, and crosstalk remain limitations. Willow reports mean $T_1=68\,\mu\mathrm{s}$ and $T_{2,\mathrm{CPMG}}=89\,\mu\mathrm{s}$ with refocusing pulses. These are device measurements, not fixed properties of all transmons. [Experiment](https://www.nature.com/articles/s41586-024-08449-y)
-
-### Preparation, single-qubit gates, and readout
-
-**Prepare zero:** allow relaxation toward the ground state, or measure and apply $X$ when the result is one. [Reset protocols](https://www.nature.com/articles/s41467-021-26205-y)
-
-**Drive:** the resonant frequency is $f_{01}=(E_1-E_0)/h$, typically a few gigahertz. This energy gap calls for microwaves. An optical laser's carrier is far above the transition. In the frame rotating at $f_{01}$, pulse phase selects an axis in the $X$–$Y$ plane. Strength and duration set the angle. [Control review](https://www.nature.com/articles/s41534-016-0004-0)
+The resonant frequency is $f_{01}=(E_1-E_0)/h$, typically **a few gigahertz**. This energy gap calls for **microwaves**. In the frame rotating at $f_{01}$, pulse phase selects an axis in the $X$–$Y$ plane. Strength and duration set the angle.
 
 - **$X$:** choose the $X$-axis phase and a calibrated $\pi$ pulse. It swaps zero and one, up to global phase.
 - **$Y$:** use the same rotation angle with drive phase shifted by $\pi/2$.
 - **$Z$:** update the tracked phase frame by $\pi$ and adjust subsequent controls. This **virtual $Z$** implements $\alpha|0\rangle+\beta|1\rangle\to\alpha|0\rangle-\beta|1\rangle$ without a separate physical pulse. [Virtual Z gates](https://arxiv.org/abs/1612.00858)
-- **Readout:** probe a coupled resonator whose microwave response depends on the qubit state. The calibrated response is classified as zero or one. [Readout](https://www.nature.com/articles/s41534-016-0004-0)
+- **Readout:** a typical transmon is coupled to a microwave resonator whose response reflects the state of the qubit.
 
-### Interactions and native gates
-
-Capacitive or inductive couplings connect selected circuits, often through tunable couplers. They exchange excitations or shift joint-state energies. A conditional phase of $\pi$ on $|11\rangle$, after compensating single-qubit phases, gives **$CZ$**. One implementation exploits coupling to the nearby $|02\rangle$ level. Other designs favour exchange or ECR gates. Native single-qubit operations include rotations and virtual $Z$. Fixed connectivity creates routing costs for distant qubits. [Coupled-circuit example](https://www.nature.com/articles/ncomms11059)
+Capacitive or inductive couplings connect selected circuits, often through tunable couplers. They exchange excitations or shift joint-state energies. A conditional phase of $\pi$ on $|11\rangle$, after compensating single-qubit phases, gives **$CZ$**. One implementation exploits coupling to the nearby $|02\rangle$ level. Other designs favour exchange or ECR gates. Native single-qubit operations include rotations and virtual $Z$. Fixed connectivity creates routing costs for distant qubits. 
 
 ![A capacitor and Josephson junction in parallel, junction materials, and unequal circuit energy levels](assets/superconducting.png)
 
