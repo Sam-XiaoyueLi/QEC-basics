@@ -1,6 +1,6 @@
 # Gross code: check patterns, logical operators, and computation
 
-Status: Working notes
+Status: Finished
 Last updated: 2026-10-14
 
 ## Overview
@@ -155,21 +155,33 @@ Multiplying a logical representative by a stabilizer changes its physical patter
 
 The original paper reports that this final distance calculation was performed using integer programming: a computer searches for the smallest pattern satisfying the no-syndrome and nontrivial-action requirements. It distinguishes that calculation from the faster heuristic searches used to screen code candidates. We rely on the paper for exclusion of smaller logical patterns; our examples verify the displayed twelve-qubit pattern. [Table 3 and Section 6](https://arxiv.org/html/2308.07915)
 
-### Why distance twelve guarantees correction of five errors
+### The general distance rule: why twelve guarantees correction of five errors
+
+For a quantum code of distance $d$, the number of data-qubit errors guaranteed correctable with ideal syndrome information and appropriate recovery is
+
+$$
+t=\left\lfloor\frac{d-1}{2}\right\rfloor.
+$$
+
+The floor means round down to an integer. This counts **how many physical data qubits may suffer errors**, not how many logical qubits the code stores. For Gross code, $d=12$, so $t=\lfloor11/2\rfloor=5$.
+
 Distance twelve means that the smallest Pauli pattern that passes every check while changing the logical information touches twelve data qubits. Smaller invisible patterns can be stabilizers, which leave the encoded information unchanged.
 The decoder sees the syndrome, not the actual errors. It therefore chooses an error pattern that explains the check results and applies its inverse as a correction.
 Suppose the actual error touches at most five qubits. An appropriate decoder can choose an explanation that also touches at most five. The actual error followed by that correction then touches at most
+
 $$
 5+5=10
 $$
+
 qubits.
 
-Because the correction accounts for the syndrome, the combined operation passes every check. Because it touches fewer than twelve qubits, it cannot be a harmful logical operator. The logical information is therefore restored—even if the decoder chose a different physical error pattern.
+Because the correction accounts for the syndrome, the combined operation passes every check. Because it touches fewer than twelve qubits, it cannot be a harmful logical operator. The logical information is therefore restored—even if the decoder chose a different physical error pattern. In general, the same reasoning requires $2t<d$, giving the formula above.
 
-Why can we not guarantee correction of six errors? Divide a twelve-qubit logical \(Z\) into two halves. Applying \(Z\) to the first six qubits and applying \(Z\) to the remaining six produce the same syndrome: combining those patterns gives the full logical \(Z\), which is invisible to the checks.
+Why can we not guarantee correction of six errors? Divide a twelve-qubit logical `Z` into two halves. Applying `Z` to the first six qubits and applying `Z` to the remaining six produce the same syndrome: combining those patterns gives the full logical `Z`, which is invisible to the checks.
 
-A correction that cancels one possibility completes the logical \(Z\) for the other. The syndrome cannot distinguish them, so no recovery can guarantee success for both.
-Thus, every error affecting at most five data qubits is correctable with ideal syndrome information and appropriate recovery. Some six-qubit errors are also correctable, but not all. Faults during check measurements require a separate circuit analysis.
+A correction that cancels one possibility completes the logical `Z` for the other. The syndrome cannot distinguish them, so no recovery can guarantee success for both.
+Thus, every error affecting at most five data qubits is correctable with ideal syndrome information and appropriate recovery. Some six-qubit errors are also correctable, but not all. Faults during check measurements require a separate circuit analysis. [Quantum error-correction conditions](https://arxiv.org/html/quant-ph/9705052)
+
 
 ## Preparing all twelve logical qubits in zero
 
