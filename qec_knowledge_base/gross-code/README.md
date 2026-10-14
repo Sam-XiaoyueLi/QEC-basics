@@ -1,6 +1,6 @@
 # Gross code: check patterns, logical operators, and computation
 
-Status: Finished
+Status: Finished |
 Last updated: 2026-10-14
 
 ## Overview
