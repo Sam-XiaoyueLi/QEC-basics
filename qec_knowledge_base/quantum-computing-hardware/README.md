@@ -2,61 +2,52 @@
 
 Last updated: 2026-10-14
 
-## From quantum states to classical behaviour
+## Overview
 
-A qubit uses two quantum states, $|0\rangle$ and $|1\rangle$, whose amplitudes can combine:
+A qubit can be in a superposition
 
 $$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle,
+\qquad \alpha,\beta\in\mathbb C,
 \qquad |\alpha|^2+|\beta|^2=1.
 $$
 
-The complex amplitudes contain a **relative phase**. For example, prepare $(|0\rangle+e^{i\varphi}|1\rangle)/\sqrt2$ and apply a Hadamard gate. The probability of measuring zero is
+The amplitudes set the measurement probabilities, $P(0)=|\alpha|^2$ and $P(1)=|\beta|^2$. Their **relative phase**, $\arg\beta-\arg\alpha$, determines how the two components interfere during later gates. Hardware must preserve both the populations and the phase information long enough to perform the computation.
+
+**Atoms and electron spins provide physical states for qubits.** An atom has discrete internal energy levels. It can occupy one level, or a coherent superposition of two levels. For two different energies $E_0$ and $E_1$, that superposition evolves as
 
 $$
-P(0)=\frac{1+\cos\varphi}{2}.
+|\psi(t)\rangle
+=\alpha e^{-iE_0t/\hbar}|0\rangle
++\beta e^{-iE_1t/\hbar}|1\rangle.
 $$
 
-Changing the phase changes the result through interference. A classical random choice of zero or one has no relative phase to manipulate.
+The possible results of an energy measurement are still $E_0$ and $E_1$. Before measurement, the relative phase evolves at a rate set by their energy difference. A resonant electromagnetic drive couples the levels and prepares a chosen superposition. Electron spin works similarly: along a chosen axis, its two basis states are spin up and spin down. A controlled drive can prepare a superposition of them.
 
-Atoms supply discrete internal energy levels because their electrons are bound quantum states. Electron spin supplies two states along a chosen measurement axis. Drives can couple such states to prepare superpositions. Preserving their relative phase makes them useful qubits.
+**Ordinary objects also obey quantum mechanics.** But light, air, surrounding materials, and internal motion continually interact with them. When those interactions carry away information that distinguishes the components of a superposition, observable interference is lost. This is **decoherence**. For everyday objects, it usually happens too quickly to preserve and manipulate superpositions of macroscopically different states.
 
-Ordinary objects also obey quantum mechanics, but interact continually with light, air, surrounding materials, and internal motion. These interactions correlate their states with the environment. For a two-state example,
-
-$$
-(\alpha|0\rangle+\beta|1\rangle)|E\rangle
-\longrightarrow
-\alpha|0\rangle|E_0\rangle+\beta|1\rangle|E_1\rangle,
-$$
-
-where $|E_0\rangle$ and $|E_1\rangle$ are environmental states. If the environment carries a distinguishable record of zero versus one, interference disappears from measurements on the qubit alone. This is **decoherence**. Fluctuating fields can also randomize the phase across repeated runs. Large objects have many such coupling channels, so interference between their macroscopically distinct states is usually unobservable. [Decoherence review](https://arxiv.org/abs/quant-ph/0306072)
-
-Silicon electronics exploits quantum effects such as band structure, but an ordinary transistor processes currents and voltages involving many carriers coupled to contacts and the lattice. It does not preserve a chosen pair of coherent states as its computational variable. Isolating and controlling individual spins in silicon instead produces qubits. The distinction is **which quantum degree of freedom is controlled, and how long its phase information survives**. [Semiconductor-qubit review](https://www.nature.com/articles/s42254-021-00283-9)
-
-Quantum hardware therefore selects two addressable states and suppresses unwanted interactions while retaining controlled drives and readout. Small isolated atoms are one route. Superconducting circuits preserve a collective electrical mode instead. Cooling reduces thermal excitation and motion. For a two-level system in thermal equilibrium,
-
-$$
-\frac{p_1}{p_0}=e^{-\Delta E/(k_BT)},
-$$
-
-where $\Delta E=E_1-E_0$, $T$ is temperature, and $k_B$ is Boltzmann's constant. A cold bath helps prepare the ground state when $k_BT\ll\Delta E$. Atomic devices can also prepare states with optical pumping and cool motion with lasers, without cooling the entire apparatus. [Circuit review](https://arxiv.org/abs/2006.10433), [ion review](https://www.nature.com/articles/npjqi201634)
+**Quantum computing hardware selects two addressable states, suppresses unwanted interactions, and retains controlled coupling for gates and readout.** Trapped ions and neutral atoms use selected internal atomic states, with vacuum and carefully controlled fields helping preserve them. Superconducting qubits instead use discrete energy levels of an engineered electrical circuit, protected by low-loss materials, cooling, and shielding. Each platform needs drives that control individual qubits, interactions that entangle qubits, and a way to measure them.
 
 ### Relaxation and phase stability
 
-| Quantity | What decays | Meaning |
+On the Bloch sphere introduced in Tutorial 0, the north pole is $|0\rangle$ and the south pole is $|1\rangle$. The height encodes the population difference, and the angle around the vertical axis encodes the relative phase. Noise can shorten the Bloch vector, moving its tip inside the sphere.
+
+| Time scale | Physical change | Bloch-sphere picture |
 | --- | --- | --- |
-| $T_1$ | Excited-state population, approximately $p_1(t)=p_1(0)e^{-t/T_1}$ for relaxation to the ground state. | How long the qubit retains its excitation before releasing energy. |
-| $T_2$ | Interference visibility, approximately $V(t)=V(0)e^{-t/T_2}$. | How long the relative phase remains predictable enough for amplitudes to interfere. |
+| $T_1$: energy relaxation | The excited-state population decays as the qubit releases energy. | For relaxation to the ground state, the vector approaches the north pole. |
+| $T_2$: loss of phase coherence | Phase fluctuations wash out interference across repeated runs. Energy relaxation also contributes. | The component in the equatorial plane shrinks. Pure phase noise leaves the height unchanged. |
 
-**Visibility** $V$ measures the interference contrast:
+For relaxation toward $|0\rangle$ and simple exponential decay,
 
 $$
-P(0)=\frac{1+V\cos\varphi}{2}.
+p_1(t)=p_1(0)e^{-t/T_1},
+\qquad
+r_\perp(t)=r_\perp(0)e^{-t/T_2},
 $$
 
-Random phase shifts reduce $V$, eventually leaving $P(0)=1/2$ for every applied phase. Energy relaxation also reduces visibility, so $T_2$ includes both relaxation and phase noise. Compare these times with gate and idle durations. Refocusing pulses can extend phase stability, so the reported measurement sequence matters. [Coherence and control review](https://arxiv.org/abs/2006.10433)
+where $r_\perp$ is the length of the Bloch vector's projection onto the equatorial plane. The figure starts both examples at $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$, with equal populations and relative phase zero. The vectors show the state averaged over repeated runs, with predictable phase rotation omitted. Compare $T_1$ and $T_2$ with gate and idle durations to judge how much information is lost during a computation.
 
-![Interference probability versus phase, showing how phase noise reduces contrast](assets/phase-coherence.png)
+![Bloch-sphere views of energy relaxation toward the ground state and loss of phase coherence at fixed populations](assets/bloch-coherence.png)
 
 ## Requirements for gate-based quantum computing
 
