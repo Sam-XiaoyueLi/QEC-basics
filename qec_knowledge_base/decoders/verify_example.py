@@ -1,6 +1,6 @@
 """Check the repetition-code examples using exact probabilities.
 
-Run with --with-stim for circuit/DEM and ordinary-matching checks.
+Run with --with-stim for circuit/DEM and matching checks.
 No BP or BeliefMatching result is computed here.
 """
 
@@ -145,10 +145,24 @@ OBSERVABLE_INCLUDE(0) rec[-1]
     print(f'Stim {stim.__version__}: generated DEM and supplied shared-event DEM agree.')
     print(f'PyMatching {pymatching.__version__}: ordinary matching selects 10101 and predicts L0=1.')
 
+    correlated = pymatching.Matching.from_detector_error_model(dem, enable_correlations=True)
+    corr_prediction = correlated.decode(s, enable_correlations=True)
+    corr_edges = correlated.decode_to_edges_array(s, enable_correlations=True)
+    corr_selected = {tuple(sorted(map(int, row))) for row in corr_edges}
+    # Report the actual heuristic result rather than assuming it equals exact ML.
+    if corr_selected == {(-1, 0), (1, 2), (-1, 3)}:
+        pattern = '10101'
+    elif corr_selected == {(0, 1), (2, 3)}:
+        pattern = '01010'
+    else:
+        raise AssertionError(f'Unexpected syndrome-1111 edge set: {corr_selected}')
+    assert corr_prediction.tolist() == [int(pattern[0])]
+    print(f'PyMatching {pymatching.__version__}: two-pass correlated matching selects {pattern} and predicts L0={int(pattern[0])}.')
+
 
 if __name__ == '__main__':
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument('--with-stim', action='store_true', help='also verify Stim and ordinary PyMatching')
+    parser.add_argument('--with-stim', action='store_true', help='also verify Stim and report ordinary/correlated matching')
     args = parser.parse_args()
     exact_checks()
     if args.with_stim:

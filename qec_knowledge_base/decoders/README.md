@@ -2,13 +2,24 @@
 
 Last updated: 2026-10-16
 
-## Recap: lookup decoding and matching
+## Overview
 
-In the [decoding notebook](../../decoder.ipynb), we use the measured detector events to infer whether a logical readout needs flipping. Stim generates a **detector error model (DEM)**: possible fault mechanisms, their probabilities, and their detector and logical effects.
+A **decoder** reads the syndrome—the pattern of check outcomes—and supplies a correction or a change to the interpreted logical result. It uses a noise model to infer which errors could explain those outcomes. Several errors can produce the same syndrome, so recovering the logical information does not require identifying a unique physical error.
 
-We first build a small lookup decoder that tries one or two whole DEM mechanisms and chooses the most likely explanation consistent with the observed events. We then give the DEM to **PyMatching**, which represents detectors as graph nodes and graphlike fault effects as edges. Minimum-weight perfect matching finds a low-cost explanation without the lookup decoder's one-or-two-mechanism limit.
+There are several ways to make this inference:
 
-Both use likelihood information. Their answers depend on the noise model and the search they perform. In particular, treating the graph components of one shared fault as independent can change which explanation looks most likely. [Stim DEM specification](https://github.com/quantumlib/Stim/blob/main/doc/file_format_dem_detector_error_model.md), [PyMatching](https://github.com/oscarhiggott/PyMatching)
+| Method | Principle |
+| --- | --- |
+| **Minimum weight** | Choose a compatible explanation with the smallest total cost. With equal costs, this means the fewest errors. |
+| **Maximum likelihood** | Choose the most probable compatible explanation under the noise model. |
+| **Minimum-weight perfect matching (MWPM)** | Solve the minimum-cost problem on a graph whose edges describe fault effects. |
+| **Correlated matching** | Use relationships between graph edges to revise matching weights. |
+| **Belief propagation (BP)** | Update estimates of fault probabilities using the observed check constraints. |
+| **BeliefMatching** | Use BP over whole faults, with matching as a fallback when needed. |
+
+Minimum weight and maximum likelihood describe selection criteria. Matching and BP describe ways to perform the inference. They can overlap: for independent graph-edge events, assigning weight $w=\ln[(1-p)/p]$ makes minimum-weight matching select the most likely edge combination. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+
+In quantum codes, several error combinations can have the same logical effect. **Maximum-likelihood logical decoding** adds their probabilities before choosing a logical class. This can differ from choosing the single most likely error combination. [Decoding objectives](https://arxiv.org/html/2203.04948v4)
 
 ## Five qubits: when the graph loses a correlation
 
@@ -18,7 +29,7 @@ $$
 Z_1Z_2,\quad Z_2Z_3,\quad Z_3Z_4,\quad Z_4Z_5.
 $$
 
-The encoded space is spanned by $|00000\rangle$ and $|11111\rangle$. Assume perfect check measurements, initially all $+1$. This toy protects against bit flips, not arbitrary Pauli noise.
+Assume perfect check measurements, initially all $+1$. This repetition code protects against bit flips only.
 
 Suppose the noise consists of four independent events:
 
@@ -61,13 +72,11 @@ $$
 
 All checks pass afterward, but the logical state has flipped. The failure comes from discarding a relationship in the noise model. Likelihood inference itself can retain that relationship.
 
-In a DEM, the shared event can appear as
+## Correlated matching: revise the graph weights
 
-```text
-error(0.02) D0 D1 ^ D2 D3
-```
+In a matching graph, the shared event $F$ can be represented by two edges: one joining the first two checks and one joining the last two. Ordinary matching treats them independently. A **detector error model (DEM)** can retain the fact that they came from one event, giving a correlation-aware decoder more information.
 
-This is one event affecting four detectors. The `^` suggests two graph components, without declaring them independent. The notebook uses ordinary matching on such decompositions. PyMatching also offers **correlated matching**, which exploits component relationships through a different decoding procedure. [Stim separator semantics](https://github.com/quantumlib/Stim/blob/main/doc/file_format_dem_detector_error_model.md#separator-target), [PyMatching correlated-matching API](https://github.com/oscarhiggott/PyMatching/blob/master/src/pymatching/matching.py)
+PyMatching's **two-pass correlated matching** first runs ordinary matching, then uses the selected edges to adjust the costs of correlated edges and runs matching again. This can improve inference without a full search over shared-event combinations. It remains a heuristic: in the five-qubit example, the tested PyMatching 2.4.0 implementation also selects **10101**, rather than the exact model's preferred **01010**. [Correlated matching](https://github.com/oscarhiggott/PyMatching#correlated-matching)
 
 ## BeliefMatching: infer whole faults before matching
 
@@ -80,11 +89,11 @@ The [reference implementation](https://github.com/oscarhiggott/BeliefMatching/bl
 
 The matching stage can therefore use evidence from this particular run, rather than only fixed prior edge probabilities. Matching is a fallback in this implementation; it need not run after successful BP. [BeliefMatching paper](https://arxiv.org/abs/2203.04948)
 
-This still uses probabilistic inference. Its advantage is keeping more of the fault structure while making the search practical. It does not guarantee the most likely logical result: the most likely individual fault combination can differ from the logical class with the largest total probability across equivalent combinations.
+BeliefMatching retains whole-fault relationships while keeping inference practical. Its estimates and final decisions remain approximate; they do not guarantee maximum-likelihood logical decoding.
 
 ## How belief propagation updates a probability
 
-Return to the first detector in the five-qubit example. Only $A$ and $F$ affect it. If it fired, exactly one of them occurred:
+With perfect checks and known initial signs, each changed check is a detector event. Only $A$ and $F$ affect the first detector. If it fired, exactly one occurred:
 
 | Compatible possibility | Probability before conditioning |
 | --- | --- |
@@ -99,7 +108,7 @@ P(F\mid\text{first detector fired})
 \approx15.5\%.
 $$
 
-The event occurs in 2% of all runs, but this measurement makes it more plausible **in this run**. No extra physical experiment is needed. The DEM's prior probability can remain 0.02 across shots.
+The event occurs in 2% of all runs, but this measurement raises its probability **in this run** to 15.5%. The model's event rate remains unchanged.
 
 This calculation is a local BP message. If $F$ happened, the fired detector requires $A$ to be absent, with probability 0.9. If $F$ did not happen, it requires $A$ to be present, with probability 0.1. The check therefore supplies a likelihood ratio of **9** in favor of $F$.
 
@@ -107,21 +116,36 @@ Across a larger graph, event variables combine their prior probabilities with ev
 
 Loops can return information by other routes, making BP approximate or causing oscillations. In this toy, the middle two checks impose the same condition on $B$ and $F$, so multiplying all check evidence as if independent would double-count a constraint. The **93.7%** result above is exact enumeration, not a guaranteed BP output.
 
-BP estimates this shot's faults; calibration estimates noise rates across experiments. Standard BP also needs the relevant mechanisms in its model: it cannot discover an omitted shared disturbance simply by iterating longer. The decoder receives measurements, not the simulator's hidden error labels.
+BP needs the relevant faults in its model; iterating cannot discover an omitted mechanism. It receives measurements, not hidden error labels.
 
-## Other decoding approaches
+## Comparing the same example
 
-**BP+OSD** uses BP's reliability estimates to guide ordered statistics decoding: binary linear algebra finds a syndrome-consistent solution, with additional candidate searches available. This helps when BP's hard decisions fail to satisfy all checks. **BP+LSD** localizes the algebra to error clusters, reducing the size of the solves. Neither syndrome consistency nor a high-scoring candidate certifies the true logical answer. [OSD and LSD documentation](https://software.roffe.eu/ldpc/quantum_decoder.html)
+For syndrome 1111, the methods use different criteria or approximations:
+
+| Method | Result or inference in this example |
+| --- | --- |
+| Fewest physical bit flips | Chooses **01010**: two flipped qubits rather than three. This count ignores event probabilities. |
+| Exact maximum likelihood with the shared event | Chooses **01010**, with conditional probability **93.7%**. |
+| Ordinary MWPM with independent graph edges | Chooses **10101**, because the graph charges separately for both parts of $F$. |
+| Two-pass correlated matching | Also chooses **10101** in the tested implementation; reweighting does not guarantee exact joint inference. |
+| BP | The first check alone gives **15.5%** for $F$. Full-graph BP is approximate and was not run here. |
+| BeliefMatching | Retains $F$ as a whole-fault variable and can use BP-informed matching. Its output was not tested here. |
+
+The minimum-flip and exact-likelihood choices agree here, but can differ when error probabilities differ. Correlation-aware heuristics do not guarantee exact joint inference.
+
+## Advanced decoding methods
+
+**BP+OSD** uses BP's reliability estimates to guide ordered statistics decoding: binary linear algebra finds a syndrome-consistent solution, with additional candidate searches available. This helps when BP's hard decisions fail to satisfy all checks. **BP+LSD** localizes the algebra to error clusters, reducing the size of the solves. These are BP-based decoders, rather than variants of BeliefMatching. [OSD and LSD documentation](https://software.roffe.eu/ldpc/quantum_decoder.html)
 
 For [qLDPC codes](../qldpc-codes/README.md), including the [Gross code](../gross-code/README.md), other approaches change BP's updates, explore several hypotheses, or use a different representation altogether:
 
-| Team | Approach and mechanism | What the public results establish |
+| Team | Approach and mechanism | Scope of public results |
 | --- | --- | --- |
-| **IBM** | **Relay-BP** varies memory strengths in BP updates to reduce oscillations, break symmetries, and explore valid corrections. | An FPGA prototype targets Gross-code memory under a circuit-noise model. Its classical timing results do not establish an integrated physical Gross-code memory. [Algorithm](https://arxiv.org/abs/2506.01779), [FPGA study](https://arxiv.org/abs/2510.21600) |
-| **IonQ** | **BP-guided beam search** retains several promising hypotheses. A wider beam spends more computation exploring alternatives. A later stack separates longer-window error tracking from shorter-window logical-outcome decoding. | CPU benchmarks cover simulated workloads up to 408 logical qubits with assumed 1–5 ms extraction cycles, rather than a quantum experiment at that scale. [Beam search](https://arxiv.org/abs/2512.07057), [decoding stack](https://arxiv.org/abs/2608.25027) |
+| **IBM** | **Relay-BP** varies memory strengths in BP updates to reduce oscillations, break symmetries, and explore valid corrections. | An FPGA prototype targets Gross-code memory under a circuit-noise model. This is classical decoder hardware, not an integrated physical Gross-code memory. [Algorithm](https://arxiv.org/abs/2506.01779), [FPGA study](https://arxiv.org/abs/2510.21600) |
+| **IonQ** | **BP-guided beam search** retains several promising hypotheses. Wider beams explore more alternatives. A later stack separates longer-window error tracking from shorter-window logical-outcome decoding. | CPU benchmarks include simulated workloads up to 408 logical qubits with assumed 1–5 ms extraction cycles. [Beam search](https://arxiv.org/abs/2512.07057), [decoding stack](https://arxiv.org/abs/2608.25027) |
 | **Riverlane** | **Local Clustering Decoder** grows and merges detection-event clusters using a Union-Find-based method. FPGA parallelism speeds processing, and signals such as heralded leakage can adapt the graph. | Classical hardware timing and simulated quantum resource savings are distinct results. [LCD paper](https://www.nature.com/articles/s41467-025-66773-x) |
-| **Google / DeepMind** | Alongside matching and correlated matching, **Tesseract** uses A* search with pruning over fault subsets. **AlphaQubit 2** learns logical predictions from measurement records. | AlphaQubit 2 is evaluated on simulated circuits and recorded Willow data. Fast TPU processing per cycle is distinct from final-decision latency and live communication delays. [Tesseract](https://arxiv.org/abs/2503.10988), [AlphaQubit 2](https://arxiv.org/abs/2512.07737) |
+| **Google / DeepMind** | **Tesseract** uses A* search with pruning over fault subsets. **AlphaQubit 2** learns logical predictions from measurement records. | AlphaQubit 2 is evaluated on simulated circuits and recorded Willow data. Fast TPU processing per cycle is distinct from final-decision latency and live communication delays. [Tesseract](https://arxiv.org/abs/2503.10988), [AlphaQubit 2](https://arxiv.org/abs/2512.07737) |
 
-These methods trade accuracy, computation, and response time differently. Compare logical error rates under the same code and noise assumptions, then ask whether throughput keeps up with incoming measurements and whether difficult cases meet logical-feedback deadlines. A CPU, FPGA, or TPU is the execution hardware; it does not by itself identify the decoding algorithm.
+Compare logical error rates under the same code and noise assumptions, then ask whether throughput keeps up with measurements and whether difficult cases meet feedback deadlines. A CPU, FPGA, or TPU names execution hardware, not a decoding algorithm.
 
-The [verification script](verify_example.py) checks the five-qubit probabilities by exhaustive enumeration and confirms ordinary PyMatching's choice using Stim 1.16.0 and PyMatching 2.4.0. Run `uv run python qec_knowledge_base/decoders/verify_example.py --with-stim` from the repository root. BP and BeliefMatching were not executed for this example.
+The [verification script](verify_example.py) checks the probabilities by exhaustive enumeration and reports ordinary and correlated matching results using Stim 1.16.0 and PyMatching 2.4.0. Run `uv run python qec_knowledge_base/decoders/verify_example.py --with-stim` from the repository root. BP and BeliefMatching were not executed for this example.
