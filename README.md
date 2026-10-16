@@ -37,7 +37,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
-- [Decoders](qec_knowledge_base/decoders/README.md) — Worked examples of matching, correlated faults, Bayesian inference, BP and BeliefMatching, plus other decoder families and public benchmarks.
+- [Decoders: Beyond Likelihood](qec_knowledge_base/decoders/README.md) — A notebook recap, a five-qubit example of lost correlations, BeliefMatching and BP, and other companies' decoding approaches.
 
 ## Run the notebooks
 
