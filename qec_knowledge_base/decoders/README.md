@@ -4,24 +4,19 @@ Last updated: 2026-10-16
 
 ## Overview
 
-A **decoder** reads the syndrome—the pattern of check outcomes—and supplies a correction or a change to the interpreted logical result. It uses a noise model to infer which errors could explain those outcomes. Several errors can produce the same syndrome, so recovering the logical information does not require identifying a unique physical error.
+A **decoder** reads the syndrome, which is the pattern of check outcomes, and supplies a correction. To choose that correction, it infers which faults could explain the syndrome. Different faults can require different corrections, but some errors produce the same syndrome and can be corrected in the same way. The decoder therefore does not need to identify the exact physical origin of every error.
 
-The decoder's **selection criterion** says which explanation it prefers. Minimum weight means the smallest sum of assigned error weights. Maximum likelihood means the most probable explanation under the noise model. An **inference algorithm** is the procedure used to find or approximate that choice.
+This inference uses an **error model** that describes possible faults, their probabilities, and their effects on the checks. The model can treat faults as independent or include shared events that affect several qubits together. The decoder uses these probabilities to compare explanations compatible with the measured syndrome.
 
-A **weight** is a numerical penalty assigned to a candidate error or graph edge; the **total cost** is the sum of those weights. In probability-weighted matching, an edge with probability $p$ receives weight $w=\ln[(1-p)/p]$. Less likely edges receive larger penalties. For independent graph-edge events, minimizing this sum selects the most likely edge combination. **Physical error weight** instead counts affected qubits: $X_2X_4$ has physical weight 2. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+One approach is to maximize the probability of an explanation. Another is to minimize its total assigned weight. A **weight** is a numerical penalty assigned to a candidate error or graph edge based on its probability. Less likely events receive larger penalties. For independent graph-edge events, weights $w=\ln[(1-p)/p]$, where $p$ is the edge probability, make minimizing the sum equivalent to selecting the most likely edge combination. This probability-based weight differs from simply counting affected qubits. [PyMatching](https://github.com/oscarhiggott/PyMatching)
 
-The decoders below use these criteria and algorithms in different combinations:
+Decoders differ in how they process the model and the observed syndrome:
 
-| Decoder | How it makes a decision |
+| Decoder | How it uses probabilities and weights |
 | --- | --- |
-| **Minimum-weight perfect matching (MWPM) decoder** | Uses a matching algorithm to find a syndrome-compatible graph explanation with the smallest sum of edge weights. |
-| **Correlated-matching decoder** | Runs matching, uses correlations to revise edge weights, then runs matching again. |
-| **BP decoder** | Uses belief propagation to update fault probabilities and form a candidate error assignment. The candidate can fail to satisfy all syndrome constraints. |
-| **BeliefMatching decoder** | Runs BP over whole faults. If BP finds a syndrome-consistent assignment, uses it; otherwise runs matching with BP-informed weights. |
-
-BP is the inference algorithm used inside both the BP decoder and BeliefMatching. Minimum weight is the criterion optimized by the matching stage. These components can therefore appear together in one decoder.
-
-For an exact **maximum-likelihood logical decoder**, the criterion is the largest total probability of a logical class, summing error combinations with the same logical effect. This can differ from choosing the single most likely error combination. Exact enumeration supplies a reference for the small example below. [Decoding objectives](https://arxiv.org/html/2203.04948v4)
+| **Ordinary minimum-weight perfect matching (MWPM)** | Starts with graph weights computed from the model's probabilities and finds a compatible explanation with the smallest total weight. These weights stay fixed across shots when the model stays fixed. |
+| **BeliefMatching** | Uses **belief propagation (BP)**, an approximate form of Bayesian inference, to update estimated fault probabilities conditioned on this shot's syndrome. If BP finds a syndrome-consistent assignment, it uses it. Otherwise, it converts BP's estimates into matching weights and runs matching. [Implementation](https://github.com/oscarhiggott/BeliefMatching/blob/main/src/beliefmatching/belief_matching.py) |
+| **Correlated matching** | In the two-pass version, first runs ordinary matching, then uses the inferred edges and their modeled correlations to revise other edge weights before running matching again. [Two-pass method](https://github.com/oscarhiggott/PyMatching#correlated-matching) |
 
 ## Five qubits: when the graph loses a correlation
 
