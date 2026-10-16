@@ -8,9 +8,9 @@ A **decoder** reads the syndrome, which is the pattern of check outcomes, and su
 
 This inference uses an **error model** that describes possible faults, their probabilities, and their effects on the checks. The model can treat faults as independent or include shared events that affect several qubits together. The decoder uses these probabilities to compare explanations compatible with the measured syndrome.
 
-One approach is to maximize the probability of an explanation. Another is to minimize its total assigned weight. A **weight** is a numerical penalty assigned to a candidate error or graph edge based on its probability. Less likely events receive larger penalties. For independent graph-edge events, weights $w=\ln[(1-p)/p]$, where $p$ is the edge probability, make minimizing the sum equivalent to selecting the most likely edge combination. This probability-based weight differs from simply counting affected qubits. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+The decoder seeks a likely explanation of the measured syndrome. For independent graph-edge events, maximizing an explanation's probability can be expressed as minimizing its total **weight**. Each edge receives a numerical penalty $w=\ln[(1-p)/p]$ based on its probability $p$: less likely edges receive larger penalties. Choosing the compatible combination with the smallest sum of weights therefore selects the most probable edge combination under that model. This probability-based weight differs from simply counting affected qubits. [PyMatching](https://github.com/oscarhiggott/PyMatching)
 
-Decoders differ in how they process the model and the observed syndrome:
+**Ordinary minimum-weight matching** carries out this search on a graph using weights calculated from the error model. **BeliefMatching** and **correlated matching** use additional inference steps to revise the weights using evidence from the observed syndrome:
 
 | Decoder | How it uses probabilities and weights |
 | --- | --- |
