@@ -6,17 +6,19 @@ Last updated: 2026-10-16
 
 A **decoder** reads the syndrome, which is the pattern of check outcomes, and supplies a correction. To choose that correction, it infers which faults could explain the syndrome. Different faults can require different corrections, but some errors produce the same syndrome and can be corrected in the same way. The decoder therefore does not need to identify the exact physical origin of every error.
 
-This inference uses an **error model** that describes possible faults, their probabilities, and their effects on the checks. The model can treat faults as independent or include shared events that affect several qubits together. The decoder uses these probabilities to compare explanations compatible with the measured syndrome.
+This inference uses an **error model** that describes possible faults, their probabilities, and their effects on the checks. The model can treat faults as independent or include shared events that affect several qubits together.
 
 The decoder seeks a likely explanation of the measured syndrome. For independent graph-edge events, maximizing an explanation's probability can be expressed as minimizing its total **weight**. Each edge receives a numerical penalty $w=\ln[(1-p)/p]$ based on its probability $p$: less likely edges receive larger penalties. Choosing the compatible combination with the smallest sum of weights therefore selects the most probable edge combination under that model. This probability-based weight differs from simply counting affected qubits. [PyMatching](https://github.com/oscarhiggott/PyMatching)
 
-**Ordinary minimum-weight matching** carries out this search on a graph using weights calculated from the error model. **BeliefMatching** and **correlated matching** use additional inference steps to revise the weights using evidence from the observed syndrome:
+**Minimum-weight matching** carries out this search on a graph. **BeliefMatching** and **correlated matching** add inference steps that use the observed syndrome to revise the weights:
 
 | Decoder | How it uses probabilities and weights |
 | --- | --- |
-| **Ordinary minimum-weight perfect matching (MWPM)** | Starts with graph weights computed from the model's probabilities and finds a compatible explanation with the smallest total weight. These weights stay fixed across shots when the model stays fixed. |
-| **BeliefMatching** | Uses **belief propagation (BP)**, an approximate form of Bayesian inference, to update estimated fault probabilities conditioned on this shot's syndrome. If BP finds a syndrome-consistent assignment, it uses it. Otherwise, it converts BP's estimates into matching weights and runs matching. [Implementation](https://github.com/oscarhiggott/BeliefMatching/blob/main/src/beliefmatching/belief_matching.py) |
-| **Correlated matching** | In the two-pass version, first runs ordinary matching, then uses the inferred edges and their modeled correlations to revise other edge weights before running matching again. [Two-pass method](https://github.com/oscarhiggott/PyMatching#correlated-matching) |
+| **Minimum-weight perfect matching (MWPM)** | Finds a compatible explanation with the smallest total graph weight, using weights computed from the error model. |
+| **BeliefMatching** | Uses **belief propagation (BP)** to estimate whole-fault probabilities conditioned on the syndrome, with BP-informed matching as a fallback. [Implementation](https://github.com/oscarhiggott/BeliefMatching/blob/main/src/beliefmatching/belief_matching.py) |
+| **Correlated matching** | Runs matching, uses inferred edges and modeled correlations to revise other edge weights, then matches again. [Two-pass method](https://github.com/oscarhiggott/PyMatching#correlated-matching) |
+
+Stim can express fault probabilities and detector effects in a **detector error model (DEM)**, which PyMatching converts into a weighted graph. Splitting a shared fault into independent graph edges can lose information. The five-qubit example below shows how this changes the preferred correction. We use the same faults to examine correlated matching and BeliefMatching, then turn to advanced decoders.
 
 ## Five qubits: when the graph loses a correlation
 
@@ -71,22 +73,20 @@ All checks pass afterward, but the logical state has flipped. The failure comes 
 
 ## Correlated matching: revise the graph weights
 
-In a matching graph, the shared event $F$ can be represented by two edges: one joining the first two checks and one joining the last two. Ordinary matching treats them independently. A **detector error model (DEM)** can retain the fact that they came from one event, giving a correlation-aware decoder more information.
+In a matching graph, the shared event $F$ can be represented by two edges: one joining the first two checks and one joining the last two. Matching on the independent-edge graph treats them independently, while the DEM retains their shared origin.
 
-PyMatching's **two-pass correlated matching** first runs ordinary matching, then uses the selected edges to adjust the costs of correlated edges and runs matching again. This can improve inference without a full search over shared-event combinations. It remains a heuristic: in the five-qubit example, the tested PyMatching 2.4.0 implementation also selects **10101**, rather than the exact model's preferred **01010**. [Correlated matching](https://github.com/oscarhiggott/PyMatching#correlated-matching)
+PyMatching's **two-pass correlated matching** uses a first matching result to reweight correlated edges for a second pass. It remains a heuristic: in the five-qubit example, the tested PyMatching 2.4.0 implementation also selects **10101**, rather than the exact model's preferred **01010**. [Correlated matching](https://github.com/oscarhiggott/PyMatching#correlated-matching)
 
 ## BeliefMatching: infer whole faults before matching
 
-**BeliefMatching** first uses **belief propagation (BP)** to estimate whole fault mechanisms from the observed syndrome. A shared event such as $F$ remains one variable, even though it affects several detectors.
+**BeliefMatching** first uses **belief propagation (BP)** to estimate whole fault mechanisms from the observed syndrome. The shared event $F$ remains one variable, even though it affects all four detectors. [BeliefMatching paper](https://arxiv.org/abs/2203.04948)
 
 The [reference implementation](https://github.com/oscarhiggott/BeliefMatching/blob/main/src/beliefmatching/belief_matching.py) then takes one of two paths:
 
 - If BP finds a syndrome-consistent event assignment, return its predicted logical effect.
 - Otherwise, use BP's probability estimates to construct shot-dependent graph weights and run matching.
 
-The matching stage can therefore use evidence from this particular run, rather than only fixed prior edge probabilities. Matching is a fallback in this implementation; it need not run after successful BP. [BeliefMatching paper](https://arxiv.org/abs/2203.04948)
-
-BeliefMatching retains whole-fault relationships while keeping inference practical. Its estimates and final decisions remain approximate; they do not guarantee maximum-likelihood logical decoding.
+Keeping $F$ intact preserves the relationship lost by the independent-edge approximation, although BP and BeliefMatching remain approximate.
 
 ## How belief propagation updates a probability
 
@@ -117,16 +117,13 @@ BP needs the relevant faults in its model; iterating cannot discover an omitted 
 
 ## Comparing the same example
 
-For syndrome 1111, exact enumeration of the shared-event model gives **01010** a conditional probability of **93.7%**. This is the maximum-likelihood reference for comparing the decoders:
+For syndrome 1111, the exact shared-event model prefers **01010** with probability **93.7%**:
 
-| Decoder | Decision or evidence in this example |
+| Decoder | Result for this example |
 | --- | --- |
-| **Ordinary MWPM decoder** | Chooses **10101**, because its independent-edge graph charges separately for both parts of $F$. |
-| **Two-pass correlated-matching decoder** | Also chooses **10101** in the tested implementation; its reweighting does not recover the exact model's preferred explanation here. |
-| **BP decoder** | The first-check calculation gives **15.5%** for $F$. A full BP decoding decision was not tested. |
-| **BeliefMatching decoder** | Retains $F$ as a whole-fault variable and can use BP-informed matching. Its final decision was not tested. |
-
-Simply choosing the fewest flipped qubits also gives 01010 here: two flips rather than three. That is a counting criterion, not another inference algorithm. Its agreement with exact likelihood in this example does not hold generally when probabilities differ.
+| **MWPM** | **10101** in the independent-edge model. |
+| **Two-pass correlated matching** | **10101** in the tested implementation. |
+| **BeliefMatching** | Not executed here. The BP calculation above illustrates how syndrome evidence updates the estimate for $F$. |
 
 ## Advanced decoding methods
 
@@ -143,4 +140,4 @@ For [qLDPC codes](../qldpc-codes/README.md), including the [Gross code](../gross
 
 Compare logical error rates under the same code and noise assumptions, then ask whether throughput keeps up with measurements and whether difficult cases meet feedback deadlines. A CPU, FPGA, or TPU names execution hardware, not a decoding algorithm.
 
-The [verification script](verify_example.py) checks the probabilities by exhaustive enumeration and reports ordinary and correlated matching results using Stim 1.16.0 and PyMatching 2.4.0. Run `uv run python qec_knowledge_base/decoders/verify_example.py --with-stim` from the repository root. BP and BeliefMatching were not executed for this example.
+The [verification script](verify_example.py) checks the probabilities by exhaustive enumeration and reports MWPM and correlated matching results using Stim 1.16.0 and PyMatching 2.4.0. Run `uv run python qec_knowledge_base/decoders/verify_example.py --with-stim` from the repository root. BP and BeliefMatching were not executed for this example.
