@@ -135,6 +135,12 @@ OBSERVABLE_INCLUDE(0) rec[-1]
 
     # Check the graph, not just the final logical bit: it must be 10101.
     matching = pymatching.Matching.from_detector_error_model(dem)
+    # The supplied DEM still has one shared event. Its two graph components
+    # each receive p=.02 and weight ln(49) for independent-edge scoring.
+    for u, v in ((0, 1), (2, 3)):
+        edge = matching.get_edge_data(u, v)
+        assert isclose(edge['error_probability'], 0.02)
+        assert isclose(edge['weight'], log(49))
     s = np.ones(4, dtype=np.uint8)
     prediction, weight = matching.decode(s, return_weight=True)
     selected = {tuple(sorted(map(int, row))) for row in matching.decode_to_edges_array(s)}

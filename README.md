@@ -37,7 +37,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
-- [Decoders: Beyond Likelihood](qec_knowledge_base/decoders/README.md) — Minimum weight and maximum likelihood, a shared five-qubit example comparing matching and BP-based inference, and advanced decoding methods.
+- [Decoders: Beyond Likelihood](qec_knowledge_base/decoders/README.md) — One physical error model used to explain MWPM, correlated matching and BeliefMatching, followed by advanced decoders and company approaches.
 
 ## Run the notebooks
 
