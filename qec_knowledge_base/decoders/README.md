@@ -1,6 +1,5 @@
 # Decoders: from check outcomes to likely faults
 
-Status: Study reference |
 Last updated: 2026-10-16
 
 ## One physical error can change two checks

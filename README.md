@@ -31,13 +31,13 @@ Read the notebooks in order. Basic Python and familiarity with quantum gates are
 
 The [QEC knowledge base](qec_knowledge_base/README.md) collects concise references on QEC and quantum computing hardware, developed through study and discussion.
 
-- [Gross code](qec_knowledge_base/gross-code/README.md) — **Finished.** Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
+- [Gross code](qec_knowledge_base/gross-code/README.md) — Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
-- [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — **Study reference.** Definitions, encoding efficiency, practical trade-offs, comparisons with other code approaches, and major companies' QEC work.
+- [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — Definitions, encoding efficiency, practical trade-offs, comparisons with other code approaches, and major companies' QEC work.
 
-- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
+- [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
-- [Decoders](qec_knowledge_base/decoders/README.md) — **Study reference.** Worked examples of matching, correlated faults, Bayesian inference, BP and BeliefMatching, plus other decoder families and public benchmarks.
+- [Decoders](qec_knowledge_base/decoders/README.md) — Worked examples of matching, correlated faults, Bayesian inference, BP and BeliefMatching, plus other decoder families and public benchmarks.
 
 ## Run the notebooks
 

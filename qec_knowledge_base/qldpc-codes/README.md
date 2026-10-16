@@ -1,6 +1,6 @@
 # qLDPC codes: definitions, trade-offs, and industry approaches
 
-Status: Study reference | Last updated: 2026-10-16
+Last updated: 2026-10-16
 
 ## What qLDPC means
 
