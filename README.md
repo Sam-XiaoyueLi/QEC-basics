@@ -33,7 +33,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Gross code](qec_knowledge_base/gross-code/README.md) — **Finished.** Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
-- [QLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — **Study reference.** Definitions, encoding efficiency, practical trade-offs, comparisons with other code approaches, and major companies' QEC work.
+- [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — **Study reference.** Definitions, encoding efficiency, practical trade-offs, comparisons with other code approaches, and major companies' QEC work.
 
 - [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
