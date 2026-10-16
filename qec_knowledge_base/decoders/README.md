@@ -6,18 +6,20 @@ Last updated: 2026-10-16
 
 A **decoder** reads the syndrome—the pattern of check outcomes—and supplies a correction or a change to the interpreted logical result. It uses a noise model to infer which errors could explain those outcomes. Several errors can produce the same syndrome, so recovering the logical information does not require identifying a unique physical error.
 
-There are several ways to make this inference:
+A **weight** is a numerical penalty assigned to a candidate error or graph edge. The **total cost** of an explanation is the sum of its assigned weights. There are several ways to use these weights and probabilities:
 
 | Method | Principle |
 | --- | --- |
-| **Minimum weight** | Choose a compatible explanation with the smallest total cost. With equal costs, this means the fewest errors. |
+| **Minimum weight** | Choose a compatible explanation with the smallest sum of assigned weights. Equal unit weights select the fewest error events. |
 | **Maximum likelihood** | Choose the most probable compatible explanation under the noise model. |
-| **Minimum-weight perfect matching (MWPM)** | Solve the minimum-cost problem on a graph whose edges describe fault effects. |
+| **Minimum-weight perfect matching (MWPM)** | Choose a compatible set of graph edges with the smallest sum of edge weights. |
 | **Correlated matching** | Use relationships between graph edges to revise matching weights. |
 | **Belief propagation (BP)** | Update estimates of fault probabilities using the observed check constraints. |
 | **BeliefMatching** | Use BP over whole faults, with matching as a fallback when needed. |
 
-Minimum weight and maximum likelihood describe selection criteria. Matching and BP describe ways to perform the inference. They can overlap: for independent graph-edge events, assigning weight $w=\ln[(1-p)/p]$ makes minimum-weight matching select the most likely edge combination. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+Minimum weight and maximum likelihood describe selection criteria. Matching and BP describe ways to perform the inference. They can overlap: for independent graph-edge events, an edge with probability $p$ receives weight $w=\ln[(1-p)/p]$. Less likely edges receive larger penalties, so minimizing the sum selects the most likely edge combination. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+
+**Physical error weight** has a different meaning: the number of qubits affected. For example, $X_2X_4$ has physical weight 2. Probability-based matching weights need not equal this count.
 
 In quantum codes, several error combinations can have the same logical effect. **Maximum-likelihood logical decoding** adds their probabilities before choosing a logical class. This can differ from choosing the single most likely error combination. [Decoding objectives](https://arxiv.org/html/2203.04948v4)
 
