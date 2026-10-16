@@ -1,7 +1,7 @@
 # Gross code: check patterns, logical operators, and computation
 
 Status: Finished |
-Last updated: 2026-10-14
+Last updated: 2026-10-16
 
 ## Overview
 
@@ -280,7 +280,7 @@ $$
 \qquad m_q\in\{+1,-1\}.
 $$
 
-The individual outcomes can be random even for a known encoded computational-basis state; the collective parities give the twelve logical results. The decoder uses the preceding syndrome history and compatible final check parities to decide which raw logical results need flipping. No physical corrections are required after this destructive readout. Whole-block `X` readout works in the corresponding basis.
+The individual outcomes can be random even for a known encoded computational-basis state; the collective parities give the twelve logical results. The [decoder](../decoders/README.md) uses the preceding syndrome history and compatible final check parities to decide which raw logical results need flipping. No physical corrections are required after this destructive readout. Whole-block `X` readout works in the corresponding basis.
 
 To read one logical qubit while preserving the others, use the collective auxiliary measurement described above. Measuring every physical qubit on its support individually would reveal more information than the chosen logical parity. [Logical measurement protocols and whole-block readout](https://arxiv.org/html/2506.03094v1)
 

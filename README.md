@@ -37,6 +37,8 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — **Working notes.** Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
+- [Decoders](qec_knowledge_base/decoders/README.md) — **Study reference.** Worked examples of matching, correlated faults, Bayesian inference, BP and BeliefMatching, plus other decoder families and public benchmarks.
+
 ## Run the notebooks
 
 Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:

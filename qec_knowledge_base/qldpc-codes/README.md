@@ -85,7 +85,7 @@ When hearing about a qLDPC code, first ask which family it belongs to and what i
 - **Total hardware overhead:** how many data qubits, ancillas, and other components are required?
 - **Connectivity:** which qubits must interact, and how are those interactions implemented?
 - **Logical error rate:** what performance survives when gates, preparation, and check measurements can fail?
-- **Decoding:** can the decoder keep up with the measurement stream and the feedback deadlines?
+- **[Decoding](../decoders/README.md):** can the decoder keep up with the measurement stream and the feedback deadlines?
 - **Logical operations:** what are the time and hardware costs of preparation, gates, and readout?
 
 The useful comparison is the cost of achieving a specified reliability for the intended computation. No single code property settles all of these questions.
