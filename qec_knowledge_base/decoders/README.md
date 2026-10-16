@@ -6,22 +6,22 @@ Last updated: 2026-10-16
 
 A **decoder** reads the syndrome—the pattern of check outcomes—and supplies a correction or a change to the interpreted logical result. It uses a noise model to infer which errors could explain those outcomes. Several errors can produce the same syndrome, so recovering the logical information does not require identifying a unique physical error.
 
-A **weight** is a numerical penalty assigned to a candidate error or graph edge. The **total cost** of an explanation is the sum of its assigned weights. There are several ways to use these weights and probabilities:
+The decoder's **selection criterion** says which explanation it prefers. Minimum weight means the smallest sum of assigned error weights. Maximum likelihood means the most probable explanation under the noise model. An **inference algorithm** is the procedure used to find or approximate that choice.
 
-| Method | Principle |
+A **weight** is a numerical penalty assigned to a candidate error or graph edge; the **total cost** is the sum of those weights. In probability-weighted matching, an edge with probability $p$ receives weight $w=\ln[(1-p)/p]$. Less likely edges receive larger penalties. For independent graph-edge events, minimizing this sum selects the most likely edge combination. **Physical error weight** instead counts affected qubits: $X_2X_4$ has physical weight 2. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+
+The decoders below use these criteria and algorithms in different combinations:
+
+| Decoder | How it makes a decision |
 | --- | --- |
-| **Minimum weight** | Choose a compatible explanation with the smallest sum of assigned weights. Equal unit weights select the fewest error events. |
-| **Maximum likelihood** | Choose the most probable compatible explanation under the noise model. |
-| **Minimum-weight perfect matching (MWPM)** | Choose a compatible set of graph edges with the smallest sum of edge weights. |
-| **Correlated matching** | Use relationships between graph edges to revise matching weights. |
-| **Belief propagation (BP)** | Update estimates of fault probabilities using the observed check constraints. |
-| **BeliefMatching** | Use BP over whole faults, with matching as a fallback when needed. |
+| **Minimum-weight perfect matching (MWPM) decoder** | Uses a matching algorithm to find a syndrome-compatible graph explanation with the smallest sum of edge weights. |
+| **Correlated-matching decoder** | Runs matching, uses correlations to revise edge weights, then runs matching again. |
+| **BP decoder** | Uses belief propagation to update fault probabilities and form a candidate error assignment. The candidate can fail to satisfy all syndrome constraints. |
+| **BeliefMatching decoder** | Runs BP over whole faults. If BP finds a syndrome-consistent assignment, uses it; otherwise runs matching with BP-informed weights. |
 
-Minimum weight and maximum likelihood describe selection criteria. Matching and BP describe ways to perform the inference. They can overlap: for independent graph-edge events, an edge with probability $p$ receives weight $w=\ln[(1-p)/p]$. Less likely edges receive larger penalties, so minimizing the sum selects the most likely edge combination. [PyMatching](https://github.com/oscarhiggott/PyMatching)
+BP is the inference algorithm used inside both the BP decoder and BeliefMatching. Minimum weight is the criterion optimized by the matching stage. These components can therefore appear together in one decoder.
 
-**Physical error weight** has a different meaning: the number of qubits affected. For example, $X_2X_4$ has physical weight 2. Probability-based matching weights need not equal this count.
-
-In quantum codes, several error combinations can have the same logical effect. **Maximum-likelihood logical decoding** adds their probabilities before choosing a logical class. This can differ from choosing the single most likely error combination. [Decoding objectives](https://arxiv.org/html/2203.04948v4)
+For an exact **maximum-likelihood logical decoder**, the criterion is the largest total probability of a logical class, summing error combinations with the same logical effect. This can differ from choosing the single most likely error combination. Exact enumeration supplies a reference for the small example below. [Decoding objectives](https://arxiv.org/html/2203.04948v4)
 
 ## Five qubits: when the graph loses a correlation
 
@@ -122,18 +122,16 @@ BP needs the relevant faults in its model; iterating cannot discover an omitted 
 
 ## Comparing the same example
 
-For syndrome 1111, the methods use different criteria or approximations:
+For syndrome 1111, exact enumeration of the shared-event model gives **01010** a conditional probability of **93.7%**. This is the maximum-likelihood reference for comparing the decoders:
 
-| Method | Result or inference in this example |
+| Decoder | Decision or evidence in this example |
 | --- | --- |
-| Fewest physical bit flips | Chooses **01010**: two flipped qubits rather than three. This count ignores event probabilities. |
-| Exact maximum likelihood with the shared event | Chooses **01010**, with conditional probability **93.7%**. |
-| Ordinary MWPM with independent graph edges | Chooses **10101**, because the graph charges separately for both parts of $F$. |
-| Two-pass correlated matching | Also chooses **10101** in the tested implementation; reweighting does not guarantee exact joint inference. |
-| BP | The first check alone gives **15.5%** for $F$. Full-graph BP is approximate and was not run here. |
-| BeliefMatching | Retains $F$ as a whole-fault variable and can use BP-informed matching. Its output was not tested here. |
+| **Ordinary MWPM decoder** | Chooses **10101**, because its independent-edge graph charges separately for both parts of $F$. |
+| **Two-pass correlated-matching decoder** | Also chooses **10101** in the tested implementation; its reweighting does not recover the exact model's preferred explanation here. |
+| **BP decoder** | The first-check calculation gives **15.5%** for $F$. A full BP decoding decision was not tested. |
+| **BeliefMatching decoder** | Retains $F$ as a whole-fault variable and can use BP-informed matching. Its final decision was not tested. |
 
-The minimum-flip and exact-likelihood choices agree here, but can differ when error probabilities differ. Correlation-aware heuristics do not guarantee exact joint inference.
+Simply choosing the fewest flipped qubits also gives 01010 here: two flips rather than three. That is a counting criterion, not another inference algorithm. Its agreement with exact likelihood in this example does not hold generally when probabilities differ.
 
 ## Advanced decoding methods
 
