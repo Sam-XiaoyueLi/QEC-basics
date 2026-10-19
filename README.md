@@ -39,6 +39,8 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Decoders: Beyond Likelihood](qec_knowledge_base/decoders/README.md) — One physical error model used to explain MWPM, correlated matching and BeliefMatching, followed by advanced decoders and company approaches.
 
+- [A denser planar surface code](qec_knowledge_base/denser-planar-surface-code/README.md) — Twist-defect packing, practical measurements, density comparisons, yoking assumptions, and computing with dense memory.
+
 ## Run the notebooks
 
 Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:
