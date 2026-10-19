@@ -6,7 +6,7 @@ Google Quantum AI's [*A Denser Planar Surface Code*, Low et al., arXiv:2605.3045
 
 ## Separate rotated patches: what is being counted?
 
-A distance-$d$ rotated surface-code patch stores one logical qubit using $d^2$ **data qubits**. Its $d^2-1$ independent stabilizers have dedicated **measurement qubits** in the usual extraction circuit, giving
+A distance - $d$ rotated surface-code patch stores one logical qubit using $d^2$ **data qubits**. Its $d^2-1$ independent stabilizers have dedicated **measurement qubits** in the usual extraction circuit, giving
 
 $$
 n_{\mathrm{phys}}=d^2+(d^2-1)=2d^2-1.
