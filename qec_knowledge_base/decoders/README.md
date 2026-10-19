@@ -24,7 +24,7 @@ The decoding graph has detector nodes. An edge models an effect on two detectors
 
 This graph works naturally for independent faults with one- or two-detector effects. A shared disturbance affecting four detectors needs additional treatment. **Splitting its effects into graph edges is useful for matching, but scoring those edges independently can discard their shared origin.**
 
-## One physical model, two ways to score it
+## Issue with MWPM: independent edge scores
 
 Consider five qubits encoding $|00000\rangle$ and $|11111\rangle$, with checks
 
@@ -62,7 +62,7 @@ Now give this **same physical model** to a matching decoder. Stim's **detector e
 error(0.02) D0 D1 ^ D2 D3
 ```
 
-The separator `^` suggests two graph components: $D_0$–$D_1$ and $D_2$–$D_3$. Both remain parts of **one** probability-0.02 mechanism in the DEM. [Stim format](https://github.com/quantumlib/Stim/blob/main/doc/file_format_dem_detector_error_model.md)
+The separator `^` suggests two graph components: $D_0$ – $D_1$ and $D_2$ – $D_3$. Both remain parts of **one** probability-0.02 mechanism in the DEM. [Stim format](https://github.com/quantumlib/Stim/blob/main/doc/file_format_dem_detector_error_model.md)
 
 When PyMatching builds the graph for MWPM, each component receives probability 0.02 and weight $\ln49$. Matching scores their selection independently. Thus exact inference and MWPM start from the same supplied DEM, but use different scoring rules. The resulting independent-edge scores are:
 
