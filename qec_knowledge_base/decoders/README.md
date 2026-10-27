@@ -1,6 +1,6 @@
 # Decoders: Beyond Likelihood
 
-Last updated: 2026-10-16
+Last updated: 2026-10-27
 
 ## From syndrome to correction
 
@@ -129,5 +129,6 @@ Industrial work spans [qLDPC codes](../qldpc-codes/README.md), including the [Gr
 | **IonQ** | **BP-guided beam search** retains a bounded set of promising candidates. A later stack separates longer-window error tracking from shorter-window logical-outcome decoding. CPU benchmarks cover simulated workloads up to 408 logical qubits with assumed 1–5 ms extraction cycles. [Beam search](https://arxiv.org/abs/2512.07057), [decoding stack](https://arxiv.org/abs/2608.25027) |
 | **Riverlane** | Its Union-Find-based **Local Clustering Decoder** grows and merges detection-event clusters on FPGAs, with graph adaptations for information such as heralded leakage. Reported hardware timing and simulated quantum resource savings are distinct results. [LCD paper](https://www.nature.com/articles/s41467-025-66773-x) |
 | **Google / DeepMind** | **Tesseract** uses A* search with pruning over fault subsets. **AlphaQubit 2** is a trained neural decoder evaluated on simulated circuits and recorded Willow data. [Tesseract](https://arxiv.org/abs/2503.10988), [AlphaQubit 2](https://arxiv.org/abs/2512.07737) |
+| **Quantinuum** | Its October 2026 [color-code experiment](../color-codes/README.md#decoding-and-the-remaining-computation-gap) used **Tesseract**, **Frontier** (pruned dynamic programming), a CNN and a round-token transformer. All experiment decoding was offline; separate streaming timing tests did not include end-to-end feedback. [Paper and methods](https://arxiv.org/html/2610.24077v1) |
 
 Compare logical error rates under the same code and noise model, then distinguish **throughput**, which determines whether processing keeps up with incoming measurements, from **feedback latency**, the time until a required decision arrives. Average speed can hide slow difficult cases, so latency tails matter too. Fast processing per cycle alone does not establish the final feedback deadline, including communication and control.

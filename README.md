@@ -41,6 +41,8 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [A denser planar surface code](qec_knowledge_base/denser-planar-surface-code/README.md) — Twist-defect packing, practical measurements, density comparisons, yoking assumptions, and computing with dense memory.
 
+- [Color codes](qec_knowledge_base/color-codes/README.md) — Face checks, a seven-qubit example, transversal Clifford gates, and the promise and limits of Quantinuum's Helios experiment.
+
 ## Run the notebooks
 
 Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:
