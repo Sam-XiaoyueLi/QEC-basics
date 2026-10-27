@@ -16,7 +16,7 @@ $$
 S_f^X=\prod_{i\in f}X_i,\qquad S_f^Z=\prod_{i\in f}Z_i.
 $$
 
-For a four-qubit face these are $X_1X_2X_3X_4$ and $Z_1Z_2Z_3Z_4$. In the triangular honeycomb family, bulk faces have six qubits and truncated boundary faces have four. These are **CSS stabilizer codes**: separate all-$X$ and all-$Z$ checks define the protected subspace through their $+1$ eigenvalues.
+For a four-qubit face these are $X_1X_2X_3X_4$ and $Z_1Z_2Z_3Z_4$. In the triangular honeycomb family, bulk faces have six qubits and truncated boundary faces have four. These are **CSS stabilizer codes**: separate all $X$ and all $Z$ checks define the protected subspace through their $+1$ eigenvalues.
 
 The checks commute because their supports overlap on an even number of qubits. Exchanging $X$ and $Z$ on one shared qubit gives a minus sign; an even number of such signs cancels. This applies both to the two checks on the same even-sized face and to checks on adjacent faces sharing an edge.
 
@@ -116,6 +116,6 @@ All decoding in this study was **offline**. The primary decoder, **Tesseract**, 
 
 Streaming timing tests supplied recorded syndromes one round at a time. Neural timings measured isolated computation on an NVIDIA H100 GPU; Frontier's WebAssembly timings ran on a laptop. These tests support feasibility, but exclude the full communication and control path needed for live feedback. [Paper, decoding methodology](https://arxiv.org/html/2610.24077v1)
 
-The practical promise is a measured combination of compact blocks, convenient protected gates and strong distance scaling on compatible hardware. What remains is to combine many interacting blocks, live decoding and feedforward, reliable magic-state supply and $T$ injection, and longer circuits demonstrating below-threshold full Clifford+$T$ execution. Total resources must include helpers, routing, time and magic-state production. The company's Apollo 2029 target is a [roadmap](https://www.quantinuum.com/blog/quantinuum-closes-in-on-one-million-error-free-operations), not an outcome established by this experiment.
+The practical promise is a measured combination of compact blocks, convenient protected gates and strong distance scaling on compatible hardware. What remains is to combine many interacting blocks, live decoding and feedforward, reliable magic-state supply and $T$ injection, and longer circuits demonstrating below-threshold full Clifford + $T$ execution. Total resources must include helpers, routing, time and magic-state production. The company's Apollo 2029 target is a [roadmap](https://www.quantinuum.com/blog/quantinuum-closes-in-on-one-million-error-free-operations), not an outcome established by this experiment.
 
 This October color-code experiment is separate from the September Helix work already listed in the [qLDPC industry overview](../qldpc-codes/README.md#what-major-companies-are-doing); their reported error rates should not be combined.
