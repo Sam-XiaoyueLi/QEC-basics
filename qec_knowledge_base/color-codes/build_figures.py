@@ -147,12 +147,14 @@ fig.text(.5,.035,'Gold rings mark the qubits acted on. Signs in panels 2–3 are
          ha='center',fontsize=11)
 save(fig,'seven-qubit-checks')
 
-fig, ax = plt.subplots(figsize=(12,4.3))
+fig, ax = plt.subplots(figsize=(12,4.6))
 fig.subplots_adjust(left=.02,right=.98,bottom=.03,top=.95)
-ax.set(xlim=(-1.8,8),ylim=(-.9,3.3))
+ax.set(xlim=(-1.8,8),ylim=(-1.1,3.3))
 ax.axis('off')
 ax.text(3.1,3.0,'Transversal CNOT = seven separate physical CNOTs',
         ha='center',fontsize=18,weight='bold')
+ax.text(3.1,2.65,'Two [[7,1,3]] blocks  ·  14 data qubits  ·  7 matching pairs',
+        ha='center',fontsize=12)
 for y,name in ((2.05,'Control block'),(.45,'Target block')):
     ax.text(-.65,y,name,ha='right',va='center',fontsize=13,weight='bold')
     ax.plot([-.3,6.3],[y,y],lw=12,color='#e9eef5',solid_capstyle='round',zorder=0)
@@ -167,5 +169,7 @@ for i in range(7):
     ax.text(i,.05,str(i+1),ha='center',fontsize=12)
 ax.text(3.1,-.55,'A fault in pair 3 can affect qubit 3 in both blocks; this gate does not spread it to the other pairs.',
         ha='center',fontsize=12)
+ax.text(3.1,-.90,'One abstract parallel CNOT layer; native gates, routing and device scheduling determine actual time.',
+        ha='center',fontsize=11)
 save(fig,'transversal-cnot')
 print('Validated d=3,5,7 data counts, face weights, even overlaps, three-colouring and README numbering.')

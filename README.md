@@ -41,7 +41,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [A denser planar surface code](qec_knowledge_base/denser-planar-surface-code/README.md) — Twist-defect packing, practical measurements, density comparisons, yoking assumptions, and computing with dense memory.
 
-- [Color codes](qec_knowledge_base/color-codes/README.md) — Illustrated lattices and face checks, a seven-qubit example, transversal Clifford gates, and the promise and limits of Quantinuum's Helios experiment.
+- [Color codes](qec_knowledge_base/color-codes/README.md) — Illustrated geometry and checks, transversal gates, data-qubit costs, experimental uncertainty, and hardware/decoder trade-offs in Quantinuum's Helios result.
 
 ## Run the notebooks
 
