@@ -67,9 +67,9 @@ A standard rotated surface-code patch also encodes one logical qubit, with $d^2$
 | 5 | 19 data qubits | 25 data qubits |
 | 7 | 37 data qubits | 49 data qubits |
 
-This is an **equal-distance, data-only comparison**. Equal distance does not mean equal logical reliability: check circuits, noise and decoding differ. Measurement helpers, routing, operation time and magic-state production also contribute to the total cost. [Color-code parameters](https://arxiv.org/html/2610.24077v1), [surface-code counting](../denser-planar-surface-code/README.md#separate-rotated-patches-what-is-being-counted)
+This is an **equal-distance, data-only comparison**. Equal distance does not mean equal logical reliability: check circuits, noise and decoding differ. Measurement helpers, routing, operation time and magic-state production also contribute to the total cost. [Color-code parameters](https://arxiv.org/html/2610.24077v1), [surface-code counting](../denser-planar-surface-code/README.md#start-with-one-ordinary-surface-code-patch)
 
-For both code families, the one-logical-qubit count belongs to these particular layouts. The [dense surface-code notes](../denser-planar-surface-code/README.md#twist-defects-shared-information-rather-than-three-isolated-squares) show how several logical qubits can instead share one connected region.
+For both code families, the one-logical-qubit count belongs to these particular layouts. The [dense surface-code notes](../denser-planar-surface-code/README.md#find-the-three-logical-qubits-on-one-shared-patch) show how several logical qubits can instead share one connected region.
 
 ## Transversal Clifford gates
 
