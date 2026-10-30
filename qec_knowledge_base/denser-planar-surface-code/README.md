@@ -4,8 +4,6 @@ Last updated: 2026-10-30
 
 ## Start with one ordinary surface-code patch
 
-A **logical qubit** is quantum information stored across many physical data qubits. The surface code protects it by repeatedly measuring small groups of data qubits. These measurements are called **stabilizer checks**. They reveal errors without reading the stored logical information.
-
 An ordinary rotated patch of distance $d$ has $d^2$ data qubits and $d^2-1$ independent checks. For a stabilizer code, the counting rule is
 
 $$
