@@ -119,7 +119,7 @@ The comparison counts **data qubits and measurement helpers**. An ordinary patch
 The first two rows describe the packing mechanism. The last row adds another layer of error protection, called **yoking**, with its own time and space costs. The three gains are not factors to multiply together. [Google paper, Fig. 11 and §III](https://arxiv.org/pdf/2605.30455v1#page=14)
 
 <details>
-<summary>Further details: reliability, using the memory, and the chemistry estimate</summary>
+<summary>Further details: reliability and using the memory</summary>
 
 ### What has been tested?
 
@@ -139,10 +139,47 @@ This suggests two roles: **cold storage** holds many rarely used qubits densely;
 
 The paper separately makes ordinary lattice surgery fit into $2d^2$ sites per patch instead of the conventional $2(d+1)^2$. This is **padding-free surgery**: it removes conventional per-patch padding, while operations still need their ancillas and access space. At $d=5$, ordinary memory occupies 49 qubits, the conventional box has 72 sites, and the compact box has 50. [§II.B](https://arxiv.org/pdf/2605.30455v1#page=10)
 
-### Chemistry example
-
-For a FeMoco chemistry calculation with 108 spin-orbitals, the compact system estimate uses about **89,000 physical qubits and less than one month**, assuming $10^{-3}$ physical error strength, a $1\,\mu\mathrm{s}$ code cycle and $10\,\mu\mathrm{s}$ classical reaction time. [Fig. 1](https://arxiv.org/pdf/2605.30455v1#page=2)
-
-Its reported **$36\times$ reduction in qubits** compares complete system estimates. It combines the code, memory/workspace architecture, gate compilation and algorithm improvements. It is not a $36\times$ density gain from twists. The compact choice also takes longer than the earlier roughly three-hour estimate; a different configuration gives the best spacetime-volume result. [Fig. 1 and §VI.D](https://arxiv.org/pdf/2605.30455v1#page=56)
-
 </details>
+
+## FeMoco algorithm: what is the computer calculating?
+
+**FeMoco is the iron–molybdenum cofactor in nitrogenase**, an enzyme involved in turning nitrogen into ammonia. Understanding its electrons helps researchers study how that chemistry works. The calculation used here asks a specific question: **what is the lowest possible electronic energy of a chosen FeMoco model?** This is its *ground-state energy*. Comparing energies of different chemical structures can help investigate a reaction. [Reiher et al., FeMoco benchmark](https://arxiv.org/abs/1605.03590), [Google paper, §VI](https://arxiv.org/pdf/2605.30455v1#page=49)
+
+### Represent the electrons with logical qubits
+
+The benchmark selects **54 spatial orbitals** for detailed treatment. Each orbital has two spin choices, giving **108 spin-orbitals**. Think of a spin-orbital as an available electron slot. Its occupation is represented by one logical qubit:
+
+- $0$: the slot is empty.
+- $1$: the slot contains an electron.
+
+The benchmark has 54 electrons distributed among these 108 slots. The quantum state can combine many occupation patterns, with correlations between them. These **108 logical qubits hold the electronic state**; additional logical qubits are needed to run the algorithm. Each logical qubit then needs many physical qubits for error protection. [Google paper, §VI and Table XII](https://arxiv.org/pdf/2605.30455v1#page=50)
+
+### Extract energy using phase estimation
+
+The **Hamiltonian**, usually written $H$, is the mathematical description of electron energies and interactions. It supplies the rules for the calculation.
+
+```mermaid
+flowchart TD
+    A["Build the molecular energy model on a classical computer"]
+    B["Rewrite its interaction data as a smaller recipe"]
+    C["Prepare a quantum starting state for the electrons"]
+    D["Repeat controlled circuit steps built from the energy model"]
+    E["Use phase estimation to read an energy-related phase"]
+    F["Convert the measured phase into an energy estimate"]
+    A --> B --> C --> D --> E --> F
+```
+
+1. **Make the recipe cheaper to execute.** The interaction data can be very large. The paper uses **DFTHC**, a way to approximate that data with a more compact mathematical recipe. This reduces the work needed to implement the model while keeping the required energy accuracy.
+2. **Prepare a suitable starting state.** It must contain a ground-state component. Phase estimation can return energies present in the starting state, so a poor starting state can make the desired energy difficult to obtain.
+3. **Apply the model repeatedly.** The recipe becomes a reusable circuit step called a **quantum walk**. Building it uses *block-encoding* and *qubitization*: methods for turning the energy model into a gate circuit with helper qubits. The algorithm applies controlled repetitions of this step.
+4. **Read the phase and infer the energy.** For an encoded energy eigenstate, the walk produces a phase related to its energy. Think of phase as a clock-hand angle: different energies give different angles. Phase estimation uses helper qubits and interference to measure that phase. The known relationship converts it into an energy estimate. The paper also uses **spectrum amplification**, which changes the phase–energy relationship so low energies can be resolved with fewer walk steps. [Google paper, §VI, Eqs. (6.1)–(6.6)](https://arxiv.org/pdf/2605.30455v1#page=49)
+
+The walk repeatedly looks up numerical coefficients and performs controlled rotations. A large part of the work therefore happens in the helper registers, while the electronic state needs only selected interactions. [Google paper, §VI.A and Fig. 45](https://arxiv.org/pdf/2605.30455v1#page=52)
+
+### Why dense memory helps this algorithm
+
+The electronic state must survive throughout the calculation, even while helper qubits are busy. **Dense cold storage holds much of that state; hot storage and compute space handle the frequent lookup, arithmetic and rotation work.** Selected stored qubits are brought into use when needed. The paper analyzes how to schedule these accesses and use buffers to reduce waiting. Its fastest layouts still need fuller scheduling validation. [Google paper, §VI.C](https://arxiv.org/pdf/2605.30455v1#page=55)
+
+For the 108-spin-orbital benchmark, the compact estimate uses about **89,000 physical qubits and less than one month**. It assumes physical error strength $10^{-3}$, a $1\,\mu\mathrm{s}$ code cycle and $10\,\mu\mathrm{s}$ classical reaction time. The phase-estimation uncertainty target is 1 millihartree, within a chemical-accuracy budget of about 1.6 millihartree. The estimates **assume perfect ground-state overlap and omit starting-state preparation cost**; the authors expect that cost to be smaller than the main calculation. These are resource estimates, rather than a completed FeMoco computation. [Google paper, Fig. 1 and §VI](https://arxiv.org/pdf/2605.30455v1#page=49)
+
+The reported **$36\times$ reduction in physical qubits** combines denser codes, the storage/workspace layout, gate compilation and algorithm improvements. It compares the compact estimate with an earlier estimate of about 3.2 million physical qubits. It is not a $36\times$ density gain from twists alone. The smaller machine also runs longer than the earlier roughly three-hour configuration. [Google paper, Figs. 1 and 44](https://arxiv.org/pdf/2605.30455v1#page=51)
