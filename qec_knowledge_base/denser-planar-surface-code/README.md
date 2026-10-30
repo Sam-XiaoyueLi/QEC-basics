@@ -1,4 +1,4 @@
-# A denser planar surface code
+# A denser planar surface code: twist defects
 
 Last updated: 2026-10-30
 
