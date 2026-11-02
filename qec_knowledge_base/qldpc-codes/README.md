@@ -1,47 +1,52 @@
-# qLDPC codes: definitions, trade-offs, and industry approaches
+# qLDPC codes: definitions, construction recipes, and trade-offs
 
-Last updated: 2026-10-16
+Last updated: 2026-11-02
 
-## What qLDPC means
+## What makes a code qLDPC?
 
-**qLDPC means “quantum low-density parity-check.”** It describes a broad class of quantum error-correcting codes, including the [Gross code](../gross-code/README.md).
+**A quantum low-density parity-check (qLDPC) family has a set of stabilizer checks in which each check touches a bounded number of data qubits, and each data qubit belongs to a bounded number of those checks.** Both bounds stay fixed as the block size grows. For example, a construction could keep checks at weight six even as it adds more data qubits and more checks. The bound need not be six, or even especially small in engineering terms.
 
-Quantum information is encoded across many physical qubits, and we repeatedly measure **checks**—joint properties of groups of qubits—to detect errors without reading out the logical information. The pattern of check outcomes is called the **syndrome**. A classical **decoder** uses those outcomes to infer a suitable correction.
+A check is a joint Pauli measurement, such as $X_1X_3X_5$. Its **weight** is the number of data qubits it touches: three in this example. The selected checks generate the stabilizer constraints defining the encoded states. Their products can have large weight; the definition asks for a sparse generating set, not for every possible product to stay small. In a binary check matrix, rows represent checks and columns represent data qubits, so the two requirements are bounded row weight and bounded column weight. [Definition](https://arxiv.org/html/2103.06309v2#S2.SS1.SSS2)
 
-“Low density” describes the checking structure:
+Repeated measurements produce a **syndrome**, the pattern of check outcomes. A [decoder](../decoders/README.md) uses that information to infer a correction. Data qubits hold the encoded information. Measurement ancillas are additional helper qubits used to extract checks; the code's data-qubit count does not include them.
 
-- Each check involves only a small number of qubits.
-- Each qubit participates in only a small number of checks.
+The definition says nothing by itself about geometric locality, a high encoding rate, large distance, easy decoding, or cheap fault-tolerant gates. Six qubits in a check may be far apart on a chip. Both ordinary surface codes and ordinary lattice [color codes](../color-codes/README.md) are qLDPC. “Stabilizer” describes the commuting constraints, “CSS” describes checks made entirely of $X$ or entirely of $Z$, and “qLDPC” describes sparsity as the code grows. These classifications overlap.
 
-For a qLDPC code family, both numbers remain bounded as the code grows. In a check matrix, this means bounded row and column weights: each row describes a check, and each column describes a qubit. Most commonly discussed examples are **stabilizer codes**, whose checks are commuting Pauli operators. Many are also **CSS codes**, with separate checks made entirely of $X$ operators or entirely of $Z$ operators. [Definition and examples](https://www.nature.com/articles/s41586-024-07107-7)
+## Families are recipes for the check pattern
 
-## Protection and encoding efficiency
+Imagine an inventory of physical data qubits and a list beside each check saying which qubits it uses. A code construction is a systematic way to produce those lists. For a CSS code, it produces one collection of $X$ lists and one of $Z$ lists. Every $X$ list must overlap every $Z$ list on an even number of data qubits, so the measurements commute.
 
-The usual notation is $[[n,k,d]]$:
+The recipe can also determine how many qubits are needed. It may require two grids of addresses, a periodic size, or a special network. It therefore gives allowable block sizes and connection patterns; fitting one to an existing processor is a further design problem. A grid of addresses is a way to label the qubits. Its rows and columns need not be rows and columns of a chip.
 
-| Parameter | Meaning |
-| --- | --- |
-| $n$ | Number of data qubits |
-| $k$ | Number of encoded logical qubits |
-| $d$ | Minimum number of qubits on which an undetectable, nontrivial logical Pauli error can act |
+The names below describe **construction methods**. Superconducting circuits, ions, atoms, and optical modes describe the [physical hardware](../quantum-computing-hardware/README.md) that might implement them.
 
-The **encoding rate** is $k/n$. A higher rate means more logical qubits per data qubit. The distance tells us about protection: with ideal syndrome information and suitable recovery, a distance-$d$ code can correct arbitrary errors on up to $\lfloor(d-1)/2\rfloor$ qubits. Noisy check measurements and gates require a fault-tolerant measurement protocol and decoder; distance alone does not specify the resulting logical error rate.
+## What do rate and distance tell us?
 
-Some qLDPC families achieve both a rate that stays above zero and a distance proportional to $n$. As the block grows, both its storage capacity and its distance grow proportionally. These are called **asymptotically good codes**. This is a property of particular families, rather than a guarantee of the qLDPC definition. [Panteleev and Kalachev](https://arxiv.org/abs/2111.03654)
+The notation $[[n,k,d]]$ means $n$ data qubits encode $k$ logical qubits with distance $d$. The **rate** is $k/n$. Distance is the smallest number of qubits supporting a nontrivial logical Pauli operator: an error invisible to the checks that changes the encoded information. With ideal syndrome information and suitable recovery, distance $d$ guarantees correction of arbitrary errors on up to $\lfloor(d-1)/2\rfloor$ qubits.
 
-The attraction is the possibility of protecting many logical qubits with fewer physical qubits per logical qubit. The Gross code is a concrete example: $[[144,12,12]]$, with six-qubit checks. Its original measurement scheme uses another 144 check ancillas, giving 288 physical qubits in total. This illustrates why the data-qubit count alone does not capture the full hardware cost. [Bivariate bicycle construction](https://www.nature.com/articles/s41586-024-07107-7)
+In the table, “proportional to $n$” means scaling with block size up to constant factors. A family with $k$ and $d$ both proportional to $n$ is **asymptotically good**. Such families exist, but the constants, useful block sizes, and measurement circuits still matter. A scaling theorem does not say that its smallest example beats a surface-code patch. [Existence of good qLDPC families](https://arxiv.org/abs/2111.03654)
 
-## Practical trade-offs
+## How do the main recipes compare?
 
-**Sparse checks do not necessarily mean easy hardware implementation.** A check can involve only six qubits while those qubits are physically far apart. “Few qubits per check” describes connectivity in the code; “nearby qubits” describes geometry in the hardware.
+| Family / construction | Basic recipe for physical data qubits and checks | Advantages | Drawbacks and qualifications |
+| --- | --- | --- | --- |
+| **Surface / toric codes** | Put data qubits on a lattice and check nearby edges or faces. Boundaries or periodic seams determine logical operators. See the [surface-code notebook](../../surface_code.ipynb) and [patch explanation](../denser-planar-surface-code/README.md#start-with-one-ordinary-surface-code-patch). | Small local checks, mature decoding and lattice-surgery methods. A rotated patch has $n=d^2$, $k=1$; a square toric code has $k=2$ and $d$ proportional to $\sqrt n$. | For these usual patches or fixed-topology lattices, rate falls as distance increases. Gates, routing, and resource-state preparation add space and time. |
+| **[Color codes](../color-codes/README.md)** | Put data qubits on vertices of a suitably colored lattice; a face specifies both an $X$ and a $Z$ check. | Common 2D patches support transversal Clifford gates, including Hadamard and phase gates, and can use fewer data qubits than a comparable surface patch. | Usual 2D patches still have $k=1$ and $d$ proportional to $\sqrt n$. Higher-weight checks and extraction/decoding costs can offset data-qubit savings. |
+| **[Hypergraph product (HGP)](../hypergraph-product-codes/README.md)** | Use two classical check blueprints to label two sets of data qubits. Each quantum check connects across both sets, pairing otherwise odd $X$–$Z$ overlaps. | A direct construction from sparse classical ingredients. Suitable good seeds give $k$ proportional to $n$ and $d$ proportional to $\sqrt n$; expander-based versions have proven decoding algorithms. | General connections are nonlocal on a 2D chip. Distance has square-root scaling for the standard good-seed construction. Seed choice controls performance. |
+| **[Lifted product (LP)](../lifted-product-codes/README.md)** | Build compatible small check templates with shift/permutation instructions, combine them, then expand a shared copy index into actual qubits and connections. | More freedom than the ordinary product to obtain useful rate–distance trade-offs. Carefully chosen nonabelian constructions achieve $k,d$ proportional to $n$. | Arbitrary permutations are not compatible. Simple cyclic lifts do not inherit every theorem for the wider family. Connectivity, constants, decoding, and logical gates require separate work. |
+| **[Balanced product](../balanced-product-codes/README.md)** | Start with product labels and a common symmetry; assign one physical role to each orbit of labels, applying the same identification to checks and their connections. | Uses symmetry to avoid the full size of an ordinary product. One explicit construction gives $k$ of order $n^{4/5}$ and $d$ at least of order $n^{3/5}$. | Symmetry must preserve check membership. The identification changes the code, so rate and distance need new proofs. Those exponents are one result, not a universal rule. |
+| **[Quantum Tanner](../quantum-tanner-codes/README.md)** | Assign a data qubit to each square of a special network. Small classical codes select the check masks on the qubits meeting at each vertex. | Suitable expanding networks and robust local codes give $k,d$ proportional to $n$, with efficient decoders proved under specified assumptions. | A Tanner graph alone is not this construction. Constant check sizes can be large, the network is generally nonlocal, and theorem-level decoding does not settle noisy hardware costs. |
+| **[Bicycle family: generalized, bivariate, multivariate](../bicycle-codes/README.md)** | Use two equal-sized data blocks and two compatible connection recipes. Exchange and reverse the recipes to obtain the other check type. | Compact descriptions and useful finite examples. The bivariate [Gross code](../gross-code/README.md) is $[[144,12,12]]$ with weight-six checks; some trivariate bicycle examples use weight five. | Parameters depend on the chosen recipes and periodic sizes. Long connections, decoder cost, and access to individual logical qubits matter. No universal linear-distance claim follows from the name. |
 
-Routing interactions, measuring checks reliably, decoding outcomes quickly, and performing logical gates all affect whether the theoretical savings survive in a real machine. A code that stores information efficiently may still need substantial resources to address individual logical qubits or carry out a computation.
+The family pages give the mechanisms and primary sources behind these comparisons. These are overlapping descriptions, rather than disjoint boxes or a ladder of successively better codes. Products of repetition-code ingredients recover familiar surface/toric constructions. Under suitable free abelian symmetry actions, a balanced product is also a lifted product. Generalized bicycle codes fit within the broader product framework. [Product relationships](https://arxiv.org/html/2012.09271v3#S4.SS4.SSS3), [bicycle and lifted products](https://arxiv.org/html/2012.04068)
 
-Surface codes themselves satisfy the qLDPC definition. In research conversations, however, “qLDPC” often refers to other constructions aimed at better encoding efficiency, including hypergraph-product, lifted-product, quantum Tanner, and bivariate bicycle codes.
+**Trivariate bicycle** and **trivariate tricycle** are different constructions. Bicycle retains the two-block recipe while adding shift variables. Tricycle uses three polynomials in a longer construction that includes the 3D toric code; its work studies partial single-shot decoding and logical gates. The [bicycle page](../bicycle-codes/README.md#how-is-trivariate-tricycle-different) explains the distinction. [Tricycle paper, version 3](https://arxiv.org/abs/2508.08191v3)
 
-A standard rotated surface-code patch stores one logical qubit using $d^2$ data qubits at distance $d$. Its checks can be measured using nearby interactions on a 2D grid. High-rate qLDPC constructions aim to protect many logical qubits together in a block, often with connections that are harder to implement on that grid. Neither approach wins from its code parameters alone. [Code and hardware comparison](https://www.nature.com/articles/s41586-024-07107-7)
+## Why use them, and what can erase the savings?
 
-qLDPC codes are a major research direction, with hardware demonstrations already reported, including small bivariate bicycle variants on a 32-qubit processor. These demonstrations are steps toward practical use; they do not yet establish large-scale operation. [Experimental demonstration](https://www.nature.com/articles/s41567-025-03157-4)
+The attraction of high-rate qLDPC codes is sharing a block among many logical qubits. The Gross code, for example, stores twelve logical qubits in 144 data qubits. Its original memory protocol also uses 144 measurement ancillas, for 288 physical qubits. That result was a proposed and simulated protocol, not a hardware demonstration of the full Gross memory. [Original memory study](https://www.nature.com/articles/s41586-024-07107-7)
+
+To use those savings, the machine must implement the requested connections, measure checks without spreading too many errors, decode quickly enough, and operate on the stored logical qubits. A good memory can still be expensive to compute with. Compare total hardware and time at a specified logical error rate, including helpers, routing, preparation, gates, readout, and the decoder's feedback deadlines.
 
 ## Other kinds of quantum codes
 
@@ -63,29 +68,17 @@ Approaches can also be combined. A bosonic code can protect each underlying qubi
 
 ## What major companies are doing
 
-The following is a snapshot of public work **as of October 16, 2026**. “Demonstrated” refers to specific experiments; an architecture or roadmap describes a proposed larger system. These are examples of each company's work, rather than an exclusive choice of one code.
+The following is a snapshot of public work **checked on November 2, 2026**. “Demonstrated” refers to specific experiments; an architecture or roadmap describes a proposed larger system. These are examples of each company's work, rather than an exclusive choice of one code.
 
 | Company | Codes used or developed | How they are using them |
 | --- | --- | --- |
-| **Google Quantum AI** | Primarily **surface codes**, with **color codes** for some operations | Demonstrated below-threshold surface-code error correction on Willow: increasing code distance reduced logical errors. Its October 2026 work also demonstrated preparing special resource states in a color code and transferring them into a surface code. [Surface-code results](https://research.google/blog/making-quantum-error-correction-work/), [color-code work](https://blog.google/innovation-and-ai/models-and-research/quantum-computing/magic-state-cultivation-quantum-computing/) |
+| **Google Quantum AI** | Primarily **surface codes**, with **color codes** for some operations | Demonstrated below-threshold surface-code error correction on Willow: increasing code distance reduced logical errors. Its October 15, 2026 work also demonstrated preparing special resource states in a color code and transferring them into a surface code. [Surface-code results](https://research.google/blog/making-quantum-error-correction-work/), [color-code work](https://blog.google/innovation-and-ai/models-and-research/quantum-computing/magic-state-cultivation-quantum-computing/) |
 | **IBM** | **Bivariate bicycle qLDPC codes**, including the Gross code | These form the basis of its proposed modular fault-tolerant architecture. IBM is developing the connectivity, check measurements, and logical operations needed to implement it. The full architecture remains a development target. [Architecture research](https://research.ibm.com/publications/tour-de-gross-a-modular-quantum-computer-based-on-bivariate-bicycle-codes--2) |
 | **Amazon / AWS** | **Bosonic cat encoding combined with a repetition code** | Demonstrated on Ocelot: cat-qubit stabilization suppresses bit flips, while a repetition code across cat qubits corrects phase flips. This combines two protection mechanisms tailored to the hardware's noise. [Ocelot results](https://www.amazon.science/blog/amazon-announces-ocelot-quantum-chip) |
-| **Quantinuum** | Several codes, including its **concatenated Helix code**, plus surface-code interfaces | Demonstrated protected memory and logical operations on its trapped-ion Helios processor. Movable ions provide flexible connectivity, allowing more complex code connections. [Helix demonstration](https://www.quantinuum.com/blog/helix-a-new-architecture-for-enterprise-scale-fault-tolerant-quantum-computing) |
+| **Quantinuum** | Several codes, including its **Helix code**, plus surface-code interfaces | Demonstrated protected memory and logical operations on its trapped-ion Helios processor. Movable ions provide flexible connectivity, allowing more complex code connections. [Helix demonstration](https://www.quantinuum.com/blog/helix-a-new-architecture-for-enterprise-scale-fault-tolerant-quantum-computing) |
 | **Microsoft**, with hardware partners | **Carbon codes** derived from concatenation, **tesseract color codes**, and other geometric constructions | With Quantinuum hardware, demonstrated error correction and logical operations using $[[12,2,4]]$ carbon and $[[16,6,4]]$ tesseract codes. These experiments are distinct from Microsoft's own Majorana hardware programme. [Technical account](https://quantum.microsoft.com/en-us/insights/blogs/from-research-to-product-engineering-logical-qubit-demonstrations-shaping-microsoft-utility-scale-quantum-software-platform) |
-| **IonQ** | **qLDPC codes**, alongside specialised error-reduction protocols | Developing trapped-ion architectures, logical-operation protocols, and decoders for qLDPC codes. Recent work evaluates codes within its proposed “Walking Cat” architecture; those architecture results are research toward a future system. [qLDPC research](https://www.ionq.com/blog/how-qLDPC-with-scheduled-error-correction-unlocks-faster-fault-tolerant-quantum-computers) |
+| **IonQ** | **qLDPC codes**, alongside specialised error-reduction protocols | Developing trapped-ion architectures, logical-operation protocols, and decoders for qLDPC codes. Recent work evaluates codes within its proposed “Walking Cat” architecture; those architecture results are research toward a future system. [qLDPC research](https://www.ionq.com/blog/how-qldpc-with-scheduled-error-correction-unlocks-faster-fault-tolerant-quantum-computers) |
 
 These choices reflect different engineering priorities. Google's surface-code approach fits nearby interactions on a grid. IBM's high-rate qLDPC approach aims to store multiple logical qubits efficiently within each block. Flexible connectivity in trapped-ion systems gives companies more freedom to explore other check structures. AWS engineers cat qubits so bit flips become rare, then targets the remaining phase errors with an outer code.
 
 A company may also use different codes for memory, logical gates, and preparation of special resource states. Google's color-to-surface-code experiment is a direct example: the resource states, often called **magic states**, enable operations needed for universal quantum computation.
-
-## How to compare candidates
-
-When hearing about a qLDPC code, first ask which family it belongs to and what its $[[n,k,d]]$ parameters are. For a practical comparison, also ask:
-
-- **Total hardware overhead:** how many data qubits, ancillas, and other components are required?
-- **Connectivity:** which qubits must interact, and how are those interactions implemented?
-- **Logical error rate:** what performance survives when gates, preparation, and check measurements can fail?
-- **[Decoding](../decoders/README.md):** can the decoder keep up with the measurement stream and the feedback deadlines?
-- **Logical operations:** what are the time and hardware costs of preparation, gates, and readout?
-
-The useful comparison is the cost of achieving a specified reliability for the intended computation. No single code property settles all of these questions.
