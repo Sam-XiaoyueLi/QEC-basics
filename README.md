@@ -43,6 +43,8 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Color codes](qec_knowledge_base/color-codes/README.md) — Illustrated geometry and checks, transversal gates, data-qubit costs, experimental uncertainty, and hardware/decoder trade-offs in Quantinuum's Helios result.
 
+- [Erasure conversion](qec_knowledge_base/erasure-conversion/README.md) — Why known error locations help, how fluxonium and dual-rail encodings produce flags, outer-code recovery, and experimental limits.
+
 ## Run the notebooks
 
 Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from the repository root:
