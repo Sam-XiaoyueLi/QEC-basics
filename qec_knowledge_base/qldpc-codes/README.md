@@ -37,7 +37,7 @@ For example, four data qubits with two independent checks, $XXXX$ and $ZZZZ$, en
 | **Lifted product (LP)** | Use small check templates with permutation instructions in the address book, then combine them to generate commuting checks. | Some constructions achieve constant rate and $d\propto n$. | Choosing useful permutations and implementing the connections can be difficult. |
 | **Balanced product** | Use symmetry to identify equivalent positions in a product construction. | Reduces the number of qubit positions in the product. | The reduction also changes the code's rate and distance. |
 | **Quantum Tanner** | Use small classical codes to define checks on a specially connected network. | Suitable constructions achieve constant rate and $d\propto n$, with efficient decoders. | Checks can involve many qubits and require long connections. |
-| **Bicycle** | Use repeated shift patterns to connect checks across two data blocks. | Compact recipes give useful small codes, such as the $[[144,12,12]]$ Gross code. | Performance depends on the shifts chosen; long connections remain a challenge. |
+| **Bicycle** | Use two equal-sized groups of data qubits and repeating connection rules. The rules tell each check which qubits to measure. | Compact recipes give useful small codes, such as the $[[144,12,12]]$ Gross code. | Performance depends on the shifts chosen; long connections remain a challenge. |
 
 These families overlap. For example, some balanced-product constructions are also lifted products. The scaling results above require suitable ingredients; they do not hold for every code made with the recipe.
 
