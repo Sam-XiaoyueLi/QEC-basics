@@ -4,29 +4,19 @@ Last updated: 2026-11-02
 
 ## What makes a code qLDPC?
 
-**A quantum low-density parity-check (qLDPC) family has a set of stabilizer checks in which each check touches a bounded number of data qubits, and each data qubit belongs to a bounded number of those checks.** Both bounds stay fixed as the block size grows. For example, a construction could keep checks at weight six even as it adds more data qubits and more checks. The bound need not be six, or even especially small in engineering terms.
+A quantum low-density parity-check (qLDPC) family has a set of stabilizer checks in which 
+- each check touches a bounded number of data qubits, and
+- each data qubit belongs to a bounded number of those checks.
+- Both bounds stay fixed as the block size grows.
 
-A check is a joint Pauli measurement, such as $X_1X_3X_5$. Its **weight** is the number of data qubits it touches: three in this example. The selected checks generate the stabilizer constraints defining the encoded states. Their products can have large weight; the definition asks for a sparse generating set, not for every possible product to stay small. In a binary check matrix, rows represent checks and columns represent data qubits, so the two requirements are bounded row weight and bounded column weight. [Definition](https://arxiv.org/html/2103.06309v2#S2.SS1.SSS2)
-
-Repeated measurements produce a **syndrome**, the pattern of check outcomes. A [decoder](../decoders/README.md) uses that information to infer a correction. Data qubits hold the encoded information. Measurement ancillas are additional helper qubits used to extract checks; the code's data-qubit count does not include them.
-
-The definition says nothing by itself about geometric locality, a high encoding rate, large distance, easy decoding, or cheap fault-tolerant gates. Six qubits in a check may be far apart on a chip. Both ordinary surface codes and ordinary lattice [color codes](../color-codes/README.md) are qLDPC. “Stabilizer” describes the commuting constraints, “CSS” describes checks made entirely of $X$ or entirely of $Z$, and “qLDPC” describes sparsity as the code grows. These classifications overlap.
+What differentiate qLDPC codes are the different **recipes**, or rules to generate check patterns.
 
 ## Families are recipes for the check pattern
 
 Imagine an inventory of physical data qubits and a list beside each check saying which qubits it uses. A code construction is a systematic way to produce those lists. For a CSS code, it produces one collection of $X$ lists and one of $Z$ lists. Every $X$ list must overlap every $Z$ list on an even number of data qubits, so the measurements commute.
 
-The recipe can also determine how many qubits are needed. It may require two grids of addresses, a periodic size, or a special network. It therefore gives allowable block sizes and connection patterns; fitting one to an existing processor is a further design problem. A grid of addresses is a way to label the qubits. Its rows and columns need not be rows and columns of a chip.
+The recipe can also determine how many qubits are needed. It may require two grids of addresses, a periodic size, or a special network. It therefore gives allowable block sizes and connection patterns. However, fitting one to an existing processor is a further design problem.
 
-The names below describe **construction methods**. Superconducting circuits, ions, atoms, and optical modes describe the [physical hardware](../quantum-computing-hardware/README.md) that might implement them.
-
-## What do rate and distance tell us?
-
-The notation $[[n,k,d]]$ means $n$ data qubits encode $k$ logical qubits with distance $d$. The **rate** is $k/n$. Distance is the smallest number of qubits supporting a nontrivial logical Pauli operator: an error invisible to the checks that changes the encoded information. With ideal syndrome information and suitable recovery, distance $d$ guarantees correction of arbitrary errors on up to $\lfloor(d-1)/2\rfloor$ qubits.
-
-In the table, “proportional to $n$” means scaling with block size up to constant factors. A family with $k$ and $d$ both proportional to $n$ is **asymptotically good**. Such families exist, but the constants, useful block sizes, and measurement circuits still matter. A scaling theorem does not say that its smallest example beats a surface-code patch. [Existence of good qLDPC families](https://arxiv.org/abs/2111.03654)
-
-## How do the main recipes compare?
 
 | Family / construction | Basic recipe for physical data qubits and checks | Advantages | Drawbacks and qualifications |
 | --- | --- | --- | --- |
