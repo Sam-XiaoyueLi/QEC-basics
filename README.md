@@ -33,7 +33,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Gross code](qec_knowledge_base/gross-code/README.md) — Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, decoded readout, and hardware constraints.
 
-- [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — Bounded checks, construction recipes and their trade-offs, related code classifications, and company examples.
+- [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — Definition, code families, main trade-offs, and company examples.
 
 - [Hypergraph-product codes](qec_knowledge_base/hypergraph-product-codes/README.md) — A five-data-qubit example, the general two-seed check recipe, rate and distance, and decoding trade-offs.
 

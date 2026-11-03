@@ -7,7 +7,7 @@ This is a growing collection of topic pages developed through independent study 
 | Topic | Description |
 | --- | --- |
 | [Gross code](gross-code/README.md) | Check patterns, logical-state preparation, logical operators and distance, parity-based CNOTs within and across blocks, and decoded readout, with reproducible examples. |
-| [qLDPC codes](qldpc-codes/README.md) | Bounded checks, construction recipes and their trade-offs, related code classifications, and company examples. |
+| [qLDPC codes](qldpc-codes/README.md) | Definition, code families, main trade-offs, and company examples. |
 | [Hypergraph-product codes](hypergraph-product-codes/README.md) | A five-data-qubit example, the general two-seed check recipe, rate and distance, and decoding trade-offs. |
 | [Lifted-product codes](lifted-product-codes/README.md) | Copy indices and shift connections, the shared-index product recipe, and the scope of good-code results. |
 | [Balanced-product codes](balanced-product-codes/README.md) | Physical roles from symmetry orbits, consistent check identification, and rate–distance trade-offs. |
