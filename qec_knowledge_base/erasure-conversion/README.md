@@ -48,11 +48,11 @@ One implementation uses three energy levels of a **fluxonium**, a [superconducti
 
 | Energy level | Role |
 | --- | --- |
-| Highest of the three: $|f\rangle$ | Computational 1 |
-| Middle: $|e\rangle$ | Erasure state |
-| Lowest: $|g\rangle$ | Computational 0 |
+| Highest of the three: $\lvert f\rangle$ | Computational 1 |
+| Middle: $\lvert e\rangle$ | Erasure state |
+| Lowest: $\lvert g\rangle$ | Computational 0 |
 
-An encoded superposition occupies $|g\rangle$ and $|f\rangle$. The unused middle level provides somewhere detectable for relaxation to go. [Single-fluxonium experiment](https://arxiv.org/html/2601.11086v1)
+An encoded superposition occupies $\lvert g\rangle$ and $\lvert f\rangle$. The unused middle level provides somewhere detectable for relaxation to go. [Single-fluxonium experiment](https://arxiv.org/html/2601.11086v1)
 
 In integer fluxonium at zero flux, a parity selection rule suppresses the direct one-photon $|f\rangle\to|g\rangle$ transition. Relaxation $|f\rangle\to|e\rangle$ instead leaves the encoding and can be flagged. Having three levels alone is insufficient: the transition strengths must favor this behavior. [Integer-fluxonium experiment](https://arxiv.org/html/2607.27123v1)
 
@@ -60,7 +60,7 @@ A phase error can still occur within the valid $g/f$ space without producing an 
 
 ## How do we check the middle level without reading the qubit?
 
-Couple the fluxonium to a microwave resonator. Choose circuit parameters so the resonator responds almost identically to $|g\rangle$ and $|f\rangle$, but differently to $|e\rangle$. Send a microwave probe and classify the returned signal. The intended distinction is **inside or outside the encoding**, without resolving computational 0 versus 1. Imperfect matching of the responses can disturb the qubit, and missed flags remain possible. [Resonator readout](https://arxiv.org/html/2607.27123v1#S2.SS3)
+Couple the fluxonium to a microwave resonator. Choose circuit parameters so the resonator responds almost identically to $\lvert g\rangle$ and $\lvert f\rangle$, but differently to $\lvert e\rangle$. Send a microwave probe and classify the returned signal. The intended distinction is **inside or outside the encoding**, without resolving computational 0 versus 1. Imperfect matching of the responses can disturb the qubit, and missed flags remain possible. [Resonator readout](https://arxiv.org/html/2607.27123v1#S2.SS3)
 
 Even an ideal check does not guarantee that every unflagged superposition stays unchanged. If one computational state decays faster, surviving without a flag favors the longer-lived component and can change their relative amplitudes. Readout backaction and this conditional evolution are separate effects. [Fluxonium discussion](https://arxiv.org/html/2607.27123v1#S2.SS2)
 

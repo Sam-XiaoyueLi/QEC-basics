@@ -94,9 +94,9 @@ A **readout resonator** is often a winding transmission line supporting a microw
 
 *Figure 3. Control lines deliver gates, resonators reveal qubit states, and the coupler connects the two qubits.*
 
-The resonant frequency is $f_{01}=(E_1-E_0)/h$, typically **a few gigahertz**. A resonant **microwave pulse** drives this transition. In the frame rotating at $f_{01}$, pulse phase selects the rotation axis in the $X$–$Y$ plane. Strength and duration set the angle.
+The resonant frequency is $f_{01}=(E_1-E_0)/h$, typically **a few gigahertz**. A resonant **microwave pulse** drives this transition. In the frame rotating at $f_{01}$, pulse phase selects the rotation axis in the X–Y plane. Strength and duration set the angle.
 
-- **$X$:** choose the $X$-axis phase and a calibrated $\pi$ pulse. It swaps zero and one, up to global phase.
+- **$X$:** choose the X-axis phase and a calibrated $\pi$ pulse. It swaps zero and one, up to global phase.
 - **$Y$:** use the same rotation angle with drive phase shifted by $\pi/2$.
 - **$Z$:** update the tracked phase frame by $\pi$ and adjust subsequent controls. This **virtual $Z$** implements $\alpha|0\rangle+\beta|1\rangle\to\alpha|0\rangle-\beta|1\rangle$ without a separate physical pulse.
 - **Readout:** send a microwave probe through the readout resonator and classify the returning response as zero or one.
@@ -117,7 +117,7 @@ Both are **hyperfine states** in the electronic ground level. Their energy diffe
 
 Vacuum suppresses collisions, while stable fields and drive references protect phase. **Laser cooling** slows the ions through repeated photon absorption and emission. Cooling a second ion species also cools their shared motion without directly driving the qubit states. Unwanted light, microwave leakage, and motional heating remain error sources.
 
-**Optical pumping** repeatedly excites other states until decay leaves the ion in zero. Focused beams address individual ions, or electrodes move selected ions into a control zone. A **Raman drive** uses two laser frequencies whose difference matches the qubit splitting. Their relative phase selects the $X$–$Y$ axis, and pulse strength and duration set the rotation angle.
+**Optical pumping** repeatedly excites other states until decay leaves the ion in zero. Focused beams address individual ions, or electrodes move selected ions into a control zone. A **Raman drive** uses two laser frequencies whose difference matches the qubit splitting. Their relative phase selects the X–Y axis, and pulse strength and duration set the rotation angle.
 
 - **$X$:** apply an addressed Raman $\pi$ pulse with the phase defining the $X$ axis.
 - **$Z$:** update the tracked phase frame, or shift the two levels differently with light to accumulate a relative phase of $\pi$.
@@ -151,9 +151,9 @@ These hyperfine states differ in how electron and nuclear angular momenta combin
 
 Vacuum suppresses collisions, laser cooling reduces motion, and stable fields and trapping light limit phase noise. Trap-light scattering can change populations, intensity variations shift the levels, and atoms can be lost.
 
-Optical pumping prepares zero. Control uses focused Raman beams or global microwave rotations combined with local light-induced energy shifts. Pulse strength and duration set the rotation angle, and drive phase selects the $X$–$Y$ axis. Steering the tweezers rearranges the atoms.
+Optical pumping prepares zero. Control uses focused Raman beams or global microwave rotations combined with local light-induced energy shifts. Pulse strength and duration set the rotation angle, and drive phase selects the X–Y axis. Steering the tweezers rearranges the atoms.
 
-- **$X$:** drive the storage-state transition with a resonant $\pi$ pulse and the $X$-axis phase.
+- **$X$:** drive the storage-state transition with a resonant $\pi$ pulse and the X-axis phase.
 - **$Z$:** shift the two levels differently with focused light to accumulate a relative phase of $\pi$. Compatible controllers can also track phase-frame updates.
 - **Readout:** use state-dependent fluorescence, or map the internal state to position or atom loss before imaging. Atom retention depends on the method.
 
@@ -170,5 +170,5 @@ A laser sequence uses this conditional response to apply **$CZ$** while returnin
 | Platform | Qubit | Control and readout | Interaction and native gates | Advantages and limitations | Research directions |
 | --- | --- | --- | --- | --- | --- |
 | Superconducting | Two lowest transmon levels on a cold chip. | Microwaves, virtual $Z$, resonator readout. | Engineered couplings. $CZ$, ECR, or exchange gates. | Fast gates, but short memory and extra routing for distant pairs. | Cleaner materials, more accurate gates, chip connections, and error correction. |
-| Trapped ions | Two internal ion states in an electric trap. | Raman or microwave drives, fluorescence readout. | Shared motion. $XX$/$ZZ$ gates, with pair access through shared modes or transport. | Longer memory, but gates, transport, and cooling consume time. | Faster gates, less heating during movement, more parallel gates, and error correction. |
+| Trapped ions | Two internal ion states in an electric trap. | Raman or microwave drives, fluorescence readout. | Shared motion. XX/ZZ gates, with pair access through shared modes or transport. | Longer memory, but gates, transport, and cooling consume time. | Faster gates, less heating during movement, more parallel gates, and error correction. |
 | Neutral atoms | Two internal atom states in optical tweezers. | Raman/microwave drives, local light shifts, imaging. | Rydberg interactions. $CZ$ gates, with pair access through atom movement or beam addressing. | Large rearrangeable arrays. Movement, atom loss, and measurement/reset affect the schedule. | More accurate Rydberg gates, readout that keeps atoms, replacement of lost atoms, and error correction. |

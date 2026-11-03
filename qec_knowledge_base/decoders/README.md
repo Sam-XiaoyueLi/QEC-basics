@@ -107,7 +107,7 @@ $$
 P(F\mid D_0\text{ fired})=\frac{0.018}{0.018+0.098}\approx15.5\%.
 $$
 
-The check supplies a **9:1 likelihood ratio** favoring $F$: if $F$ occurred, $A$ must be absent, with probability 0.9; otherwise $A$ must be present, with probability 0.1. Combining that check-to-event message with $F$'s prior odds $0.02/0.98$ produces the 15.5% posterior.
+The check supplies a **9:1 likelihood ratio** favoring $F$: if $F$ occurred, $A$ must be absent, with probability 0.9; otherwise $A$ must be present, with probability 0.1. Combining that check-to-event message with the prior odds of $F$, namely $0.02/0.98$, produces the 15.5% posterior.
 
 Across the graph, variables combine their priors with incoming messages, while checks enforce the observed parity. Each outgoing message excludes the recipient's previous contribution. Repeated updates spread information using classical computation on this shot's measurements; they require no new experiment or recalibration. [BP documentation](https://software.roffe.eu/ldpc/bp_decoding_example.html)
 

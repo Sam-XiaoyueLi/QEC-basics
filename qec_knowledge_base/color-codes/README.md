@@ -89,7 +89,7 @@ Each qubit participates in just one pair, so a fault in that CNOT can affect bot
 
 The benefit is a simple implementation of many logical operations. Surface codes also implement Clifford gates, using methods including [lattice surgery](../../surface_code.ipynb), patch transformations and suitable transversal operations. Color codes offer a different balance: fewer data qubits at a given distance and convenient Clifford gates, but more demanding check circuits and decoding. A single bulk error's three-check signature already goes beyond the simplest two-endpoint matching picture. Hardware connectivity, physical error rates, extraction faults and routing costs determine which balance works best.
 
-The full Clifford group does **not** provide arbitrary quantum computation. In particular, this 2D code does not supply a transversal $T$ gate. This gate leaves $|0\rangle$ unchanged and multiplies $|1\rangle$ by $e^{i\pi/4}$. Universal computation needs an additional resource, such as a prepared **magic state** consumed in a measurement-based $T$-gate protocol.
+The full Clifford group does **not** provide arbitrary quantum computation. In particular, this 2D code does not supply a transversal $T$ gate. This gate leaves $|0\rangle$ unchanged and multiplies $|1\rangle$ by $e^{i\pi/4}$. Universal computation needs an additional resource, such as a prepared **magic state** consumed in a measurement-based T-gate protocol.
 
 ## Quantinuum’s Helios experiment
 

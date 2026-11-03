@@ -33,7 +33,7 @@ For example, four data qubits with two independent checks, $XXXX$ and $ZZZZ$, en
 | Family | Basic idea | Advantage | Main drawback |
 | --- | --- | --- | --- |
 | **Geometric** — [surface](../../surface_code.ipynb), toric, [color](../color-codes/README.md) | Arrange checks using a geometric lattice. | Nearby connections simplify hardware. | Usual 2D patches use more data qubits per logical qubit as distance grows. |
-| **Hypergraph product (HGP)** | Combine two classical check patterns, creating two sets of data qubits. Checks use both sets so every $X$–$Z$ overlap is even. | Suitable seeds give constant encoding rate and $d\propto\sqrt n$. | Distance grows relatively slowly; connections can be long. |
+| **Hypergraph product (HGP)** | Combine two classical check patterns, creating two sets of data qubits. Checks use both sets so every X–Z overlap is even. | Suitable seeds give constant encoding rate and $d\propto\sqrt n$. | Distance grows relatively slowly; connections can be long. |
 | **Lifted product (LP)** | Use small check templates with permutation instructions in the address book, then combine them to generate commuting checks. | Some constructions achieve constant rate and $d\propto n$. | Choosing useful permutations and implementing the connections can be difficult. |
 | **Balanced product** | Use symmetry to identify equivalent positions in a product construction. | Reduces the number of qubit positions in the product. | The reduction also changes the code's rate and distance. |
 | **Quantum Tanner** | Use small classical codes to define checks on a specially connected network. | Suitable constructions achieve constant rate and $d\propto n$, with efficient decoders. | Checks can involve many qubits and require long connections. |

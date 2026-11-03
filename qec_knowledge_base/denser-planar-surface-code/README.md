@@ -28,7 +28,7 @@ $$
 S=X_1X_2Y_3Z_4Z_5.
 $$
 
-The subscripts label five nearby data qubits. This is one combined check involving both $X$ and $Z$, with a $Y$ on one qubit. Here $Y$ is the third Pauli operation, combining $X$- and $Z$-type action. We change what the checking circuit measures; no physical qubit needs to be twisted or moved. [Google paper, §III and Fig. 10](https://arxiv.org/pdf/2605.30455v1#page=13)
+The subscripts label five nearby data qubits. This is one combined check involving both $X$ and $Z$, with a $Y$ on one qubit. Here $Y$ is the third Pauli operation, combining X- and Z-type action. We change what the checking circuit measures; no physical qubit needs to be twisted or moved. [Google paper, §III and Fig. 10](https://arxiv.org/pdf/2605.30455v1#page=13)
 
 ![A domain wall ending at two twists, a path changing from X to Z across it, and a five-data-qubit twist check](assets/twist-anatomy.png)
 
