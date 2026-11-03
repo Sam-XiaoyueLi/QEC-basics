@@ -35,16 +35,6 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [qLDPC codes](qec_knowledge_base/qldpc-codes/README.md) — Definition, code families, main trade-offs, and company examples.
 
-- [Hypergraph-product codes](qec_knowledge_base/hypergraph-product-codes/README.md) — A five-data-qubit example, the general two-seed check recipe, rate and distance, and decoding trade-offs.
-
-- [Lifted-product codes](qec_knowledge_base/lifted-product-codes/README.md) — Copy indices and shift connections, the shared-index product recipe, and the scope of good-code results.
-
-- [Balanced-product codes](qec_knowledge_base/balanced-product-codes/README.md) — Physical roles from symmetry orbits, consistent check identification, and rate–distance trade-offs.
-
-- [Quantum Tanner codes](qec_knowledge_base/quantum-tanner-codes/README.md) — Data qubits on squares, local check masks, even overlaps, expansion, and decoding guarantees.
-
-- [Bicycle codes](qec_knowledge_base/bicycle-codes/README.md) — Two-block check recipes, bivariate and multivariate variants, and the distinction between bicycle and tricycle.
-
 - [Quantum computing hardware](qec_knowledge_base/quantum-computing-hardware/README.md) — Physical zero/one states, preparation and gates, protection and coherence, a concise platform comparison, and research directions.
 
 - [Decoders: Beyond Likelihood](qec_knowledge_base/decoders/README.md) — One physical error model used to explain MWPM, correlated matching and BeliefMatching, followed by advanced decoders and company approaches.
