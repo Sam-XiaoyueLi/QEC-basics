@@ -25,8 +25,10 @@ The recipe also determines allowed qubit counts and connections. Implementing th
 We write a code as $[[n,k,d]]$:
 
 - **$n$:** number of data qubits.
-- **$k$:** number of logical qubits stored. The encoding rate is $k/n$.
+- **$k$:** number of logical qubits stored. For a stabilizer code, **$k=n-r$**, where $r$ is the number of independent stabilizer generators. The encoding rate is $k/n$.
 - **$d$:** smallest number of qubits an undetectable logical Pauli error can affect.
+
+For example, four data qubits with two independent checks, $XXXX$ and $ZZZZ$, encode $4-2=2$ logical qubits. Their product $YYYY$ adds no independent constraint. The distance is 2, giving a $[[4,2,2]]$ code.
 
 | Family | Basic idea | Advantage | Main drawback |
 | --- | --- | --- | --- |
