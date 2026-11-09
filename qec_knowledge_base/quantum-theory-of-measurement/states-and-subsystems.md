@@ -39,25 +39,58 @@ You average the density matrices, not the state vectors. Adding vectors describe
 
 A valid density matrix is Hermitian, positive semidefinite, and has trace one. Positive semidefinite means all eigenvalues are nonnegative, or equivalently $`\bra{v}\rho\ket{v}\geq0`$ for every column vector $`\ket{v}`$. Here the operator $`\rho`$ acts between the bra and ket. In finite dimensions, the trace is the sum of diagonal entries. For a pure state $`\rho^2=\rho`$ and $`\mathrm{tr}(\rho^2)=1`$; for a mixed state the purity $`\mathrm{tr}(\rho^2)`$ is smaller than one.
 
-For a qubit, the computational basis is $`\ket{0}=(1,0)^T`$ and $`\ket{1}=(0,1)^T`$, where $`T`$ denotes transpose. Compare the coherent superposition $`\ket{+}`$ with an equal mixture of these basis states:
+## Superposition and mixture predict different measurements
+
+For a qubit, use the computational basis $`\ket{0}=(1,0)^T`$ and $`\ket{1}=(0,1)^T`$, where $`T`$ denotes transpose. Consider two ways to prepare it.
+
+**Prepare the same superposition on every run.** Define the state vector $`\ket{+}`$ and construct its density matrix $`\rho_+`$ using the outer product:
 
 ```math
 \ket{+}=\frac{\ket{0}+\ket{1}}{\sqrt2},\qquad
-\rho_+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
-\rho_{\mathrm{mix}}=\frac12\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+\rho_+=\ket{+}\bra{+}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}.
 ```
 
-Here $`\ket{-}=(\ket{0}-\ket{1})/\sqrt2`$. Both give equal probabilities for $`0`$ and $`1`$ in the computational basis. But measuring in the $`\{\ket{+},\ket{-}\}`$ basis always gives $`+`$ for $`\rho_+`$ and gives either sign equally for $`\rho_{\mathrm{mix}}`$. The off-diagonal entries encode coherence relative to the chosen basis. Coherence is basis-dependent; purity is not.
+**Randomly prepare one of the basis states.** Prepare $`\ket{0}`$ with probability $`1/2`$ and $`\ket{1}`$ with probability $`1/2`$, without retaining which was chosen. Call this mixture $`\rho_{\mathrm{mix}}`$. The ensemble rule gives
+
+```math
+\rho_{\mathrm{mix}}=\frac12\ket{0}\bra{0}+\frac12\ket{1}\bra{1}
+=\frac12\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+```
+
+These matrices have the same diagonal entries but different off-diagonal entries. To see what that difference means, measure each preparation in the computational basis. The probability of a normalized basis vector $`\ket{b}`$ is $`p(b)=\bra{b}\rho\ket{b}`$. For a pure state this reduces to the squared inner product; for a mixture it averages that probability over the preparations. Both matrices therefore give $`p(0)=p(1)=1/2`$. This measurement cannot distinguish them.
+
+To distinguish them, use a basis containing $`\ket{+}`$ itself. Its orthogonal partner is
+
+```math
+\ket{-}=\frac{\ket{0}-\ket{1}}{\sqrt2},\qquad \braket{-|+}=0.
+```
+
+Measuring in the $`\{\ket{+},\ket{-}\}`$ basis asks whether the state lies along the plus or minus direction. For the superposition,
+
+```math
+p(+\mid\rho_+)=\bra{+}\rho_+\ket{+}=1,\qquad
+p(-\mid\rho_+)=0.
+```
+
+For the random preparation, either input basis state gives either sign with probability $`1/2`$, so
+
+```math
+p(+\mid\rho_{\mathrm{mix}})=p(-\mid\rho_{\mathrm{mix}})=\frac12.
+```
+
+The off-diagonal entries of $`\rho_+`$ encode **coherence relative to the computational basis**: they change predictions when we measure in another basis. Their absence in $`\rho_{\mathrm{mix}}`$ is why the two preparations are physically different despite identical computational-basis probabilities. Coherence depends on the basis used to write the matrix. Purity does not: $`\mathrm{tr}(\rho_+^2)=1`$, whereas $`\mathrm{tr}(\rho_{\mathrm{mix}}^2)=1/2`$ in every basis.
 
 ## One qubit in three real numbers
 
-Define
+The two measurements above are called Pauli $`Z`$ and Pauli $`X`$ measurements. Together with Pauli $`Y`$, their matrices are
 
 ```math
 X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
 Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
 Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
 ```
+
+The eigenvectors of $`Z`$ are $`\ket{0},\ket{1}`$, with outcomes $`+1,-1`$; those of $`X`$ are $`\ket{+},\ket{-}`$, with the same outcome labels. Thus the previous example compared a $`Z`$ measurement with an $`X`$ measurement.
 
 With $`I`$ denoting the identity matrix, every qubit state can be written as
 
@@ -67,6 +100,8 @@ With $`I`$ denoting the identity matrix, every qubit state can be written as
 ```
 
 The Bloch vector $`\mathbf r=(r_x,r_y,r_z)`$ has length at most one. Its components are $`r_j=\mathrm{tr}(\rho\sigma_j)`$, where $`\sigma_x=X`$, $`\sigma_y=Y`$, and $`\sigma_z=Z`$. The eigenvalues are $`(1\pm|\mathbf r|)/2`$, which explains the length constraint. Pure states lie on the unit sphere; mixed states lie inside it.
+
+For the two preparations above, $`\rho_+`$ has Bloch vector $`(1,0,0)`$ and $`\rho_{\mathrm{mix}}=I/2`$ has Bloch vector $`(0,0,0)`$. Their equal $`r_z`$ explains their identical $`Z`$ statistics; their different $`r_x`$ explains their different $`X`$ statistics.
 
 Our running measurement will first reveal only $`r_z`$. The other two components will matter when we ask what the measurement disturbs and whether its data suffice for reconstruction.
 
@@ -81,14 +116,14 @@ Let $`\rho_{AB}`$ be the joint density matrix, with basis indices $`a,a'`$ for $
 (\rho_A)_{a,a'}=\sum_b(\rho_{AB})_{ab,a'b}.
 ```
 
-The partial trace sums over matching indices of the discarded system. For any measurement effect $`E_A`$ on $`A`$, and identity $`I_B`$ on $`B`$, it preserves the local prediction:
+The partial trace sums over matching indices of the discarded system. For any observable $`A_0`$ acting on $`A`$, with $`I_B`$ the identity on $`B`$, the reduced state preserves its expected value:
 
 ```math
-\mathrm{tr}[\rho_{AB}(E_A\otimes I_B)]
-=\mathrm{tr}(\rho_AE_A).
+\mathrm{tr}[\rho_{AB}(A_0\otimes I_B)]
+=\mathrm{tr}(\rho_AA_0).
 ```
 
-For the Bell state $`\ket{\Phi^+}=(\ket{00}+\ket{11})/\sqrt2`$, the joint state is pure but either reduced state is $`I/2`$. The information needed to distinguish the Bell state from other joint states lies in correlations. A mixed reduced state does not mean that the global state was a classical mixture.
+For the Bell state $`\ket{\Phi^+}=(\ket{00}+\ket{11})/\sqrt2`$, the joint state is pure but either reduced state is $`I/2=\rho_{\mathrm{mix}}`$. Every measurement on that qubit alone therefore gives the same statistics as the random preparation above. The information needed to distinguish the Bell state from other joint states lies in correlations. A mixed reduced state does not mean that the global state was a classical mixture.
 
 Discarding $`B`$ is different from measuring $`B`$ and retaining its result. Discarding gives one reduced state; retaining a result gives a conditional state and a classical record. [Instruments](instruments-and-apparatus.md) will make this distinction precise.
 

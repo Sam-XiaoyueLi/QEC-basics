@@ -52,7 +52,7 @@ In general the discarded-record channel is
 \qquad c=\sqrt{1-\eta^2}.
 ```
 
-Equivalently, $`\Phi(\rho)=(1-q)\rho+qZ\rho Z`$ with $`q=(1-c)/2`$. Here stronger measurement suppresses more $`Z`$-basis coherence. This relation belongs to this instrument, not to every implementation of the POVM.
+Equivalently, $`\Phi(\rho)=(1-q)\rho+qZ\rho Z`$ with $`q=(1-c)/2`$. For $`\rho_+`$, the diagonal entries remain $`1/2`$ while the off-diagonal entries become $`c/2`$. At $`\eta=1`$, discarding the record therefore gives $`\rho_{\mathrm{mix}}`$, exactly the loss of coherence considered on page 1. Here stronger measurement suppresses more $`Z`$-basis coherence. This relation belongs to this instrument, not to every implementation of the POVM.
 
 ## Same readout statistics, different disturbance
 

@@ -1,6 +1,6 @@
 # 6. Learning from measurement: tomography
 
-A detector can produce arbitrarily many bits without identifying a quantum state. Our running $`Z`$ measurement determines only $`r_z`$ when its calibrated strength is nonzero. Tomography asks which measurements distinguish all possible input states and how to reconstruct a state from finite data.
+A detector can produce arbitrarily many bits without identifying a quantum state. Our running $`Z`$ measurement determines only $`r_z`$ when its calibrated strength is nonzero. Page 1 already supplied a counterexample: $`\rho_+`$ and $`\rho_{\mathrm{mix}}`$ have identical $`Z`$ statistics but different $`X`$ statistics. Tomography generalizes that question: which set of measurements distinguishes every pair of states, and how do we reconstruct the state from finite data?
 
 [Learning path](README.md) · Previous: [Compatibility and disturbance](compatibility-and-disturbance.md) · Course: §2.4, pp. 83–90.
 

@@ -1,6 +1,6 @@
 # 2. Measurement outcomes: effects and POVMs
 
-A detector event asks a yes–no question about a prepared system. An effect $`E`$ encodes its probability through the Born rule:
+For a basis measurement, page 1 used $`p(b)=\bra{b}\rho\ket{b}=\mathrm{tr}(\rho\ket{b}\bra{b})`$. The projector $`\ket{b}\bra{b}`$ represents the event “outcome $`b`$.” A general detector event is represented by a more general operator. An effect $`E`$ encodes its probability through the Born rule:
 
 ```math
 p(E\mid\rho)=\mathrm{tr}(\rho E),\qquad 0\leq E\leq I.
@@ -38,7 +38,7 @@ p_s=\frac{1+s\eta r_z}{2}.
 
 At $`\eta=1`$ we measure sharp $`Z`$. At $`\eta=0`$ we get a fair random bit with no state information. At intermediate strengths the two $`Z`$ eigenstates give different, overlapping distributions. For $`r_z=0.6`$ and $`\eta=0.8`$, $`p_+=0.74`$ and $`p_-=0.26`$.
 
-This detector cannot distinguish states with the same $`r_z`$, whatever their $`r_x`$ and $`r_y`$. More shots improve the estimate of $`\eta r_z`$ but reveal no missing components.
+In particular, $`\rho_+`$ and $`\rho_{\mathrm{mix}}`$ from page 1 both have $`r_z=0`$, so both produce a fair sign at every strength. This detector cannot distinguish states with the same $`r_z`$, whatever their $`r_x`$ and $`r_y`$. More shots improve the estimate of $`\eta r_z`$ but reveal no missing components.
 
 ## Classical post-processing and readout errors
 

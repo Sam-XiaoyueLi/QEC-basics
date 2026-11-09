@@ -36,7 +36,7 @@ The following examples show what a channel can represent:
 | Random phase flip | $`K_0=\sqrt{1-q}I`$, $`K_1=\sqrt q Z`$ | $`(1-q)\rho+qZ\rho Z`$ |
 | Reset to zero | $`K_0=\ket{0}\bra{0}`$, $`K_1=\ket{0}\bra{1}`$ | $`\ket{0}\bra{0}\mathrm{tr}\rho`$ |
 
-A phase flip with probability $`q`$ multiplies the off-diagonal entries by $`1-2q`$ and leaves the diagonal unchanged. At $`q=1/2`$ it completely dephases in the $`Z`$ basis. At $`q=1`$ it is the unitary $`Z`$, not stronger dephasing.
+A phase flip with probability $`q`$ multiplies the off-diagonal entries by $`1-2q`$ and leaves the diagonal unchanged. At $`q=1/2`$ it completely dephases in the $`Z`$ basis: applied to $`\rho_+`$, it removes the off-diagonal entries and produces $`\rho_{\mathrm{mix}}`$. At $`q=1`$ it is the unitary $`Z`$, not stronger dephasing.
 
 As an energy-relaxation example, amplitude damping with decay probability $`0\leq\gamma\leq1`$ has
 
