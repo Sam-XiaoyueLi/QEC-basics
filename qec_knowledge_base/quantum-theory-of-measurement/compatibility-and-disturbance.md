@@ -6,7 +6,7 @@ A measurement can change what a later measurement sees. We can now calculate tha
 
 ## Calculate a sequence using the unnormalized branch
 
-Apply instrument $`\mathcal I_s`$ first, then measure a POVM $`F_t`$. The joint probability is
+For an input density matrix $`\rho`$, apply instrument $`\mathcal I_s`$ first, recording outcome $`s`$, then measure a POVM $`F_t`$, recording outcome $`t`$. The joint probability is
 
 ```math
 p(s,t)=\mathrm{tr}[\mathcal I_s(\rho)F_t].

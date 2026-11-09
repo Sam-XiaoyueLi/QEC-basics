@@ -6,7 +6,7 @@ A detector can produce arbitrarily many bits without identifying a quantum state
 
 ## Reconstruction starts with identifiability
 
-For each measurement setting $`a`$ and outcome $`s`$, a known effect $`E_{a,s}`$ predicts
+Let $`\rho`$ be the unknown density matrix. For each measurement setting $`a`$ and outcome $`s`$, a known effect $`E_{a,s}`$ predicts
 
 ```math
 p(s\mid a)=\mathrm{tr}(\rho E_{a,s}).
@@ -62,7 +62,7 @@ For ideal Pauli measurements with independent shots,
 
 Sampling uncertainty decreases with more shots. It does not fix an incorrect detector model or recover an unobserved direction.
 
-If the calibrated measurement has $`E_{a,s}=(I+s\eta_a\sigma_a)/2`$ with known $`\eta_a>0`$, the sample outcome mean $`\hat m_a`$ estimates $`\eta_a r_a`$. Divide by the calibrated strength:
+If the calibrated measurement has $`E_{a,s}=(I+s\eta_a\sigma_a)/2`$ where $`\sigma_a`$ is the corresponding Pauli matrix and $`0<\eta_a\leq1`$ is its calibrated strength, the sample outcome mean $`\hat m_a`$ estimates $`\eta_a r_a`$. Divide by the calibrated strength:
 
 ```math
 \hat r_a=\frac{\hat m_a}{\eta_a},\qquad

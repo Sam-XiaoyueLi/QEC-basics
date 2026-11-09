@@ -6,13 +6,13 @@ Knowing the probability of a detector result does not tell us what happens to th
 
 ## Why linearity and complete positivity are physical requirements
 
-Randomizing an input preparation and then applying a fixed process must agree with randomizing its outputs:
+For input states $`\rho_1,\rho_2`$ and mixing probability $`0\leq t\leq1`$, randomizing the preparation must agree with randomizing the outputs:
 
 ```math
 \Phi(t\rho_1+(1-t)\rho_2)=t\Phi(\rho_1)+(1-t)\Phi(\rho_2).
 ```
 
-The extension to operators is linear. A channel preserves trace and is completely positive (CP). Positivity alone means positive inputs yield positive outputs. Complete positivity requires $`\Phi\otimes\mathrm{id}_R`$ to remain positive for every reference system $`R`$. A local operation must remain valid if its input is entangled with an untouched reference.
+The extension to operators is linear. A channel preserves trace and is completely positive (CP). Positivity alone means positive inputs yield positive outputs. Complete positivity requires $`\Phi\otimes\mathrm{id}_R`$ to remain positive for every reference system $`R`$, where $`\mathrm{id}_R`$ is the identity map that leaves that system unchanged. A local operation must remain valid if its input is entangled with an untouched reference.
 
 Transposition illustrates why this matters. The map $`\rho\mapsto\rho^T`$ preserves positivity and trace for an isolated system. Applied to one half of a Bell state, however, it produces an operator with eigenvalues $`1/2,1/2,1/2,-1/2`$. It cannot be a deterministic physical channel on arbitrary inputs.
 
@@ -34,7 +34,7 @@ The following examples show what a channel can represent:
 | --- | --- | --- |
 | Unitary gate | $`K=U`$, $`U^\dagger U=I`$ | $`U\rho U^\dagger`$ |
 | Random phase flip | $`K_0=\sqrt{1-q}I`$, $`K_1=\sqrt q Z`$ | $`(1-q)\rho+qZ\rho Z`$ |
-| Reset to zero \ket{ $`K_0=\lvert0}\bra{0}`$, $`K_1=\ket{0}\bra{1}`$ \ket{ $`\lvert0}\bra{0}\mathrm{tr}\rho`$ |
+| Reset to zero | $`K_0=\ket{0}\bra{0}`$, $`K_1=\ket{0}\bra{1}`$ | $`\ket{0}\bra{0}\mathrm{tr}\rho`$ |
 
 A phase flip with probability $`q`$ multiplies the off-diagonal entries by $`1-2q`$ and leaves the diagonal unchanged. At $`q=1/2`$ it completely dephases in the $`Z`$ basis. At $`q=1`$ it is the unitary $`Z`$, not stronger dephasing.
 
@@ -49,7 +49,7 @@ It transfers excited-state population to $`\ket{0}`$ and multiplies coherence by
 
 ## Stinespring dilation: where the apparent randomness can come from
 
-For a channel, introduce an ancilla and an isometry
+For a channel with Kraus operators $`K_\ell`$, choose an orthonormal ancilla basis $`\{\ket{\ell}\}`$. For any input vector $`\ket{\psi}`$, define the isometry $`V`$ by
 
 ```math
 V\ket{\psi}=\sum_\ell K_\ell\ket{\psi}\otimes\ket{\ell}.
@@ -77,7 +77,7 @@ The course uses a normalized entangled vector in its finite-dimensional construc
 
 ## Moving a process from states to observables
 
-The dual, or Heisenberg, map is defined by
+For an output observable $`A`$, the dual, or Heisenberg, map $`\Phi^{\ast}`$ is defined by
 
 ```math
 \mathrm{tr}[\Phi(\rho)A]=\mathrm{tr}[\rho\Phi^{\ast}(A)],\qquad

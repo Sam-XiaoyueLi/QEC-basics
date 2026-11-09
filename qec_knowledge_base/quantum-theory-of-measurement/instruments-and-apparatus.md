@@ -67,7 +67,7 @@ It has the same effects $`E_s`$, but $`\sum_s\mathcal J_s(\rho)`$ completely rem
 
 ## Ancilla implementation and the physical model
 
-Prepare an ancilla in $`\ket{0}`$ and choose a unitary whose action on that input subspace is
+Let $`\ket{\psi}`$ be any input state vector of the system. Prepare an ancilla in $`\ket{0}`$ and choose a unitary $`U`$ whose action on that input subspace is
 
 ```math
 U(\ket{\psi}\otimes\ket{0})
@@ -91,7 +91,7 @@ The course's optical example uses $`\eta=\sin(2\gamma)`$; over $`0\leq\gamma\leq
 <details>
 <summary>Continuous-variable extension: the von Neumann pointer model (§1.4.1)</summary>
 
-Let the system observable be $`R=\sum_r rP_r`$ and let the probe have position coordinate $`q`$ and momentum operator $`P`$. In units with $`\hbar=1`$, the coupling, with strength $`\Delta>0`$, is $`U=e^{-i\Delta R\otimes P}`$. On an $`R`$ eigenstate with value $`r`$, it shifts the probe wavefunction from $`\psi(q)`$ to $`\psi(q-\Delta r)`$.
+Let the system observable be $`R=\sum_r rP_r`$, where $`P_r`$ projects onto its eigenspace with eigenvalue $`r`$. Let the probe have position coordinate $`q`$ and momentum operator $`P`$. In units with $`\hbar=1`$, the coupling, with strength $`\Delta>0`$, is $`U=e^{-i\Delta R\otimes P}`$. Prepare the probe in a normalized wavefunction $`\psi(q)`$. On an $`R`$ eigenstate with value $`r`$, it shifts the probe wavefunction from $`\psi(q)`$ to $`\psi(q-\Delta r)`$.
 
 The pointer density is therefore
 

@@ -24,7 +24,7 @@ For a projective measurement, or projection-valued measure (PVM), the effects ar
 
 ## Running example: a tunable Z measurement
 
-Let $`s=\pm1`$ and define
+Let $`s=\pm1`$ label the two outcomes and let $`\eta`$ be the measurement strength. Define
 
 ```math
 E_s=\frac12(I+s\eta Z),\qquad 0\leq\eta\leq1.
@@ -85,7 +85,7 @@ Any finite-outcome POVM admits projections $`P_x`$ on a larger Hilbert space and
 E_x=J^\dagger P_xJ,\qquad J^\dagger J=I.
 ```
 
-The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. One construction is $`J\ket{\psi}=\sum_x\sqrt{E_x}\ket{\psi}\otimes\ket{x}`$, with $`P_x=I\otimes\ket{x}\bra{x}`$. The identity $`\sum_xE_x=I`$ ensures that $`J`$ preserves norms. Projecting the outcome register gives probability $`\bra{\psi}E_x\ket{\psi}`$.
+The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. For an input vector $`\ket{\psi}`$ and an orthonormal outcome-register basis $`\{\ket{x}\}`$, one construction is $`J\ket{\psi}=\sum_x\sqrt{E_x}\ket{\psi}\otimes\ket{x}`$, with $`P_x=I\otimes\ket{x}\bra{x}`$. The identity $`\sum_xE_x=I`$ ensures that $`J`$ preserves norms. Projecting the outcome register gives probability $`\bra{\psi}E_x\ket{\psi}`$.
 
 This proves that generalized probabilities can be implemented by embedding the system and measuring a sharp pointer. It does not select a unique disturbance. Page 4 will turn this particular construction into a complete instrument.
 
