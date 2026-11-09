@@ -101,9 +101,7 @@ Check Hermiticity before using a Hermitian eigensolver, and use a small toleranc
 
 1. The outputs are $`\mathrm{diag}(\gamma,1-\gamma)`$ and
 
-```math
-\frac12\begin{pmatrix}1+\gamma&\sqrt{1-\gamma}\\\sqrt{1-\gamma}&1-\gamma\end{pmatrix}.
-```
+$`\frac12\begin{pmatrix}1+\gamma&\sqrt{1-\gamma}\\\sqrt{1-\gamma}&1-\gamma\end{pmatrix}`$.
 
 2. Reset maps two orthogonal inputs to the same output. A unitary preserves inner products and is invertible. Reset can still arise from a larger unitary process by discarding a system carrying the input information.
 3. Even positivity on every isolated input would not test entangled extensions. The transpose map is the counterexample. A valid Kraus representation or a positive Choi matrix provides a finite-dimensional CP check.

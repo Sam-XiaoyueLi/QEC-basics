@@ -95,9 +95,7 @@ Let the system observable be $`R=\sum_r rP_r`$, where $`P_r`$ projects onto its 
 
 The pointer density is therefore
 
-```math
-p(q)=\sum_r\mathrm{tr}(\rho P_r)|\psi(q-\Delta r)|^2.
-```
+$`p(q)=\sum_r\mathrm{tr}(\rho P_r)|\psi(q-\Delta r)|^2`$.
 
 Overlapping shifted packets make values difficult to distinguish. Narrower packets relative to their separation improve resolution. The unnormalized conditional update has operator density $`K(q)=\sum_r\psi(q-\Delta r)P_r`$; an interval $`B`$ gives $`\mathcal I_B(\rho)=\int_BK(q)\rho K(q)^\dagger\,dq`$.
 
