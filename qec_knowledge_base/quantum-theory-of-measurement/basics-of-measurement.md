@@ -549,6 +549,6 @@ The Bell state $`\ket{\Phi^+}`$ therefore survives the ideal even-parity outcome
 
 This is the reason for collective checks in [Gross-code state preparation](../gross-code/README.md#preparing-all-twelve-logical-qubits-in-zero). Fault tolerance additionally requires analysis of faults in the extraction circuit.
 
-An instrument now lets us predict a full measurement sequence. [Chapter 2: compatibility and disturbance](compatibility-and-disturbance.md) asks which measurements can be combined and what an earlier measurement changes.
+An instrument now lets us predict a full measurement sequence. [Chapter 2: incompatibility and uncertainty](incompatibility-and-uncertainty.md) asks which measurements can be combined and what an earlier measurement changes.
 
 Last updated: 2026-11-09
