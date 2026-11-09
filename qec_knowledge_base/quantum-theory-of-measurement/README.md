@@ -1,6 +1,10 @@
 # Quantum theory of measurement
 
-**How does a quantum state become a classical measurement record, and what happens to the quantum system along the way?**
+**How do we model quantum measurements so that we can correctly predict their results, simulate their effects, and use their outcomes to control a quantum program?**
+
+A measurement produces a classical result and changes the quantum state. Software must model both when computation continues: outcome probabilities determine which branch runs, and the conditional state determines what happens next. This matters for mid-circuit measurements, reset, feedback, and QEC syndrome extraction. For terminal readout, only the result statistics may matter.
+
+In a QEC cycle, ancilla measurements produce syndrome bits, a decoder uses them to choose corrections or update a Pauli frame, and the data qubits continue computing. A correct model must capture both the reliability of those bits and the measurement's effect on the data.
 
 ## Learning path
 
