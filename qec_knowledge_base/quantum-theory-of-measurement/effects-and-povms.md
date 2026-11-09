@@ -1,6 +1,6 @@
 # 2. Measurement outcomes: effects and POVMs
 
-A measurement produces a **classical record**: a bit, a detector label, or a pointer reading. Given the input density matrix, how do we predict that record? Page 1 answered this for a measurement in a chosen basis. We now extend that rule to detectors with noise, incomplete resolution, or more outcomes than basis states.
+A measurement produces a **classical record**, such as a bit, a detector label, or a pointer reading. The input density matrix determines the probabilities of these records. Lesson 1 gave the rule for a measurement in a chosen basis. Effects and POVMs extend that rule to more general detectors.
 
 [Learning path](README.md) · Previous: [States and subsystems](states-and-subsystems.md) · Course: §§1.2–1.2.3, pp. 17–26.
 
@@ -13,29 +13,31 @@ p(b\mid\rho)=\bra{b}\rho\ket{b}
 =\mathrm{tr}(\rho\ket{b}\bra{b}).
 ```
 
-This separates two ingredients: $`\rho`$ describes the preparation, and the projector $`\ket{b}\bra{b}`$ describes the detector event. To describe a general event, replace that projector by an operator called an **effect**, $`E`$:
+This formula separates the preparation from the detector event. The density matrix $`\rho`$ describes the preparation. The projector $`\ket{b}\bra{b}`$ describes the event. To describe a general event, replace that projector by an operator called an **effect**, $`E`$:
 
 ```math
 p(E\mid\rho)=\mathrm{tr}(\rho E),\qquad 0\leq E\leq I.
 ```
 
-Here $`I`$ is the identity. The bounds mean that both $`E`$ and $`I-E`$ are positive semidefinite; they ensure that the event's probability lies between zero and one for every input state. The effect is an operator used to calculate a probability. The recorded outcome is a classical label.
+Here $`I`$ is the identity. The bounds mean that both $`E`$ and $`I-E`$ are positive semidefinite. They keep the probability between zero and one for every input state. The effect is an operator used to calculate a probability. The recorded outcome is a classical label.
 
 One effect answers whether one event occurs. To describe the whole detector, we must account for every possible result.
 
 ## All possible outcomes: a POVM, with PVMs as a special case
 
-Let $`x`$ label mutually exclusive outcomes that exhaust all possibilities. A **POVM** (positive-operator-valued measure) assigns an effect $`E_x`$ to each label:
+Let $`x`$ label all possible outcomes. Exactly one outcome occurs on each run. A **POVM** (positive-operator-valued measure) assigns an effect $`E_x`$ to each label:
 
 ```math
 E_x\geq0,\qquad\sum_xE_x=I,\qquad p(x\mid\rho)=\mathrm{tr}(\rho E_x).
 ```
 
-The completeness condition $`\sum_xE_x=I`$ makes the probabilities sum to one. A collection of individually valid effects is therefore not enough: it must also form a complete set of outcomes. Include “no click” if the detector can fail to register a result.
+The completeness condition $`\sum_xE_x=I`$ makes the probabilities sum to one. The effects must therefore describe a complete set of outcomes. This set includes “no click” if the detector can fail to register a result.
 
-The basis measurement we started with is a special POVM. Its effects are orthogonal projectors, so it is called a **PVM** (projection-valued measure), or a sharp measurement. Writing its effects as $`P_x`$, we have $`P_x^2=P_x`$ and $`P_xP_y=0`$ for distinct labels $`x,y`$. Assigning numerical values $`a_x`$ to these outcomes gives the Hermitian observable $`A=\sum_xa_xP_x`$. General POVMs drop the requirement that effects be orthogonal projectors. See IBM's [general-measurement formulation](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/general-measurements/introduction).
+The basis measurement we started with is a special POVM. Its effects are orthogonal projectors, so it is called a **PVM** (projection-valued measure), or a sharp measurement. Its projectors $`P_x`$ satisfy $`P_x^2=P_x`$. For distinct labels $`x,y`$, they also satisfy $`P_xP_y=0`$.
 
-What does that extra freedom buy us? We can keep the same two output labels as a sharp qubit measurement while making them less reliable indicators of the input state.
+Assigning numerical values $`a_x`$ to these outcomes gives the Hermitian observable $`A=\sum_xa_xP_x`$. General POVMs drop the requirement that effects be orthogonal projectors. See IBM's [general-measurement formulation](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/general-measurements/introduction).
+
+This extra freedom describes detectors with incomplete resolution. A detector can keep the same labels as a sharp measurement but distinguish the input states less reliably.
 
 ## From sharp Z to a detector with tunable resolution
 
@@ -46,13 +48,15 @@ P_+=\ket{0}\bra{0}=\frac{I+Z}{2},\qquad
 P_-=\ket{1}\bra{1}=\frac{I-Z}{2}.
 ```
 
-Keep those two classical labels, but introduce a parameter $`0\leq\eta\leq1`$ controlling how well their probabilities distinguish the two basis states:
+A more general detector keeps these labels. Its parameter $`0\leq\eta\leq1`$ controls how well the outcome probabilities distinguish the basis states:
 
 ```math
 E_s=\frac12(I+s\eta Z),\qquad s=\pm1.
 ```
 
-These effects sum to $`I`$ and have eigenvalues $`(1\pm\eta)/2`$, which are nonnegative. They therefore form a POVM. At $`\eta=1`$ they reduce to the projectors above; for $`\eta<1`$ they are not projectors. We call $`\eta`$ the measurement strength here, but this parameter specifies the readout statistics; it does not yet specify a physical interaction.
+These effects sum to $`I`$ and have eigenvalues $`(1\pm\eta)/2`$, which are nonnegative. They therefore form a POVM. At $`\eta=1`$, they are the projectors above. For $`\eta<1`$, they are not projectors.
+
+We call $`\eta`$ the **measurement strength**. It specifies the readout statistics. It does not specify a physical interaction.
 
 For an input state with Bloch component $`r_z=\mathrm{tr}(\rho Z)`$, the Born rule gives
 
@@ -62,9 +66,9 @@ p(s\mid\rho)=\frac{1+s\eta r_z}{2}.
 
 Thus $`\ket{0}`$ reports plus with probability $`(1+\eta)/2`$, while $`\ket{1}`$ reports plus with probability $`(1-\eta)/2`$. At full strength the labels distinguish these inputs perfectly. At zero strength both inputs produce a fair random sign. Intermediate strengths give overlapping distributions. For $`r_z=0.6`$ and $`\eta=0.8`$, the plus and minus probabilities are $`0.74`$ and $`0.26`$.
 
-The two preparations from page 1, $`\rho_+`$ and $`\rho_{\mathrm{mix}}`$, both have $`r_z=0`$, so they remain indistinguishable by this detector at every strength. More shots estimate the same probabilities more precisely; they cannot reveal the missing Bloch components.
+The two preparations from page 1, $`\rho_+`$ and $`\rho_{\mathrm{mix}}`$, both have $`r_z=0`$, so they remain indistinguishable by this detector at every strength. More shots improve the estimates of these probabilities. They cannot reveal the missing Bloch components.
 
-We have specified a valid detector statistically. What could cause its imperfect resolution? One possibility requires no new quantum interaction at all: an ideal measurement followed by mistakes in the classical label.
+These effects describe the imperfect resolution but do not identify its cause. One possible cause is an error in the classical label after an ideal measurement.
 
 ## Readout errors change the effects of the recorded measurement
 
@@ -82,7 +86,7 @@ F_s=(1-\epsilon)P_s+\epsilon P_{-s}
 =\frac12[I+s(1-2\epsilon)Z].
 ```
 
-This is exactly our tunable POVM with $`\eta=1-2\epsilon`$. The same formula that described an unsharp detector can therefore describe a sharp detector with noisy readout.
+This is exactly our tunable POVM with $`\eta=1-2\epsilon`$. Thus a sharp detector with noisy readout can produce the same statistics as an unsharp quantum interaction.
 
 The same reasoning applies to any classical processing. If an original outcome $`x`$ is recorded as $`y`$ with conditional probability $`\beta(y\mid x)`$, then the original effects $`E_x`$ become
 
@@ -91,9 +95,11 @@ F_y=\sum_x\beta(y\mid x)E_x,
 \qquad\beta(y\mid x)\geq0,\quad\sum_y\beta(y\mid x)=1.
 ```
 
-Merging several labels into one is **coarse graining**; randomly misclassifying labels gives a confusion matrix. Both change the POVM describing the final record. For a continuous pointer, we similarly ask for the probability that its reading lies in an interval or measurable set $`B`$: an effect $`E(B)`$ gives $`p(B\mid\rho)=\mathrm{tr}[\rho E(B)]`$. Effects add for disjoint sets. An exact point may have probability zero even when the probability density there is nonzero.
+Merging several labels into one is **coarse graining**. A confusion matrix describes random errors in the labels. Both operations change the POVM for the final record.
 
-Once the effects for the final record are known, we can calculate any statistic of that record. But replacing the full distribution by its mean can hide some of the detector's randomness.
+The same idea applies to a continuous pointer. A recorded event can mean that the reading lies in an interval or measurable set $`B`$. Its effect $`E(B)`$ gives $`p(B\mid\rho)=\mathrm{tr}[\rho E(B)]`$. Effects add for disjoint sets. An exact point can have zero probability even when its probability density is nonzero.
+
+The final effects determine the record probabilities and their statistics. A mean gives a useful summary, but it can omit information about the spread of outcomes.
 
 ## Why the average readout is not a complete measurement model
 
@@ -104,7 +110,7 @@ For our detector, each recorded value $`s`$ is either $`+1`$ or $`-1`$. Its mean
 \mathrm{Var}(s)=1-\eta^2r_z^2.
 ```
 
-The mean equals the expectation of the Hermitian operator $`\eta Z`$. Does that mean the detector simply measures $`\eta Z`$ sharply? No: a sharp measurement of that operator outputs $`\pm\eta`$, whereas our detector outputs $`\pm1`$. The means agree, but the sharp measurement's variance is $`\eta^2(1-r_z^2)`$. Our detector has an additional variance $`1-\eta^2`$.
+The mean equals the expectation of the Hermitian operator $`\eta Z`$. However, a sharp measurement of $`\eta Z`$ outputs $`\pm\eta`$. Our detector outputs $`\pm1`$. These are different measurements. The means agree, but the sharp measurement's variance is $`\eta^2(1-r_z^2)`$. Our detector has an additional variance $`1-\eta^2`$.
 
 For a POVM with numerical outcome values $`x`$, this distinction is captured by its first and second **moment operators**:
 
@@ -127,19 +133,19 @@ For a PVM, orthogonality makes $`E[2]=E[1]^2`$. For a general POVM these can dif
 
 where $`\mathrm{Var}_\rho(A)=\mathrm{tr}(\rho A^2)-[\mathrm{tr}(\rho A)]^2`$. In our example, $`E[1]=\eta Z`$, $`E[2]=I`$, and $`N_E=(1-\eta^2)I`$, reproducing the difference above. The full labeled POVM specifies the outcome distribution; its first moment alone generally does not.
 
-We now know how to specify outcomes, model readout errors, and calculate statistics. One physical question remains: can every valid POVM be realized by a quantum apparatus, as our noisy Z example can?
+The noisy Z example has a physical implementation. A general POVM also needs one: its effects must describe probabilities that an apparatus can produce.
 
 ## Naimark dilation: a sharp measurement on a larger system
 
-Yes. A finite-outcome POVM can be implemented by embedding the input in a larger quantum system and measuring orthogonal outcome sectors there. This is **Naimark dilation**. It explains how effects that are not projectors on the input can arise from projectors on the input plus an apparatus.
+Every finite-outcome POVM has such an implementation. **Naimark dilation** places the input in a larger system and uses a projective measurement there. Projectors on the larger system can give effects that are not projectors on the input alone.
 
-For an input vector $`\ket{\psi}`$, introduce an outcome register with orthonormal basis states $`\ket{x}`$, one per label. Define the embedding $`J`$ by
+Let $`\ket{\psi}`$ be a normalized input vector. Add an outcome register with orthonormal basis vectors $`\ket{x}`$, one per label. The map $`J`$ places the input in this larger space:
 
 ```math
 J\ket{\psi}=\sum_x\sqrt{E_x}\ket{\psi}\otimes\ket{x}.
 ```
 
-The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. Because $`\sum_xE_x=I`$, this embedding satisfies $`J^\dagger J=I`$: it preserves inner products and normalization, so it is an isometry.
+The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. The condition $`\sum_xE_x=I`$ gives $`J^\dagger J=I`$. Thus $`J`$ is an isometry: it preserves inner products and normalization.
 
 On the larger space, let $`Q_x=I\otimes\ket{x}\bra{x}`$ be the projector for reading label $`x`$ from the register. Then
 
@@ -149,7 +155,9 @@ J^\dagger Q_xJ=E_x,
 
 so measuring the register gives exactly the desired probability $`\bra{\psi}E_x\ket{\psi}`$. A sharp readout of the apparatus thus realizes a general POVM on the input system.
 
-This construction establishes that the probabilities are physically realizable. It does not make the POVM a complete description of the apparatus: different implementations can give the same record probabilities and leave different system states. Our noisy sharp Z measurement and a gentler interaction can share the same effects. To distinguish them, we need the state transformations described by [operations and channels](operations-and-channels.md), then associate each transformation with its recorded outcome using an [instrument](instruments-and-apparatus.md).
+This construction shows that the probabilities have a physical implementation. Different implementations can still leave different system states. Our noisy sharp Z measurement and a gentler interaction can share the same effects.
+
+To distinguish them, we need the state transformations described by [operations and channels](operations-and-channels.md). An [instrument](instruments-and-apparatus.md) then connects each transformation to its recorded outcome.
 
 ## Check your understanding
 

@@ -1,12 +1,12 @@
 # 5. Multiple measurements: compatibility and disturbance
 
-A measurement can change what a later measurement sees. We can now calculate that change because an instrument supplies both an outcome and a remaining state. This also lets us distinguish sequential measurements from joint measurements of the original observables.
+An instrument gives the state after each result. A second detector then measures that state. We can therefore calculate the whole sequence and compare it with measuring the second observable directly. This comparison defines disturbance.
 
 [Learning path](README.md) · Previous: [Instruments and apparatus](instruments-and-apparatus.md) · Course: §§2.1–2.3, pp. 53–83.
 
 ## Calculate a sequence using the unnormalized branch
 
-For an input density matrix $`\rho`$, apply instrument $`\mathcal I_s`$ first, recording outcome $`s`$, then measure a POVM $`F_t`$, recording outcome $`t`$. The joint probability is
+The input state is $`\rho`$. The first instrument $`\mathcal I_s`$ reports $`s`$. The second POVM $`F_t`$ reports $`t`$. Their joint probability is
 
 ```math
 p(s,t)=\mathrm{tr}[\mathcal I_s(\rho)F_t].
@@ -18,17 +18,19 @@ This already includes the probability of the first outcome. Dividing by $`p(s)`$
 G_{s,t}=\mathcal I_s^{\ast}(F_t).
 ```
 
-A marginal sums over the outcome you ignore. The first marginal is the original $`E_s`$, but its second marginal is
+A **marginal** sums over one of the two outcomes. Summing over $`t`$ recovers the first measurement effect $`E_s=\mathcal I_s^{\ast}(I)`$. Summing over $`s`$ gives the second measurement effect on the original input:
 
 ```math
 \sum_sG_{s,t}=\Phi^{\ast}(F_t),\qquad \Phi=\sum_s\mathcal I_s.
 ```
 
-The first measurement is nondisturbing for $`F`$ precisely when $`\Phi^{\ast}(F_t)=F_t`$ for every outcome $`t`$. This is a statement for every input state, not merely a coincidence of probabilities on one chosen input.
+The first measurement is nondisturbing for $`F`$ precisely when $`\Phi^{\ast}(F_t)=F_t`$ for every outcome $`t`$. This condition must hold for every input state. Agreement on one state is insufficient.
+
+The tunable Z instrument lets us calculate this change explicitly. We use a later X measurement because X detects the coherence that the Z instrument can remove.
 
 ## Running example: unsharp Z followed by sharp X
 
-Use the Lüders instrument from page 4, with $`c=\sqrt{1-\eta^2}`$, and then $`F_t=(I+tX)/2`$. Direct multiplication gives
+The first measurement is the Lüders Z instrument from lesson 4, with strength $`\eta`$ and $`c=\sqrt{1-\eta^2}`$. The second is sharp X, with effects $`F_t=(I+tX)/2`$. Both labels $`s,t`$ take values $`\pm1`$. Direct multiplication gives
 
 ```math
 G_{s,t}=K_s^\dagger F_tK_s
@@ -41,19 +43,23 @@ so for input Bloch vector $`\mathbf r`$,
 p(s,t)=\frac14(1+s\eta r_z+tc r_x).
 ```
 
-The first marginal is the intended unsharp $`Z`$. The second is $`(I+tcX)/2`$: an unsharp $`X`$ observable on the original input. On $`\ket{+}`$, the final $`X=+1`$ probability is $`(1+c)/2`$. It is $`0.9`$ at $`\eta=0.6`$, and $`0.5`$ at $`\eta=1`$, rather than the probability one obtained by measuring $`X`$ directly.
+The first marginal is the intended unsharp $`Z`$. The second marginal is $`(I+tcX)/2`$. Thus the sequence measures unsharp $`X`$ on the original input, although the second detector itself is sharp. On $`\ket{+}`$, the final $`X=+1`$ probability is $`(1+c)/2`$. This probability is $`0.9`$ at $`\eta=0.6`$ and $`0.5`$ at $`\eta=1`$. Measuring $`X`$ directly would give probability one.
 
-A later $`Z`$ measurement, by contrast, is undisturbed by this instrument: $`\Phi^{\ast}(Z)=Z`$. Disturbance depends on the observable whose statistics you want to preserve.
+A later $`Z`$ measurement, by contrast, is undisturbed by this instrument: $`\Phi^{\ast}(Z)=Z`$. Thus disturbance depends on the later observable. However, preserving its average outcome distribution does not guarantee that a repeated measurement returns the same individual result.
 
 ## Repeatability is a property of the instrument
 
-Repeatability means that immediately repeating the same measurement returns the same result with probability one, assuming no intervening evolution. A sharp Lüders instrument has this property: after outcome $`s`$, its state lies in the range of $`P_s`$, so $`P_tP_s=0`$ for $`t\ne s`$ excludes a different result.
+**Repeatability** means that an immediate repetition gives the same result with probability one. There is no intervening evolution. A sharp Lüders instrument with projectors $`P_s`$ is repeatable. After result $`s`$, its state lies in the range of $`P_s`$. Since $`P_tP_s=0`$ for $`t\ne s`$, another result is impossible.
 
-A sharp POVM alone does not guarantee repeatability. Measuring $`Z`$ and then flipping the qubit has the same first-outcome POVM as ordinary $`Z`$ measurement, but the next $`Z`$ outcome is opposite. Nor does preserving $`Z`$ populations make the unsharp instrument repeatable: for $`0<\eta<1`$, either reported sign remains possible even on a $`Z`$ eigenstate. For repeated syndrome checks, separate intrinsic randomness, physical changes, and readout faults before interpreting differing records.
+A sharp POVM alone does not guarantee repeatability. A device can measure $`Z`$ and then flip the qubit. Its first-outcome POVM is unchanged, but repeating the device gives the opposite sign.
+
+The unsharp Lüders instrument preserves $`Z`$ populations but is not repeatable. For $`0<\eta<1`$, either sign can occur even on a $`Z`$ eigenstate. Different syndrome records can therefore arise from measurement randomness, changes in the system, or readout faults. These causes require different models.
 
 ## Joint measurability means preserving both requested marginals
 
-POVMs $`E_s`$ and $`F_t`$ are jointly measurable if there is a POVM $`G_{s,t}`$ such that
+A sequence always produces two labels. Our Z-then-X example showed that those labels can describe altered observables. Joint measurability asks a stricter question: can one measurement reproduce both target distributions on the original input?
+
+POVMs $`E_s`$ and $`F_t`$ are **jointly measurable** if a parent POVM $`G_{s,t}`$ satisfies
 
 ```math
 \sum_tG_{s,t}=E_s,\qquad\sum_sG_{s,t}=F_t.
@@ -61,19 +67,21 @@ POVMs $`E_s`$ and $`F_t`$ are jointly measurable if there is a POVM $`G_{s,t}`$ 
 
 One parent measurement then produces data for both target observables by classical processing. Two sharp PVMs are jointly measurable exactly when their projections commute. Commutation is sufficient for general POVMs too, but it is not necessary.
 
-For a concrete noncommuting example, consider unsharp $`Z`$ with strength $`a`$ and unsharp $`X`$ with strength $`b`$, both between zero and one. The effects
+For example, let $`a`$ be the strength of unsharp $`Z`$, and let $`b`$ be the strength of unsharp $`X`$. Both strengths lie between zero and one. The effects
 
 ```math
 G_{s,t}=\frac14(I+saZ+tbX)
 ```
 
-sum to $`I`$ and have the desired marginals. Their eigenvalues are $`(1\pm\sqrt{a^2+b^2})/4`$, so this construction works when $`a^2+b^2\leq1`$. For these unbiased orthogonal qubit observables, this is also the necessary condition; see [Busch and Heinosaari, Approximate joint measurements of qubit observables](https://arxiv.org/abs/0706.1415).
+sum to $`I`$ and have the desired marginals. Their eigenvalues are $`(1\pm\sqrt{a^2+b^2})/4`$, so this construction works when $`a^2+b^2\leq1`$. These observables are **unbiased**: they give equal outcome probabilities on the maximally mixed state. For this orthogonal qubit pair, the condition is also necessary. See [Busch and Heinosaari, Approximate joint measurements of qubit observables](https://arxiv.org/abs/0706.1415).
 
 The running sequential construction has $`a=\eta`$ and $`b=\sqrt{1-\eta^2}`$, exactly on the boundary. Sharp $`Z`$ and sharp $`X`$ would require $`a=b=1`$, which is impossible. The ability to perform two operations in sequence does not make their original sharp observables jointly measurable.
 
 Compatibility guarantees that some joint implementation exists. It does not mean that any chosen instrument for the first POVM preserves the second. Even a sharp measurement can be followed by an extra unitary that disturbs otherwise commuting observables.
 
 ## Three different meanings of uncertainty
+
+The bound above limits how sharply one device can measure both observables. It is a measurement constraint. It differs from uncertainty already present in an input state, and from disturbance caused by an earlier measurement.
 
 | Concept | What varies or is compared? | Engineering question |
 | --- | --- | --- |
@@ -87,15 +95,15 @@ For Hermitian $`A,B`$, the Robertson preparation relation is
 \Delta_\rho A\,\Delta_\rho B\geq\frac12|\mathrm{tr}(\rho[A,B])|,
 ```
 
-where $`[A,B]=AB-BA`$ and $`\Delta_\rho A`$ is the standard deviation of ideal $`A`$ outcomes. For Pauli $`X,Z`$ this lower bound is $`|r_y|`$. It can vanish even though $`X`$ and $`Z`$ are incompatible; a zero bound is not a compatibility test. This inequality does not directly describe detector error or measurement backaction.
+where $`[A,B]=AB-BA`$ and $`\Delta_\rho A`$ is the standard deviation of ideal $`A`$ outcomes. For Pauli $`X,Z`$ this lower bound is $`|r_y|`$. The bound can be zero even though $`X`$ and $`Z`$ are incompatible. It therefore does not test compatibility. This inequality does not directly describe detector error or measurement backaction.
 
-A measurement-uncertainty relation must specify how approximation error is measured. The course uses Wasserstein distances: the minimum transport cost of turning one outcome distribution into another, respecting numerical distances between outcomes, then compares observables across input states. The qubit strengths above provide a simpler concrete trade-off: improving one marginal restricts the other. Avoid applying a universal “error times disturbance” formula without identifying its error definitions and assumptions.
+A measurement-uncertainty relation must specify how approximation error is measured. The course uses Wasserstein distances to compare outcome distributions. These distances measure the minimum cost of moving probability between outcomes, using the distances between their numerical values. The course then compares observables across input states. For our qubit pair, increasing one measurement strength limits the other. Any error–disturbance formula needs its own error definitions and assumptions.
 
 ## Where continuous position and momentum fit
 
-Sections 2.1.1 and 2.2.1 extend these ideas to phase space. A phase-space POVM reports approximate position and momentum together. Its marginals are smeared versions of the sharp position and momentum observables; an auxiliary quantum state constrains the possible smearing distributions. A sequential position measurement can likewise broaden later momentum statistics through its interaction with the probe.
+The same distinction matters for continuous measurements. Sections 2.1.1 and 2.2.1 apply it to position and momentum in phase space. A phase-space POVM reports approximate position and momentum together. Its marginals are broadened versions of the sharp position and momentum distributions. An auxiliary quantum state constrains how narrow both broadening distributions can be. A sequential position measurement can likewise broaden later momentum statistics through its interaction with the probe.
 
-This is the same chain of reasoning as for the qubit: specify a joint measurement or an instrument, calculate its marginals, and compare them with the target observables. The detailed continuous-variable bounds require integral measures and operator-domain care. Master the qubit calculation first; return to these sections for bosonic or continuous-variable work.
+The calculation follows the qubit case. A POVM or instrument determines the marginals, which can then be compared with the target distributions. Continuous variables also require integration and explicit operator domains.
 
 ## Check your understanding
 
@@ -112,6 +120,6 @@ This is the same chain of reasoning as for the qubit: specify a joint measuremen
 
 </details>
 
-Next: [Tomography](tomography.md) asks whether these measurement records contain enough information to identify the original state.
+A sequence can change the state before later data are collected. [Tomography](tomography.md) instead uses repeated preparations to infer the original state from several measurement settings.
 
 Last updated: 2026-11-09
