@@ -6,34 +6,34 @@ A state summarizes everything about a preparation that affects measurement proba
 
 ## From a state vector to a density matrix
 
-In matrix notation, $`|\psi\rangle`$ is a column vector, $`\langle\psi|`$ is its conjugate-transposed row, and $`\langle\phi|\psi\rangle`$ is their inner product. The outer product $`|\psi\rangle\langle\psi|`$ is a matrix. Normalization means $`\langle\psi|\psi\rangle=1`$. An operator is Hermitian when it equals its conjugate transpose.
+In matrix notation, $`\ket{\psi}`$ is a column vector, $`\bra{\psi}`$ is its conjugate-transposed row, and $`\bra{\phi}\ket{\psi}`$ is their inner product. The outer product $`\ket{\psi}\bra{\psi}`$ is a matrix. Normalization means $`\bra{\psi}\ket{\psi}=1`$. An operator is Hermitian when it equals its conjugate transpose.
 
-A normalized vector $`|\psi\rangle`$ represents a pure state. Its density matrix is
+A normalized vector $`\ket{\psi}`$ represents a pure state. Its density matrix is
 
 ```math
-\rho=|\psi\rangle\langle\psi|.
+\rho=\ket{\psi}\bra{\psi}.
 ```
 
 If preparation $`j`$ is selected with probability $`p_j`$, use
 
 ```math
-\rho=\sum_jp_j|\psi_j\rangle\langle\psi_j|,
+\rho=\sum_jp_j\ket{\psi_j}\bra{\psi_j},
 \qquad p_j\geq0,\quad\sum_jp_j=1.
 ```
 
 You average the density matrices, not the state vectors. Adding vectors describes coherent superposition; averaging density matrices describes statistical mixing. Different ensembles can give the same density matrix, so its decomposition does not uniquely identify how it was prepared.
 
-A valid density matrix is Hermitian, positive semidefinite, and has trace one. Positive semidefinite means all eigenvalues are nonnegative, or equivalently $`\langle v|\rho|v\rangle\geq0`$ for every vector $`v`$. In finite dimensions, the trace is the sum of diagonal entries. For a pure state $`\rho^2=\rho`$ and $`\mathrm{tr}(\rho^2)=1`$; for a mixed state the purity $`\mathrm{tr}(\rho^2)`$ is smaller than one.
+A valid density matrix is Hermitian, positive semidefinite, and has trace one. Positive semidefinite means all eigenvalues are nonnegative, or equivalently $`\bra{v}\rho\ket{v}\geq0`$ for every vector $`v`$. In finite dimensions, the trace is the sum of diagonal entries. For a pure state $`\rho^2=\rho`$ and $`\mathrm{tr}(\rho^2)=1`$; for a mixed state the purity $`\mathrm{tr}(\rho^2)`$ is smaller than one.
 
 Consider
 
 ```math
-|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+\ket{+}=\frac{\ket{0}+\ket{1}}{\sqrt2},\qquad
 \rho_+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
 \rho_{\mathrm{mix}}=\frac12\begin{pmatrix}1&0\\0&1\end{pmatrix}.
 ```
 
-Here $`|-\rangle=(|0\rangle-|1\rangle)/\sqrt2`$. Both give equal probabilities for $`0`$ and $`1`$ in the computational basis. But measuring in the $`\{|+\rangle,|-\rangle\}`$ basis always gives $`+`$ for $`\rho_+`$ and gives either sign equally for $`\rho_{\mathrm{mix}}`$. The off-diagonal entries encode coherence relative to the chosen basis. Coherence is basis-dependent; purity is not.
+Here $`\ket{-}=(\ket{0}-\ket{1})/\sqrt2`$. Both give equal probabilities for $`0`$ and $`1`$ in the computational basis. But measuring in the $`\{\ket{+},\ket{-}\}`$ basis always gives $`+`$ for $`\rho_+`$ and gives either sign equally for $`\rho_{\mathrm{mix}}`$. The off-diagonal entries encode coherence relative to the chosen basis. Coherence is basis-dependent; purity is not.
 
 ## One qubit in three real numbers
 
@@ -58,7 +58,7 @@ Our running measurement will first reveal only $`r_z`$. The other two components
 
 ## Composite systems and the partial trace
 
-Two systems $`A`$ and $`B`$ live in $`\mathcal H_A\otimes\mathcal H_B`$. For independent preparations the joint state is $`\rho_A\otimes\rho_B`$. A joint state is separable if it is a probabilistic mixture of product states; otherwise it is entangled. A pure joint state is entangled exactly when it cannot be written as a product vector. In a two-qubit implementation, fix the basis order explicitly; here it is $`|00\rangle,|01\rangle,|10\rangle,|11\rangle`$, with $`A`$ first.
+Two systems $`A`$ and $`B`$ live in $`\mathcal H_A\otimes\mathcal H_B`$. For independent preparations the joint state is $`\rho_A\otimes\rho_B`$. A joint state is separable if it is a probabilistic mixture of product states; otherwise it is entangled. A pure joint state is entangled exactly when it cannot be written as a product vector. In a two-qubit implementation, fix the basis order explicitly; here it is $`\ket{00},\ket{01},\ket{10},\ket{11}`$, with $`A`$ first.
 
 If we can access only $`A`$, its state is
 
@@ -74,7 +74,7 @@ The partial trace sums over matching indices of the discarded system. It is defi
 =\mathrm{tr}(\rho_AE_A).
 ```
 
-For the Bell state $`|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2`$, the joint state is pure but either reduced state is $`I/2`$. The information needed to distinguish the Bell state from other joint states lies in correlations. A mixed reduced state does not mean that the global state was a classical mixture.
+For the Bell state $`\ket{\Phi^+}=(\ket{00}+\ket{11})/\sqrt2`$, the joint state is pure but either reduced state is $`I/2`$. The information needed to distinguish the Bell state from other joint states lies in correlations. A mixed reduced state does not mean that the global state was a classical mixture.
 
 Discarding $`B`$ is different from measuring $`B`$ and retaining its result. Discarding gives one reduced state; retaining a result gives a conditional state and a classical record. [Instruments](instruments-and-apparatus.md) will make this distinction precise.
 
@@ -89,14 +89,14 @@ The course's $`L^2(\mathbb R)`$ consists of square-integrable wavefunctions and 
 ## Check your understanding
 
 1. Why can a $`Z`$ measurement not distinguish $`\rho_+`$ from $`I/2`$? Which measurement can?
-2. Trace out $`B`$ from $`|\Phi^+\rangle\langle\Phi^+|`$. Which terms disappear, and why?
+2. Trace out $`B`$ from $`\ket{\Phi^+}\bra{\Phi^+}`$. Which terms disappear, and why?
 3. Is $`\rho=(I+0.8X+0.8Z)/2`$ a valid state?
 
 <details>
 <summary>Worked answers</summary>
 
 1. Their computational-basis diagonals agree. An $`X`$ measurement gives $`+`$ with probability one for $`\rho_+`$ and one half for $`I/2`$.
-2. The diagonal terms give $`|0\rangle\langle0|/2`$ and $`|1\rangle\langle1|/2`$. The cross terms contain $`|0\rangle\langle1|`$ or its adjoint on $`B`$, each with trace zero. The result is $`I/2`$.
+2. The diagonal terms give $`\ket{0}\bra{0}/2`$ and $`\ket{1}\bra{1}/2`$. The cross terms contain $`\ket{0}\bra{1}`$ or its adjoint on $`B`$, each with trace zero. The result is $`I/2`$.
 3. No. The Bloch length is $`\sqrt{1.28}>1`$, giving one negative eigenvalue.
 
 </details>

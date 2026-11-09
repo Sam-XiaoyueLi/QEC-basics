@@ -34,7 +34,7 @@ The following examples show what a channel can represent:
 | --- | --- | --- |
 | Unitary gate | $`K=U`$, $`U^\dagger U=I`$ | $`U\rho U^\dagger`$ |
 | Random phase flip | $`K_0=\sqrt{1-q}I`$, $`K_1=\sqrt q Z`$ | $`(1-q)\rho+qZ\rho Z`$ |
-| Reset to zero | $`K_0=\lvert0\rangle\langle0\rvert`$, $`K_1=\lvert0\rangle\langle1\rvert`$ | $`\lvert0\rangle\langle0\rvert\mathrm{tr}\rho`$ |
+| Reset to zero \ket{ $`K_0=\lvert0}\bra{0}`$, $`K_1=\ket{0}\bra{1}`$ \ket{ $`\lvert0}\bra{0}\mathrm{tr}\rho`$ |
 
 A phase flip with probability $`q`$ multiplies the off-diagonal entries by $`1-2q`$ and leaves the diagonal unchanged. At $`q=1/2`$ it completely dephases in the $`Z`$ basis. At $`q=1`$ it is the unitary $`Z`$, not stronger dephasing.
 
@@ -45,14 +45,14 @@ K_0=\begin{pmatrix}1&0\\0&\sqrt{1-\gamma}\end{pmatrix},\qquad
 K_1=\begin{pmatrix}0&\sqrt\gamma\\0&0\end{pmatrix}.
 ```
 
-It transfers excited-state population to $`|0\rangle`$ and multiplies coherence by $`\sqrt{1-\gamma}`$. Verify $`K_0^\dagger K_0+K_1^\dagger K_1=I`$ before using it.
+It transfers excited-state population to $`\ket{0}`$ and multiplies coherence by $`\sqrt{1-\gamma}`$. Verify $`K_0^\dagger K_0+K_1^\dagger K_1=I`$ before using it.
 
 ## Stinespring dilation: where the apparent randomness can come from
 
 For a channel, introduce an ancilla and an isometry
 
 ```math
-V|\psi\rangle=\sum_\ell K_\ell|\psi\rangle\otimes|\ell\rangle.
+V\ket{\psi}=\sum_\ell K_\ell\ket{\psi}\otimes\ket{\ell}.
 ```
 
 The Kraus normalization ensures $`V^\dagger V=I`$. Then
@@ -65,10 +65,10 @@ An isometry can be realized by preparing an ancilla and extending the action to 
 
 ## Choi matrices: checking a map with one matrix
 
-Fix an input basis $`|i\rangle`$ of dimension $`d`$. We use the unnormalized convention, with input reference first and output second:
+Fix an input basis $`\ket{i}`$ of dimension $`d`$. We use the unnormalized convention, with input reference first and output second:
 
 ```math
-J_\Phi=\sum_{i,j}|i\rangle\langle j|\otimes\Phi(|i\rangle\langle j|).
+J_\Phi=\sum_{i,j}\ket{i}\bra{j}\otimes\Phi(\ket{i}\bra{j}).
 ```
 
 In finite dimensions, $`\Phi`$ is CP exactly when $`J_\Phi\geq0`$. It is trace-preserving exactly when $`\mathrm{tr}_{\mathrm{out}}J_\Phi=I_{\mathrm{in}}`$. Thus a channel has $`\mathrm{tr}J_\Phi=d`$. For an operation the partial trace is bounded above by $`I_{\mathrm{in}}`$.
@@ -92,7 +92,7 @@ Check Hermiticity before using a Hermitian eigensolver, and use a small toleranc
 
 ## Check your understanding
 
-1. Apply amplitude damping to $`|1\rangle\langle1|`$ and to $`|+\rangle\langle+|`$.
+1. Apply amplitude damping to $`\ket{1}\bra{1}`$ and to $`\ket{+}\bra{+}`$.
 2. Why is a reset not a unitary gate on the qubit alone?
 3. Why does testing a map on several single-qubit states not establish complete positivity?
 

@@ -85,7 +85,7 @@ Any finite-outcome POVM admits projections $`P_x`$ on a larger Hilbert space and
 E_x=J^\dagger P_xJ,\qquad J^\dagger J=I.
 ```
 
-The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. One construction is $`J|\psi\rangle=\sum_x\sqrt{E_x}|\psi\rangle\otimes|x\rangle`$, with $`P_x=I\otimes|x\rangle\langle x|`$. The identity $`\sum_xE_x=I`$ ensures that $`J`$ preserves norms. Projecting the outcome register gives probability $`\langle\psi|E_x|\psi\rangle`$.
+The positive square root $`\sqrt{E_x}`$ is obtained by diagonalizing $`E_x`$ and taking the nonnegative square roots of its eigenvalues. One construction is $`J\ket{\psi}=\sum_x\sqrt{E_x}\ket{\psi}\otimes\ket{x}`$, with $`P_x=I\otimes\ket{x}\bra{x}`$. The identity $`\sum_xE_x=I`$ ensures that $`J`$ preserves norms. Projecting the outcome register gives probability $`\bra{\psi}E_x\ket{\psi}`$.
 
 This proves that generalized probabilities can be implemented by embedding the system and measuring a sharp pointer. It does not select a unique disturbance. Page 4 will turn this particular construction into a complete instrument.
 
@@ -93,12 +93,12 @@ For a continuous detector, replace single-outcome effects by effects $`E(B)`$ fo
 
 ## Check your understanding
 
-For $`\eta=0.6`$, calculate the probabilities on $`|0\rangle`$ and $`|+\rangle`$, the equivalent symmetric readout-flip probability, and the variance on $`|0\rangle`$. Does this specify the output state?
+For $`\eta=0.6`$, calculate the probabilities on $`\ket{0}`$ and $`\ket{+}`$, the equivalent symmetric readout-flip probability, and the variance on $`\ket{0}`$. Does this specify the output state?
 
 <details>
 <summary>Worked answer</summary>
 
-On $`|0\rangle`$, $`p_+=0.8`$ and $`p_-=0.2`$. On $`|+\rangle`$, both are $`0.5`$. The flip probability is $`\epsilon=(1-\eta)/2=0.2`$. On $`|0\rangle`$, the outcome mean is $`0.6`$ and the variance is $`1-0.6^2=0.64`$. None of these calculations specifies an output state: that requires an instrument.
+On $`\ket{0}`$, $`p_+=0.8`$ and $`p_-=0.2`$. On $`\ket{+}`$, both are $`0.5`$. The flip probability is $`\epsilon=(1-\eta)/2=0.2`$. On $`\ket{0}`$, the outcome mean is $`0.6`$ and the variance is $`1-0.6^2=0.64`$. None of these calculations specifies an output state: that requires an instrument.
 
 </details>
 

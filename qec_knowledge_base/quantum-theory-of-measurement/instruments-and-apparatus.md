@@ -43,7 +43,7 @@ r'_{x,s}=\frac{\sqrt{1-\eta^2}\,r_x}{1+s\eta r_z},\qquad
 r'_{y,s}=\frac{\sqrt{1-\eta^2}\,r_y}{1+s\eta r_z}.
 ```
 
-For $`|+\rangle`$ and $`\eta=0.6`$, both outcomes have probability $`1/2`$ and the conditional Bloch vectors are $`(0.8,0,\pm0.6)`$. Both states are pure. Ignoring the result averages them to $`(0.8,0,0)`$, which is mixed.
+For $`\ket{+}`$ and $`\eta=0.6`$, both outcomes have probability $`1/2`$ and the conditional Bloch vectors are $`(0.8,0,\pm0.6)`$. Both states are pure. Ignoring the result averages them to $`(0.8,0,0)`$, which is mixed.
 
 In general the discarded-record channel is
 
@@ -67,11 +67,11 @@ It has the same effects $`E_s`$, but $`\sum_s\mathcal J_s(\rho)`$ completely rem
 
 ## Ancilla implementation and the physical model
 
-Prepare an ancilla in $`|0\rangle`$ and choose a unitary whose action on that input subspace is
+Prepare an ancilla in $`\ket{0}`$ and choose a unitary whose action on that input subspace is
 
 ```math
-U(|\psi\rangle\otimes|0\rangle)
-=K_+|\psi\rangle\otimes|0\rangle+K_-|\psi\rangle\otimes|1\rangle.
+U(\ket{\psi}\otimes\ket{0})
+=K_+\ket{\psi}\otimes\ket{0}+K_-\ket{\psi}\otimes\ket{1}.
 ```
 
 The right side preserves inner products because $`K_+^\dagger K_++K_-^\dagger K_-=I`$, so it can be extended to a unitary. Measuring the ancilla in its computational basis realizes the instrument, with $`0`$ reporting $`+`$ and $`1`$ reporting $`-`$. Tracing it out realizes $`\Phi`$.
@@ -121,13 +121,13 @@ For an ideal two-qubit parity check, the effects and Lüders operations are
 P_s=\frac12(I+sZ\otimes Z),\qquad\mathcal I_s(\rho)=P_s\rho P_s.
 ```
 
-Prepare an ancilla in $`|0\rangle`$, apply CNOTs from both data qubits to the ancilla, and measure its $`Z`$. Even parity gives bit zero; odd parity gives bit one. This distinguishes the two parity subspaces while preserving coherence inside either subspace. Measuring the two data qubits separately and taking their classical parity gives the same parity probabilities but destroys more coherence. In particular, it destroys the coherence of $`(|00\rangle+|11\rangle)/\sqrt2`$, which an ideal parity check preserves.
+Prepare an ancilla in $`\ket{0}`$, apply CNOTs from both data qubits to the ancilla, and measure its $`Z`$. Even parity gives bit zero; odd parity gives bit one. This distinguishes the two parity subspaces while preserving coherence inside either subspace. Measuring the two data qubits separately and taking their classical parity gives the same parity probabilities but destroys more coherence. In particular, it destroys the coherence of $`(\ket{00}+\ket{11})/\sqrt2`$, which an ideal parity check preserves.
 
 This is why collective check measurements matter in [Gross-code state preparation](../gross-code/README.md#preparing-all-twelve-logical-qubits-in-zero). A fault-tolerant implementation must additionally account for faults propagating through the ancilla circuit; an ideal instrument alone does not establish fault tolerance.
 
 ## Check your understanding
 
-1. Reproduce the conditional and discarded-record states for $`|+\rangle`$ at $`\eta=0.6`$.
+1. Reproduce the conditional and discarded-record states for $`\ket{+}`$ at $`\eta=0.6`$.
 2. Give two instruments with the same $`Z`$ PVM and different outputs.
 3. Why does measuring individual bits and retaining only their parity differ from an ideal parity check?
 
@@ -135,7 +135,7 @@ This is why collective check measurements matter in [Gross-code state preparatio
 <summary>Worked answers</summary>
 
 1. The conditional matrices are $`\frac12\begin{pmatrix}1\pm0.6&0.8\\0.8&1\mp0.6\end{pmatrix}`$. Averaging with probabilities $`1/2`$ gives $`\frac12\begin{pmatrix}1&0.8\\0.8&1\end{pmatrix}`$.
-2. Use $`\mathcal I_s(\rho)=P_s\rho P_s`$ and $`\mathcal J_s(\rho)=\mathrm{tr}(P_s\rho)|0\rangle\langle0|`$. Both report the same probabilities, but only the second always outputs zero.
+2. Use $`\mathcal I_s(\rho)=P_s\rho P_s`$ and $`\mathcal J_s(\rho)=\mathrm{tr}(P_s\rho)\ket{0}\bra{0}`$. Both report the same probabilities, but only the second always outputs zero.
 3. Separate measurements physically resolve $`00`$ from $`11`$. Deleting that classical distinction afterwards does not restore the coherence already lost. The parity instrument never resolves it.
 
 </details>

@@ -88,7 +88,7 @@ For $`n`$ qubits a general state has $`4^n-1`$ parameters. Full reconstruction b
 
 ## Check your understanding
 
-1. Why do arbitrarily many $`Z`$ shots fail to distinguish $`|+\rangle`$ from $`|-\rangle`$?
+1. Why do arbitrarily many $`Z`$ shots fail to distinguish $`\ket{+}`$ from $`\ket{-}`$?
 2. With known $`\eta=0.5`$, a measured sign average of $`0.3`$ implies what estimate of $`r_z`$?
 3. Reconstruct the state from the tetrahedral probabilities for $`\mathbf r=(0,0,1)`$.
 
@@ -97,7 +97,7 @@ For $`n`$ qubits a general state has $`4^n-1`$ parameters. Full reconstruction b
 
 1. Both states have $`r_z=0`$ and hence identical $`Z`$ distributions. The missing information is about the direction being measured, not the number of shots.
 2. $`\hat r_z=0.3/0.5=0.6`$. Dividing by the strength also amplifies statistical fluctuations; it is not free error removal.
-3. For the two vertices with positive $`z`$, $`p_k=(1+1/\sqrt3)/4`$; for the other two, $`p_k=(1-1/\sqrt3)/4`$. Substituting into $`3\sum_kp_k\mathbf n_k`$ yields $`(0,0,1)`$ and $`\rho=|0\rangle\langle0|`$.
+3. For the two vertices with positive $`z`$, $`p_k=(1+1/\sqrt3)/4`$; for the other two, $`p_k=(1-1/\sqrt3)/4`$. Substituting into $`3\sum_kp_k\mathbf n_k`$ yields $`(0,0,1)`$ and $`\rho=\ket{0}\bra{0}`$.
 
 </details>
 

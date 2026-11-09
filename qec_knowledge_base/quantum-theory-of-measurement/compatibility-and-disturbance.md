@@ -41,7 +41,7 @@ so for input Bloch vector $`\mathbf r`$,
 p(s,t)=\frac14(1+s\eta r_z+tc r_x).
 ```
 
-The first marginal is the intended unsharp $`Z`$. The second is $`(I+tcX)/2`$: an unsharp $`X`$ observable on the original input. On $`|+\rangle`$, the final $`X=+1`$ probability is $`(1+c)/2`$. It is $`0.9`$ at $`\eta=0.6`$, and $`0.5`$ at $`\eta=1`$, rather than the probability one obtained by measuring $`X`$ directly.
+The first marginal is the intended unsharp $`Z`$. The second is $`(I+tcX)/2`$: an unsharp $`X`$ observable on the original input. On $`\ket{+}`$, the final $`X=+1`$ probability is $`(1+c)/2`$. It is $`0.9`$ at $`\eta=0.6`$, and $`0.5`$ at $`\eta=1`$, rather than the probability one obtained by measuring $`X`$ directly.
 
 A later $`Z`$ measurement, by contrast, is undisturbed by this instrument: $`\Phi^{\ast}(Z)=Z`$. Disturbance depends on the observable whose statistics you want to preserve.
 
@@ -99,7 +99,7 @@ This is the same chain of reasoning as for the qubit: specify a joint measuremen
 
 ## Check your understanding
 
-1. For $`|+\rangle`$ and $`\eta=0.6`$, calculate all four probabilities $`p(s,t)`$.
+1. For $`\ket{+}`$ and $`\eta=0.6`$, calculate all four probabilities $`p(s,t)`$.
 2. Can unbiased unsharp $`Z`$ and $`X`$, both with strength $`0.8`$, be jointly measured?
 3. If sharp $`Z`$ happens not to change $`X`$ statistics on $`I/2`$, does that establish nondisturbance?
 
@@ -108,7 +108,7 @@ This is the same chain of reasoning as for the qubit: specify a joint measuremen
 
 1. With $`c=0.8`$, each $`s`$ has $`p(s,+)=0.45`$ and $`p(s,-)=0.05`$. The second marginal is $`(0.9,0.1)`$.
 2. No: $`0.8^2+0.8^2=1.28>1`$. Equal strengths must be at most $`1/\sqrt2`$.
-3. No. Nondisturbance requires preservation for every input. The input $`|+\rangle`$ provides a counterexample: sharp $`Z`$ changes subsequent $`X`$ probabilities from $`(1,0)`$ to $`(1/2,1/2)`$.
+3. No. Nondisturbance requires preservation for every input. The input $`\ket{+}`$ provides a counterexample: sharp $`Z`$ changes subsequent $`X`$ probabilities from $`(1,0)`$ to $`(1/2,1/2)`$.
 
 </details>
 
