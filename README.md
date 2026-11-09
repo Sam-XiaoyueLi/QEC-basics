@@ -45,7 +45,7 @@ The [QEC knowledge base](qec_knowledge_base/README.md) collects concise referenc
 
 - [Erasure conversion](qec_knowledge_base/erasure-conversion/README.md) — Why known error locations help, how fluxonium and dual-rail encodings produce flags, outer-code recovery, and experimental limits.
 
-- [Quantum theory of measurement](qec_knowledge_base/quantum-theory-of-measurement/README.md) — A six-step engineering learning path from quantum states to measurement records, feedback, and tomography.
+- [Quantum theory of measurement](qec_knowledge_base/quantum-theory-of-measurement/README.md) — Chapter-based notes on measurement probabilities, state changes, apparatus models, compatibility, and tomography.
 
 ## Run the notebooks
 

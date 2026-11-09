@@ -1,8 +1,8 @@
-# 5. Multiple measurements: compatibility and disturbance
+# Chapter 2. Compatibility and disturbance
 
 An instrument gives the state after each result. A second detector then measures that state. We can therefore calculate the whole sequence and compare it with measuring the second observable directly. This comparison defines disturbance.
 
-[Learning path](README.md) · Previous: [Instruments and apparatus](instruments-and-apparatus.md) · Course: §§2.1–2.3, pp. 53–83.
+[Learning path](README.md) · Previous: [Basics of measurement](basics-of-measurement.md) · Course: §§2.1–2.3, pp. 53–83.
 
 ## Calculate a sequence using the unnormalized branch
 
@@ -12,7 +12,7 @@ The input state is $`\rho`$. The first instrument $`\mathcal I_s`$ reports $`s`$
 p(s,t)=\mathrm{tr}[\mathcal I_s(\rho)F_t].
 ```
 
-This already includes the probability of the first outcome. Dividing by $`p(s)`$ would give $`p(t\mid s)`$ instead. Using the dual map from page 3, the whole sequence has effects
+This already includes the probability of the first outcome. Dividing by $`p(s)`$ would give $`p(t\mid s)`$ instead. Using the [dual map from Chapter 1](basics-of-measurement.md#the-dual-map-predicts-output-measurements-from-the-input), the whole sequence has effects
 
 ```math
 G_{s,t}=\mathcal I_s^{\ast}(F_t).
@@ -30,7 +30,7 @@ The tunable Z instrument lets us calculate this change explicitly. We use a late
 
 ## Running example: unsharp Z followed by sharp X
 
-The first measurement is the Lüders Z instrument from lesson 4, with strength $`\eta`$ and $`c=\sqrt{1-\eta^2}`$. The second is sharp X, with effects $`F_t=(I+tX)/2`$. Both labels $`s,t`$ take values $`\pm1`$. Direct multiplication gives
+The first measurement is the [Lüders Z instrument from Chapter 1](basics-of-measurement.md#the-tunable-z-measurement-statistics-and-disturbance-together), with strength $`\eta`$ and $`c=\sqrt{1-\eta^2}`$. The second is sharp X, with effects $`F_t=(I+tX)/2`$. Both labels $`s,t`$ take values $`\pm1`$. Direct multiplication gives
 
 ```math
 G_{s,t}=K_s^\dagger F_tK_s

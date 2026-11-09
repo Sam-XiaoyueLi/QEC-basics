@@ -4,13 +4,9 @@
 
 ## Learning path
 
-| Topic | Leading question | Important concepts |
+| Chapter | Leading question | Important concepts |
 | --- | --- | --- |
-| [1. States and subsystems](states-and-subsystems.md) | What information describes the input? | Density matrices, mixtures, superpositions, coherence, entanglement, tensor products, partial trace. |
-| [2. Effects and POVMs](effects-and-povms.md) | What results can the detector report? | Effects, Born rule, projective measurements, POVMs, readout errors, post-processing, Naimark dilation. |
-| [3. Operations and channels](operations-and-channels.md) | How can the quantum state change? | Kraus maps, complete positivity, quantum channels, reset, Choi matrices, Stinespring dilation. |
-| [4. Instruments and apparatus](instruments-and-apparatus.md) | What state accompanies each result? | Instruments, conditional states, measurement backaction, ancillas, feedback, parity measurements. |
-| [5. Compatibility and disturbance](compatibility-and-disturbance.md) | What happens when measurements are combined? | Sequential measurements, joint measurability, disturbance, repeatability, preparation and measurement uncertainty. |
-| [6. Tomography](tomography.md) | What can the records tell us about the input? | Informational completeness, state reconstruction, finite-shot uncertainty, measurement calibration. |
+| [1. Basics of measurement](basics-of-measurement.md) | How do preparations, measurement records, and state changes fit together? | Statistical duality, Hilbert spaces, density operators, effects, POVMs, operations, dilations, Kraus and Choi representations, probes, instruments. |
+| 2. Incompatibility and uncertainty: [compatibility and disturbance](compatibility-and-disturbance.md), [tomography](tomography.md) | Which measurements can be combined, and what can their records tell us? | Joint measurability, sequential measurements, uncertainty, informational completeness, reconstruction, calibration. |
 
 Last updated: 2026-11-09

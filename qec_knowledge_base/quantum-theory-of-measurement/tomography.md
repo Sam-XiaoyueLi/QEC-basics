@@ -1,4 +1,4 @@
-# 6. Learning from measurement: tomography
+# Chapter 2. Tomography
 
 Many measurement records do not necessarily identify the input state. The Z detector determines only $`r_z`$ when its known strength is nonzero. For example, $`\rho_+`$ and $`\rho_{\mathrm{mix}}`$ have identical Z statistics but different X statistics.
 
