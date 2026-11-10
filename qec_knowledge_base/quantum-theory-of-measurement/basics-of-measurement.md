@@ -12,7 +12,7 @@ Different procedures can give identical statistics. Two preparations belong to t
 
 Thus a state retains the information needed to predict measurements. An effect retains the information needed to describe one event. Neither specifies every detail of the laboratory procedure.
 
-Let $`\mathcal S`$ be the state set and $`\mathcal E`$ the effect set. Their **statistical duality** is the rule that pairs a state with an effect to give a probability. Each state assigns probabilities to effects; each effect assigns probabilities to states. The angle brackets in the lecture's notation for this pairing do not mean a vector inner product.
+Let $`\mathcal S`$ be the state set and $`\mathcal E`$ the effect set. Their **statistical duality is the rule that pairs a state with an effect to give a probability**. Each state assigns probabilities to effects; each effect assigns probabilities to states. The angle brackets in the lecture's notation for this pairing do not mean a vector inner product.
 
 ### Why these sets are convex
 
@@ -31,11 +31,11 @@ This structure applies to probabilistic theories in general. Quantum theory make
 
 ### What makes a space Hilbert?
 
-A **Hilbert space** is a vector space with an inner product, complete in the norm defined by that inner product.
+A **Hilbert space** is a vector space with an inner product, **complete in the norm defined by that inner product**.
 
 - The vector-space structure lets us add vectors and multiply them by scalars. Quantum theory uses complex scalars, which allow superpositions with relative phases.
 - The inner product defines lengths, overlaps, and orthogonality.
-- Completeness means that every Cauchy sequence has a limit inside the space. In a Cauchy sequence, all sufficiently late terms are arbitrarily close to each other.
+- Completeness means that **every Cauchy sequence has a limit inside the space**. In a Cauchy sequence, all sufficiently late terms are arbitrarily close to each other.
 
 Completeness ensures that taking a convergent limit does not leave the space. Every finite-dimensional inner-product space is already complete. Infinite-dimensional spaces require more care.
 
@@ -193,7 +193,8 @@ General effects are not necessarily projectors. The next question is whether pro
 
 ## 4. Naimark dilation
 
-**Every POVM can be represented as a projective measurement on a larger Hilbert space.** This is Naimark dilation, also spelled Neumark dilation.
+> [!IMPORTANT]
+> **Every POVM can be represented as a projective measurement on a larger Hilbert space.** This is Naimark dilation, also spelled Neumark dilation.
 
 Let $`J`$ embed the input space $`\mathcal H`$ into a dilation space $`\mathcal M`$. It is an isometry: $`J^\dagger J=I`$, so it preserves lengths and inner products. Let $`P_x`$ be a PVM on $`\mathcal M`$. The dilation must satisfy
 
@@ -266,9 +267,9 @@ To describe that difference, probabilities are no longer enough. We need the sta
 
 ## 6. Operations and channels
 
-A **quantum operation** is a linear, completely positive, trace-nonincreasing map $`\Phi`$ from input operators to output operators.
+A **quantum operation** is a **linear, completely positive, trace-nonincreasing map** $`\Phi`$ from input operators to output operators.
 
-Linearity makes the map respect preparation mixtures. Positivity keeps positive inputs positive. **Complete positivity** requires this even when the input is part of an entangled system. For a reference system $`R`$ left untouched, $`\Phi\otimes\mathrm{id}_R`$ must preserve positivity for every finite reference dimension.
+Linearity makes the map respect preparation mixtures. Positivity keeps positive inputs positive. **Complete positivity** requires this **even when the input is part of an entangled system**. For a reference system $`R`$ left untouched, $`\Phi\otimes\mathrm{id}_R`$ must preserve positivity for every finite reference dimension.
 
 This is essential for operations on qubits inside a register. Transposition preserves positivity on an isolated system, but transposing one half of the Bell-state density matrix gives an eigenvalue of $`-1/2`$. The transpose map is therefore positive but not completely positive. It cannot be a universal physical operation on a subsystem.
 
@@ -281,7 +282,7 @@ p=\mathrm{tr}[\Phi(\rho)],\qquad
 
 Trace-nonincreasing means $`0\leq p\leq1`$ for a normalized positive input. The trace is the branch probability; $`\rho'`$ is the conditional output state. Keep the unnormalized branch until its probability has been extracted. Normalization generally makes the conditional update nonlinear.
 
-A **channel** is a quantum operation that preserves trace for every input. It describes a process without outcome selection, such as a gate, noise, reset, or a measurement whose result is ignored.
+A **channel** is a quantum operation that **preserves trace for every input**. It describes a process without outcome selection, such as a gate, noise, reset, or a measurement whose result is ignored.
 
 These conditions define allowed transformations. Dilations and matrix representations explain how to realize and calculate them.
 
@@ -469,7 +470,10 @@ The apparatus models differ, but both produce a classical record and a remaining
 
 ## 9. Instruments and measurement dilation
 
-An **instrument** is a collection of quantum operations $`\{\mathcal I_x\}`$, one per recorded outcome, whose sum is a channel. Think of a measurement instruction returning both a classical result and a remaining quantum state.
+An **instrument** is a collection of quantum operations $`\{\mathcal I_x\}`$, one per recorded outcome, whose sum is a channel.
+
+> [!IMPORTANT]
+> An instrument describes **both a classical result and a remaining quantum state**.
 
 For input $`\rho`$, it gives
 
@@ -509,7 +513,7 @@ A controller must retain the result until it has selected the correction.
 
 ### Measurement dilation: build the instrument with a probe
 
-A **measurement dilation** realizes an instrument in a larger system. It must reproduce both the probabilities and the conditional state changes.
+A **measurement dilation** realizes an instrument in a larger system. It must reproduce **both the probabilities and the conditional state changes**.
 
 For example, initialize a probe qubit in $`\ket{0}`$, apply CNOT with the system as control, and read the probe in the computational basis. This realizes Device A above. Following that readout with a conditional reset realizes Device B. The probe construction specifies more than a POVM because it also specifies the remaining state.
 
@@ -551,4 +555,4 @@ This is the reason for collective checks in [Gross-code state preparation](../gr
 
 An instrument now lets us predict a full measurement sequence. [Chapter 2: incompatibility and uncertainty](incompatibility-and-uncertainty.md) asks which measurements can be combined and what an earlier measurement changes.
 
-Last updated: 2026-11-09
+Last updated: 2026-11-10

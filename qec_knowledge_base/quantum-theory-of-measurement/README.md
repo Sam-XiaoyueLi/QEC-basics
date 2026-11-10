@@ -15,6 +15,6 @@ A POVM specifies the probabilities of a classical record. An instrument also spe
 
 Combining measurements requires more than collecting several labels: their distributions must match the intended observables. The instrument determines disturbance, while compatibility limits which target statistics one apparatus can reproduce. Unsharp measurements can still reveal a complete state across repeated preparations, provided the detector is calibrated and the data contain independent information.
 
-For quantum software, specify both what the record must reveal and what quantum information must survive. These two requirements connect readout, feedback, tomography, and QEC syndrome extraction.
+For quantum software, specify both **what the record must reveal** and **what quantum information must survive**. These two requirements connect readout, feedback, tomography, and QEC syndrome extraction.
 
-Last updated: 2026-11-09
+Last updated: 2026-11-10

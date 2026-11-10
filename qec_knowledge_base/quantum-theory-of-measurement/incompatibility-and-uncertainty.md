@@ -18,7 +18,8 @@ Let $`E=\{E_s\}`$ and $`F=\{F_t\}`$ be two POVMs on the same input space. Their 
 
 The sums are **marginals**: keep one label and forget the other. Measuring $`G`$ once produces a pair of classical labels. Across repeated preparations of any state $`\rho`$, the first-label probabilities reproduce $`\mathrm{tr}(\rho E_s)`$ and the second-label probabilities reproduce $`\mathrm{tr}(\rho F_t)`$.
 
-The condition concerns distributions for every input. It does not say that each result is predictable, or that the system had two definite values before measurement.
+> [!IMPORTANT]
+> Compatibility concerns **distributions for every input**. It does not say that each result is predictable, or that the system had two definite values before measurement.
 
 The lecture first gives a more general definition: one mother POVM supplies a raw record from which both target distributions follow by classical post-processing. For finite outcomes, this is equivalent to the paired-outcome definition above. A classical label can include extra randomness; it need not literally contain the pair at the detector.
 
@@ -156,7 +157,7 @@ When input and output spaces agree, the first instrument is **nondisturbing for*
 \Phi^*(F_t)=F_t\quad\text{for every }t.
 ```
 
-This preserves the later distribution for every input state. Agreement on a single state is insufficient. It also does not mean that every conditional branch leaves the state unchanged.
+This **preserves the later distribution for every input state**. Agreement on a single state is insufficient. It also does not mean that every conditional branch leaves the state unchanged.
 
 Nondisturbance implies that the sequence is a joint measurement of the original targets. Conversely, a compatible pair has some sequential realization, but it can require a larger intermediate space and a different second detector. Compatibility does not guarantee that an arbitrarily chosen first instrument preserves the original second detector.
 
@@ -194,7 +195,7 @@ A later sharp $`Z`$ measurement is undisturbed by this instrument because its po
 
 ### Repeatability is a different requirement
 
-An instrument is **repeatable** if an immediate repetition returns the same result with probability one, with no intervening evolution.
+An instrument is **repeatable** if an immediate repetition **returns the same result with probability one**, with no intervening evolution.
 
 A sharp Lüders measurement with projectors $`P_s`$ is repeatable: after result $`s`$, the state lies in the range of $`P_s`$. But a device can measure sharp $`Z`$ and then flip the qubit. Its POVM is unchanged, while repetition returns the opposite result.
 
@@ -349,9 +350,12 @@ Unsharp joint measurements have limits, but they can also collect several kinds 
 
 ## 4. Tomography: reconstruct a state from repeated preparations
 
-A measurement is **informationally complete** if different input states always produce different outcome distributions. With enough repeated preparations, its statistics can identify the density matrix. This is the condition that makes state tomography possible.
+A measurement is **informationally complete** if **different input states always produce different outcome distributions**. With enough repeated preparations, its statistics can identify the density matrix. This is the condition that makes state tomography possible.
 
-The unknown state is reconstructed from many identically prepared copies. One measurement result does not determine an arbitrary state. Nor can we generally measure $`X`$, then $`Y`$, then $`Z`$ on one qubit and treat those results as undisturbed samples of the original state.
+> [!IMPORTANT]
+> The unknown state is reconstructed from **many identically prepared copies**. One measurement result does not determine an arbitrary state.
+
+Nor can we generally measure $`X`$, then $`Y`$, then $`Z`$ on one qubit and treat those results as undisturbed samples of the original state.
 
 In finite Hilbert-space dimension $`d`$, a density matrix has $`d^2-1`$ independent real parameters. Informationally complete POVM effects must span the real vector space of Hermitian operators. A single such POVM needs at least $`d^2`$ outcomes; enough outcomes without independent effects are insufficient.
 
@@ -426,7 +430,7 @@ Small strength amplifies sampling noise. If both the strength and the state comp
 
 Finite sampling can also give $`|\hat{\mathbf r}|>1`$, so direct linear inversion produces a matrix with a negative eigenvalue. A constrained fit can require $`\rho\geq0`$ and $`\mathrm{tr}\rho=1`$, for example by maximizing the likelihood of the observed counts. A physical estimate can still be biased or fit the data poorly; those require separate checks.
 
-These are practical estimation issues beyond the exact reconstruction formulas. Keep detector error, sampling error, and lack of information separate when diagnosing a result.
+These are practical estimation issues beyond the exact reconstruction formulas. Keep **detector error, sampling error, and lack of information separate** when diagnosing a result.
 
 ### Continuous-variable tomography and optical readout
 
@@ -447,4 +451,4 @@ The apparatus model determines which POVM belongs in the reconstruction. Treatin
 
 Let $`n`$ be the number of qubits. Unrestricted state tomography involves $`4^n-1`$ parameters. Many software tasks need only a few expectations or correlations. QEC needs syndrome information while preserving encoded quantum information. The appropriate measurement is therefore determined by both what the record must reveal and what the system must retain.
 
-Last updated: 2026-11-09
+Last updated: 2026-11-10
