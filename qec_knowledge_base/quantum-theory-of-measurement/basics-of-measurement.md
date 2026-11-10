@@ -12,9 +12,9 @@ Different procedures can give identical statistics. Two preparations belong to t
 
 Thus a state retains the information needed to predict measurements. An effect retains the information needed to describe one event. Neither specifies every detail of the laboratory procedure.
 
-Let $`\mathcal S`$ be the state set and $`\mathcal E`$ the effect set. Their **statistical duality is the rule that pairs a state with an effect to give a probability**. Each state assigns probabilities to effects; each effect assigns probabilities to states. The angle brackets in the lecture's notation for this pairing do not mean a vector inner product.
+Let $`\mathcal S`$ be the state set and $`\mathcal E`$ the effect set. Their **statistical duality** $\langle S, E\rangle=p$ is the rule that pairs a state with an effect to give a probability. Each state assigns probabilities to effects, each effect assigns probabilities to states. 
 
-### Why these sets are convex
+### Convexity
 
 Suppose a preparation randomly chooses state $`\rho_1`$ with probability $`t`$ and state $`\rho_2`$ with probability $`1-t`$, where $`0\leq t\leq1`$. Its effective state is the mixture $`t\rho_1+(1-t)\rho_2`$. For any effect $`E`$,
 
@@ -33,20 +33,7 @@ This structure applies to probabilistic theories in general. Quantum theory make
 
 A **Hilbert space** is a vector space with an inner product, **complete in the norm defined by that inner product**.
 
-- The vector-space structure lets us add vectors and multiply them by scalars. Quantum theory uses complex scalars, which allow superpositions with relative phases.
-- The inner product defines lengths, overlaps, and orthogonality.
-- Completeness means that **every Cauchy sequence has a limit inside the space**. In a Cauchy sequence, all sufficiently late terms are arbitrarily close to each other.
-
 Completeness ensures that taking a convergent limit does not leave the space. Every finite-dimensional inner-product space is already complete. Infinite-dimensional spaces require more care.
-
-For one qubit, the Hilbert space is $`\mathcal H=\mathbb C^2`$. Its computational basis is $`\ket{0}=(1,0)^T`$ and $`\ket{1}=(0,1)^T`$, where $`T`$ denotes transpose. A normalized vector is
-
-```math
-\ket{\psi}=\alpha\ket{0}+\beta\ket{1},
-\qquad |\alpha|^2+|\beta|^2=1.
-```
-
-Here $`\alpha,\beta`$ are complex amplitudes. A ket is a column vector; its bra is its conjugate-transposed row. The dagger $`\dagger`$ denotes conjugate transpose.
 
 For two vectors $`\ket{\phi},\ket{\psi}`$ with components $`\phi_j,\psi_j`$ in an orthonormal basis, the inner product is
 
