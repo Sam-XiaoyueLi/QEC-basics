@@ -21,7 +21,7 @@ The sums are **marginals**: keep one label and forget the other. Measuring $`G`$
 > [!IMPORTANT]
 > Compatibility concerns **distributions for every input**. It does not say that each result is predictable, or that the system had two definite values before measurement.
 
-The lecture first gives a more general definition: one mother POVM supplies a raw record from which both target distributions follow by classical post-processing. For finite outcomes, this is equivalent to the paired-outcome definition above. A classical label can include extra randomness; it need not literally contain the pair at the detector.
+A mother POVM can supply a raw record from which both target distributions follow by classical post-processing. For finite outcomes, this is equivalent to the paired-outcome definition above. A classical label can include extra randomness; it need not literally contain the pair at the detector.
 
 ### When does commutation decide compatibility?
 
@@ -99,7 +99,7 @@ G_k=\frac14\left(I+\lambda_xv_{k,x}X+
 
 For direction $`j`$, report the sign $`v_{k,j}`$. Grouping the four outcomes by this sign gives the desired unsharp Pauli measurement. We will return to this same four-outcome detector for tomography.
 
-### Position and momentum: the continuous version (§2.1.1)
+### Position and momentum: the continuous version
 
 The same question applies to a particle's position and momentum, or to two quadratures of an oscillator. For one canonical degree of freedom, work on $`L^2(\mathbb R)`$; $`I`$ now denotes its identity. Let $`Q`$ and $`P`$ be the canonical position and momentum operators, with $`[Q,P]=iI`$ in units where $`\hbar=1`$. Their sharp PVMs are incompatible.
 
@@ -161,7 +161,7 @@ This **preserves the later distribution for every input state**. Agreement on a 
 
 Nondisturbance implies that the sequence is a joint measurement of the original targets. Conversely, a compatible pair has some sequential realization, but it can require a larger intermediate space and a different second detector. Compatibility does not guarantee that an arbitrarily chosen first instrument preserves the original second detector.
 
-The lecture constructs this realization using Naimark dilation: embed the input, select a projective outcome in the larger space, and measure a commuting POVM there. The dilation retains the information needed for the second marginal.
+Naimark dilation provides such a sequential realization: embed the input, select a projective outcome in the larger space, and measure a commuting POVM there. The dilation retains the information needed for the second marginal.
 
 ### Running example: unsharp Z, then sharp X
 
@@ -237,7 +237,7 @@ For the identity channel, the minimal environment is one-dimensional. Its effect
 
 An instrument that leaves every state unchanged therefore cannot reveal information about an arbitrary input state. This does not forbid preserving selected states or selected observables. An ideal QEC check can reveal a syndrome while preserving information within a code subspace.
 
-### Sequential position and momentum (§2.2.1)
+### Sequential position and momentum
 
 The continuous example follows the same mechanism. First use the von Neumann probe to measure position approximately, then measure momentum sharply on the remaining system.
 
@@ -257,7 +257,7 @@ We can now identify the relevant limits. Some concern the input preparation; oth
 
 Compatibility does not make outcomes deterministic. Two compatible measurements can both have broad distributions on a given state.
 
-### Preparation uncertainty (§2.3.1)
+### Preparation uncertainty
 
 For Hermitian observables $`A,B`$ and input state $`\rho`$, define the standard deviation by
 
@@ -278,9 +278,9 @@ For position and momentum, $`[Q,P]=iI`$ gives $`\Delta_\rho Q\,\Delta_\rho P\geq
 
 For Pauli $`X,Z`$, the lower bound is $`|r_y|`$, where $`r_y=\mathrm{tr}(\rho Y)`$. It can vanish even though sharp $`X`$ and $`Z`$ are incompatible. A state-dependent Robertson bound is therefore not a test of measurement compatibility.
 
-### Measurement uncertainty needs an error definition (§2.3.2)
+### Measurement uncertainty needs an error definition
 
-To compare an approximate detector with a target, compare their outcome distributions on the same input. The lecture uses **Wasserstein distance**, which counts the cost of moving probability between numerical outcomes.
+To compare an approximate detector with a target, compare their outcome distributions on the same input. **Wasserstein distance** measures this difference through the cost of moving probability between numerical outcomes.
 
 Let $`p(u)`$ and $`q(v)`$ be two finite distributions with numerical labels $`u,v`$. A coupling $`\pi(u,v)`$ is any joint distribution whose marginals are $`p`$ and $`q`$. The order-two distance is
 
@@ -436,13 +436,13 @@ These are practical estimation issues beyond the exact reconstruction formulas. 
 
 The same question applies to an oscillator: do the chosen probability distributions distinguish all possible states?
 
-Position and momentum distributions alone do not. They can agree for different states whose phase information differs. The lecture demonstrates this with Gaussian wavefunctions having opposite quadratic phases.
+Position and momentum distributions alone do not. They can agree for different states whose phase information differs. For example, Gaussian wavefunctions with opposite quadratic phases can have identical position and momentum distributions.
 
 Additional **rotated quadratures** provide distributions along other phase-space directions. With the convention $`Q_\theta=Q\cos\theta+P\sin\theta`$, the angle $`\theta`$ selects the direction. Measuring all angles in $`[0,\pi)`$, or a dense set in that interval, on separately prepared copies is informationally complete.
 
 A single covariant phase-space POVM can also be informationally complete. For seed $`\sigma`$, define its characteristic function $`\chi_\sigma(q,p)=\mathrm{tr}[\sigma W(q,p)]`$. The condition is that the closure of the region where $`\chi_\sigma`$ is nonzero is the whole plane. In particular, a Gaussian seed with an everywhere nonzero characteristic function satisfies it. Unsharp marginals can therefore still provide enough joint data to reconstruct the input.
 
-The lecture connects these descriptions to optical apparatus:
+Two optical measurement schemes implement these observables:
 
 - **Balanced homodyne detection** mixes a signal with a strong local oscillator and subtracts two photocounts. The oscillator phase selects a quadrature. Ideal quadrature statistics arise in the strong-oscillator limit; detector inefficiency adds noise.
 - **Eight-port homodyne detection** combines two such readouts to obtain a phase-space record. An auxiliary state's preparation controls the effective seed and resolution. Detector losses broaden the ideal statistics.

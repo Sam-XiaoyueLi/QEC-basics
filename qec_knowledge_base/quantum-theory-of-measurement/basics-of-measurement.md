@@ -211,7 +211,7 @@ A dilation is minimal when the vectors $`P_xJ\ket{\psi}`$, over all inputs and o
 
 This condition concerns outcome branches, not just the embedded inputs. In the fair-coin example, the two branches are $`\ket{\psi}\otimes\ket{0}/\sqrt2`$ and $`\ket{\psi}\otimes\ket{1}/\sqrt2`$. Together they span the full four-dimensional space, so this dilation is minimal. An extra untouched ancilla would introduce unused directions.
 
-Proposition 1 makes this precise. Let $`(\mathcal M_0,P_0,J_0)`$ be minimal and $`(\mathcal M,P,J)`$ any dilation of the same POVM. An isometry $`W:\mathcal M_0\to\mathcal M`$ satisfies
+Every dilation contains an isometric copy of a minimal dilation. To state this precisely, let $`(\mathcal M_0,P_0,J_0)`$ be minimal and $`(\mathcal M,P,J)`$ any dilation of the same POVM. An isometry $`W:\mathcal M_0\to\mathcal M`$ satisfies
 
 ```math
 WJ_0=J,\qquad P_xW=WP_{0,x}.
@@ -317,7 +317,7 @@ Different Kraus sets can describe the same map. Their labels need not be observe
 
 ### Choi: store the entire operation in one matrix
 
-Complete positivity appears to require testing all entangled inputs. In finite dimensions, one maximally entangled input is sufficient. Let the input dimension be $`d`$, with orthonormal basis $`\{\ket{i}\}_{i=1}^d`$. Introduce a reference of the same dimension. Following the course's equal-weight finite-dimensional convention, define
+Complete positivity appears to require testing all entangled inputs. In finite dimensions, one maximally entangled input is sufficient. Let the input dimension be $`d`$, with orthonormal basis $`\{\ket{i}\}_{i=1}^d`$. Introduce a reference of the same dimension. Define a normalized maximally entangled vector and the Choi operator of the map by
 
 ```math
 \ket{\Omega}=\frac1{\sqrt d}\sum_{i=1}^d\ket{i}_R\otimes\ket{i}_{\mathrm{in}},\qquad
@@ -384,7 +384,7 @@ Its trace is the probability of $`x`$. Dividing by that trace gives the conditio
 
 ### The tunable Z measurement: statistics and disturbance together
 
-The lecture's optical model adjusts a wave-plate parameter $`\gamma`$. Restrict it here to $`0\leq\gamma\leq\pi/4`$, over which measurement strength increases. Its outcome operators are
+An optical implementation adjusts a wave-plate parameter $`\gamma`$. Restrict it here to $`0\leq\gamma\leq\pi/4`$, over which measurement strength increases. Its outcome operators are
 
 ```math
 K_\pm=\frac1{\sqrt2}(\cos\gamma\,I\pm\sin\gamma\,Z),\qquad
