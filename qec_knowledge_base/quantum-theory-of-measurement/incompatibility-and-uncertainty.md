@@ -46,38 +46,80 @@ The tunable qubit detector from Chapter 1 gives a concrete example of this test.
 
 ### How much unsharpness allows a joint measurement?
 
-Let $`X,Y,Z`$ be the Pauli matrices and $`I`$ the qubit identity. Approximate sharp $`Z`$ and sharp $`X`$ with strengths $`a,b\in[0,1]`$:
+Sharp $`Z`$ and sharp $`X`$ cannot be measured jointly on one qubit. **How much must we weaken them before a joint measurement becomes possible?**
+
+Let $`X,Y,Z`$ be the Pauli matrices and $`I`$ the qubit identity. The two approximate measurements have effects
 
 ```math
 E_s=\frac12(I+saZ),\qquad
 F_t=\frac12(I+tbX),\qquad s,t\in\{+1,-1\}.
 ```
 
-A strength of one is sharp; zero gives a fair random sign. These POVMs are called **unbiased** because each gives equal outcome probabilities on $`I/2`$.
+The parameters $`a,b\in[0,1]`$ describe their strengths:
 
-Consider the candidate parent
+- **Strength one:** the corresponding sharp measurement.
+- **Strength zero:** a fair random sign, with no information about the input.
+- **Between zero and one:** the result contains partial information.
+
+For example, on a $`Z`$-plus eigenstate, the first detector reports plus with probability $`(1+a)/2`$. Lowering $`a`$ makes its result less reliable. These POVMs are called **unbiased** because each gives equal outcome probabilities on the maximally mixed state $`I/2`$.
+
+**Try to build one detector that reports both signs.** Consider four candidate parent effects:
 
 ```math
 G_{s,t}=\frac14(I+saZ+tbX).
 ```
 
-Its marginals are the required effects. It is a valid POVM only if its effects are positive. Their eigenvalues are $`(1\pm\sqrt{a^2+b^2})/4`$, so positivity requires
+They already have the correct marginals. Summing over the second sign cancels the $`X`$ terms:
+
+```math
+G_{s,+}+G_{s,-}
+=\frac14(I+saZ+bX)+\frac14(I+saZ-bX)
+=\frac12(I+saZ)=E_s.
+```
+
+Likewise, summing over the first sign gives $`F_t`$. All four effects sum to $`I`$. So **the remaining question is whether every parent effect is positive**. Otherwise, some input would receive a negative “probability.”
+
+Each $`G_{s,t}`$ has eigenvalues
+
+```math
+\frac{1+\sqrt{a^2+b^2}}4,\qquad
+\frac{1-\sqrt{a^2+b^2}}4.
+```
+
+The smaller eigenvalue is nonnegative exactly when
 
 ```math
 a^2+b^2\leq1.
 ```
 
-For this orthogonal, unbiased qubit pair, this condition is also necessary for any parent POVM. Equal strengths can reach $`1/\sqrt2`$, but not one. Sharpness in one direction limits sharpness in the other.
+Geometrically, $`X`$ and $`Z`$ are perpendicular Bloch-sphere directions. Their contributions combine with length $`\sqrt{a^2+b^2}`$. If that length exceeds one, the candidate effect is no longer positive.
 
-For arbitrary directions, let $`\mathbf e,\mathbf f`$ be Bloch vectors of length at most one. Write $`\boldsymbol\sigma=(X,Y,Z)`$, with $`\mathbf e\cdot\boldsymbol\sigma=e_xX+e_yY+e_zZ`$. Unbiased plus effects $`(I+\mathbf e\cdot\boldsymbol\sigma)/2`$ and $`(I+\mathbf f\cdot\boldsymbol\sigma)/2`$ are compatible exactly when
+For this pair of unbiased measurements, the bound is also **necessary**: no other parent can evade it. The positivity calculation above proves that this parent works within the bound; necessity is a further result, included in the general criterion below.
+
+| $`Z`$ strength $`a`$ | Largest allowed $`X`$ strength $`b`$ | Meaning |
+| --- | --- | --- |
+| $`1`$ | $`0`$ | Sharp $`Z`$; the other sign carries no $`X`$ information. |
+| $`0.6`$ | $`0.8`$ | Partial information about both. |
+| $`1/\sqrt2`$ | $`1/\sqrt2`$ | Strongest equal-strength joint readout. |
+| $`0`$ | $`1`$ | Sharp $`X`$; the other sign carries no $`Z`$ information. |
+
+**Unsharpness makes the requested statistics less demanding.** The parent reproduces the two weakened distributions for every input. It does not perform a joint measurement of sharp $`X`$ and sharp $`Z`$.
+
+This tradeoff also appears in a measurement sequence. An unsharp Lüders $`Z`$ measurement of strength $`a`$, followed by sharp $`X`$, gives an effective $`X`$ strength $`b=\sqrt{1-a^2}`$. The sequence reaches the boundary: increasing the information obtained about $`Z`$ reduces the $`X`$ information available afterward. The sequential-measurement section derives this state change.
+
+#### Extending the test to other directions
+
+The bound above uses perpendicular directions. For arbitrary directions, let $`\mathbf e,\mathbf f`$ be Bloch vectors of length at most one. Write $`\boldsymbol\sigma=(X,Y,Z)`$, with $`\mathbf e\cdot\boldsymbol\sigma=e_xX+e_yY+e_zZ`$. Unbiased plus effects $`(I+\mathbf e\cdot\boldsymbol\sigma)/2`$ and $`(I+\mathbf f\cdot\boldsymbol\sigma)/2`$ are compatible exactly when
 
 ```math
 \|\mathbf e+\mathbf f\|+\|\mathbf e-\mathbf f\|\leq2.
 ```
 
-For the orthogonal vectors $`\mathbf e=(0,0,a)`$ and $`\mathbf f=(b,0,0)`$, both norms equal $`\sqrt{a^2+b^2}`$, recovering the earlier bound.
+For the orthogonal vectors $`\mathbf e=(0,0,a)`$ and $`\mathbf f=(b,0,0)`$, both norms equal $`\sqrt{a^2+b^2}`$. This gives the necessary and sufficient condition $`a^2+b^2\leq1`$ used above.
 
-For three unbiased Pauli measurements with strengths $`\lambda_x,\lambda_y,\lambda_z\in[0,1]`$, the condition becomes
+#### Adding a third measurement direction
+
+We can also ask one detector to report unsharp $`X,Y,Z`$ statistics. For strengths $`\lambda_x,\lambda_y,\lambda_z\in[0,1]`$, joint measurability requires and is guaranteed by
 
 ```math
 \lambda_x^2+\lambda_y^2+\lambda_z^2\leq1.
